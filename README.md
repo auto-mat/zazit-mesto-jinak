@@ -5,6 +5,8 @@ A Quasar Project
 
 ## Install the dependencies
 ```bash
+pnpm install
+# or
 yarn
 # or
 npm install
@@ -12,6 +14,8 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
+pnpm run dev
+# or
 quasar dev
 ```
 
