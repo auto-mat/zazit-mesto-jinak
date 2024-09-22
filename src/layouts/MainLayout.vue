@@ -1,29 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR ffr">
+    <q-header class="bg-secondary text-black">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title class="">
+          <q-avatar square size="100px" class="q-my-sm">
+            <img src="logo-zmj.svg">
+          </q-avatar>
+          <q-btn flat label="Label"/>
         </q-toolbar-title>
+        <div>
+          <q-btn flat label="Label"/>
+        </div>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn class="mobile-only" dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="rightDrawerOpen" side="right" behavior="mobile">
+      <!-- drawer content -->
       <q-list>
         <q-item-label
           header
@@ -42,6 +36,14 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div>{{ $q.version }}</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -98,9 +100,9 @@ const linksList: EssentialLinkProps[] = [
   }
 ];
 
-const leftDrawerOpen = ref(false);
+const rightDrawerOpen = ref(false);
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+function toggleRightDrawer () {
+  rightDrawerOpen.value = !rightDrawerOpen.value;
 }
 </script>
