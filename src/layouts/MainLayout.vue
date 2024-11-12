@@ -2,24 +2,52 @@
   <q-layout view="lhh lpR lFf">
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay class="bg-secondary text-black">
-      <q-avatar square size="100px" class="q-my-sm">
-        <img src="logo-zmj.svg">
-      </q-avatar>
+
+      <DrawerHeader />
+
       <q-list>
-        <user-button />
-        <q-item-label header>
+        <q-item-label header class="menu-events-header">
           My Events
         </q-item-label>
 
-        <LocationLinks />
-        <LocationLinks />
-        <LocationLinks />
+        <LocationLinks event-name="My event 1" />
+        <LocationLinks event-name="My event 2" />
 
-        <q-separator />
+        <q-separator inset spaced/>
 
         <q-item clickable>
-          <q-item-section>
-            Invite friends
+          <q-item-section avatar>
+            <q-icon name="person" />
+          </q-item-section>
+          <q-item-section no-wrap>
+            Profile
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section avatar>
+            <q-icon name="forum" />
+          </q-item-section>
+          <q-item-section no-wrap>
+            Forum
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section avatar>
+            <q-icon name="volunteer_activism" />
+          </q-item-section>
+          <q-item-section no-wrap>
+            Donate
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable>
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+          <q-item-section no-wrap>
+            Logout
           </q-item-section>
         </q-item>
       </q-list>
@@ -35,7 +63,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import UserButton from 'src/components/menu/UserButton.vue';
+import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
 import LocationLinks from 'src/components/menu/LocationLinks.vue';
 
 defineOptions({
@@ -49,3 +77,9 @@ const leftDrawerOpen = ref(true);
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }
 </script>
+
+<style>
+.menu-events-header {
+  font-size: large;
+}
+</style>
