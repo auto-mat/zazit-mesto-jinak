@@ -11,7 +11,7 @@
           <q-icon name="rule" />
         </q-item-section>
         <q-item-section no-wrap>
-          Guide
+          {{ $t('menu.guideLink') }}
         </q-item-section>
       </q-item>
 
@@ -20,7 +20,7 @@
           <q-icon name="info" />
         </q-item-section>
         <q-item-section no-wrap>
-          Information
+          {{ $t('menu.informationLink') }}
         </q-item-section>
       </q-item>
 
@@ -29,7 +29,7 @@
           <q-icon name="language" />
         </q-item-section>
         <q-item-section no-wrap>
-          Content on web
+          {{ $t('menu.contentOnWebLink') }}
         </q-item-section>
       </q-item>
 
@@ -38,7 +38,7 @@
           <q-icon name="groups" />
         </q-item-section>
         <q-item-section no-wrap>
-          Organizers
+          {{ $t('menu.organizersLink') }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -55,9 +55,3 @@ defineProps({
 })
 
 </script>
-
-<style>
-.q-item__section--avatar {
-  min-width: fit-content !important;
-}
-</style>

@@ -7,7 +7,7 @@
 
       <q-list>
         <q-item-label header class="menu-events-header">
-          My Events
+          {{ $t('menu.myEventsHeader') }}
         </q-item-label>
 
         <LocationLinks event-name="My event 1" />
@@ -20,7 +20,7 @@
             <q-icon name="person" />
           </q-item-section>
           <q-item-section no-wrap>
-            Profile
+            {{ $t('menu.profileLink') }}
           </q-item-section>
         </q-item>
 
@@ -29,7 +29,7 @@
             <q-icon name="forum" />
           </q-item-section>
           <q-item-section no-wrap>
-            Forum
+            {{ $t('menu.forumLink') }}
           </q-item-section>
         </q-item>
 
@@ -38,7 +38,7 @@
             <q-icon name="volunteer_activism" />
           </q-item-section>
           <q-item-section no-wrap>
-            Donate
+            {{ $t('menu.donateLink') }}
           </q-item-section>
         </q-item>
 
@@ -47,7 +47,7 @@
             <q-icon name="logout" />
           </q-item-section>
           <q-item-section no-wrap>
-            Logout
+            {{ $t('menu.logoutButton') }}
           </q-item-section>
         </q-item>
       </q-list>

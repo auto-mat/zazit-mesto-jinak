@@ -7,6 +7,17 @@ export default {
   header: {
     siteTitle: 'Zazit mesto jinak'
   },
+  menu: {
+    myEventsHeader: 'My Events',
+    guideLink: 'Guide',
+    informationLink: 'Information',
+    contentOnWebLink: 'Content on web',
+    organizersLink: 'Organizers',
+    profileLink: 'Profile',
+    forumLink: 'Forum',
+    donateLink: 'Donate',
+    logoutButton: 'Logout'
+  },
   form: {
     labelEmail: 'Email',
     labelPhone: 'Phone',
