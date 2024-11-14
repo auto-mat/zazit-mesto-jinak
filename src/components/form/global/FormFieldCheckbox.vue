@@ -7,7 +7,7 @@
  * @props
  * - `modelValue` (boolean, required): Value of the checkbox.
  *   It should be of type `boolean`.
- * - `validationMessage` (string, required): Validation message of the checkbox.
+ * - `validationMessage` (string, default: false): Validation message of the checkbox.
  *   It should be of type `string`.
  * - `required` (boolean, default: false): Whether the checkbox is required.
  *
@@ -35,7 +35,7 @@ export default defineComponent({
     },
     validationMessage: {
       type: String,
-      required: true,
+      default: '',
     },
     required: {
       type: Boolean,
