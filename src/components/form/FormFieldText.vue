@@ -11,14 +11,14 @@
  * - `bgColor` (string, default: 'transparent'): The background color of the
  * - `name` (string, required): The name used for id and test selectors.
  * - `label` (string, required): The translation key for the label.
- * - `required` (boolean, default: true): Whether the input is required.
+ * - `required` (boolean, default: false): Whether the input is required.
  * - `autocomplete` (string): The autocomplete attribute.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-text v-model="value" />
+ * <form-field-text v-model="value" label="" name="" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
  */
@@ -50,7 +50,7 @@ export default defineComponent({
     },
     required: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     autocomplete: {
       type: String,
