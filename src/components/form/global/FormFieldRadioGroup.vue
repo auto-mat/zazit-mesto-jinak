@@ -84,7 +84,7 @@ export default defineComponent({
     hide-bottom-space
     :model-value="radioValue"
     :rules="[
-      (val: string) => isFilled(val) || $t('form.messageOptionRequired'),
+      (val: string) => !required || isFilled(val) || $t('form.messageOptionRequired'),
     ]"
   >
     <q-option-group
