@@ -6,15 +6,6 @@
  *
  * @description * Use this component to display registration form.
  *
- * @components
- * - `FormFieldCheckboxRequired`: Component to render checkbox input.
- * - `FormFieldCompany`: Component to render company input.
- * - `FormFieldEmail`: Component to render email input.
- * - `FormFieldPassword`: Component to render password input.
- * - `FormFieldPasswordConfirm`: Component to render password confirm input.
- * - `FormFieldPhone`: Component to render phone input.
- * - `FormFieldTextRequired`: Component to render required field.
- *
  * @example
  * <form-register-personal-details />
  *
@@ -94,7 +85,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <!-- Form: register coordinator -->
+    <!-- Form: register personal details -->
     <q-form
       autofocus
       @submit="onSubmit"
@@ -104,7 +95,7 @@ export default defineComponent({
       <!-- Heading -->
       <h2
         class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
-        data-cy="register-coordinator-form-title"
+        data-cy="register-form-personal-details-title"
       >
         {{ $t('register.personalDetails.title') }}
       </h2>
@@ -181,19 +172,35 @@ export default defineComponent({
           </form-field-checkbox>
         </div>
         <!-- Input: confirm consent -->
-        <div class="col-12" data-cy="form-register-personal-details-terms">
+        <div class="col-12 q-mt-xl" data-cy="form-register-personal-details-terms">
           <!-- Checkbox: terms -->
           <form-field-checkbox
             v-model="formRegisterPersonalDetails.terms"
             :validation-message="
                 $t('register.personalDetails.messageTermsRequired')
               "
+            required
           >
             {{ $t('register.personalDetails.labelPrivacyConsent') }}
             <!-- Link: terms -->
             <!-- TODO: Link to terms page -->
             <a href="#" target="_blank" class="text-primary">
               {{ $t('register.personalDetails.linkPrivacyConsent') }} </a
+            >.
+          </form-field-checkbox>
+          <!-- Checkbox: codex -->
+          <form-field-checkbox
+            v-model="formRegisterPersonalDetails.codex"
+            :validation-message="
+                $t('register.personalDetails.messageTermsRequired')
+              "
+            required
+          >
+            {{ $t('register.personalDetails.labelCodexTerms') }}
+            <!-- Link: codex -->
+            <!-- TODO: Link to codex page -->
+            <a href="#" target="_blank" class="text-primary">
+              {{ $t('register.personalDetails.linkCodexTerms') }} </a
             >.
           </form-field-checkbox>
           </div>
