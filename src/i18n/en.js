@@ -26,12 +26,14 @@ export default {
     labelPassword: 'Password',
     labelPasswordConfirmation: 'Password confirmation',
     labelGender: 'Gender',
+    labelDate: 'Date',
     hintPassword: 'It must contain at least 6 characters and at least 1 letter',
     messageEmailInvalid: 'Please fill in a valid email',
     messageFieldRequired: '{fieldName} is required',
     messagePasswordStrong: 'Password must contain at least 6 characters and at least 1 letter',
     messagePasswordNotIdentical: 'Passwords don\'t match',
     messagePhoneInvalid: 'Please fill in a valid phone number',
+    messageDateInvalid: 'Please fill in a valid date',
   },
   gender: {
     male: 'Male',
@@ -44,10 +46,22 @@ export default {
       newsTitle: 'What you want to be informed about by email',
       onlyOrganizerNews: 'I just want information for the organizers',
       allNews: 'I want all information from AutoMat',
-      messageTermsRequired: '',
+      messageTermsRequired: 'Error',
       labelPrivacyConsent: 'I agree to the processing of personal data in accordance with the ',
       linkPrivacyConsent: 'Data Protection and Processing Policy',
       buttonSubmit: 'Continue',
+      labelCodexTerms: 'I have read and agree to comply with the ',
+      linkCodexTerms: 'Experience the City Differently Code of Ethics'
+    },
+    event: {
+      title: 'About Event',
+      choiceNew: 'I want create new event',
+      choiceFromPast: 'I want restore event from the past',
+      labelEventFromPast: 'Choose your event from the past',
+      labelEventName: 'Event name',
+      labelPickDate: 'Date of the event',
+      mainDate: 'Main date ZMJ',
+      otherDate: 'Other date',
     }
   }
 }
