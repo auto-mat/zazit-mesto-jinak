@@ -83,6 +83,12 @@ export const useValidation = () => {
     return isLong && allNumbers;
   };
 
+  const isDate = (value: string) : boolean => {
+    const isLong = value.length === 10;
+    const isDate = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0,1,2])\/(19|20)\d{2}$/.test(value);
+    return isLong && isDate;
+  }
+
   return {
     isEmail,
     isEmailList,
@@ -92,5 +98,6 @@ export const useValidation = () => {
     isPhone,
     isStrongPassword,
     isBusinessId,
+    isDate
   };
 };
