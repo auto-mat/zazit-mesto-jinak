@@ -63,5 +63,14 @@ export default {
       mainDate: 'Main date ZMJ',
       otherDate: 'Other date',
     }
+  },
+  profile: {
+    title: 'Profile',
+    subtitle: 'Personal information',
+    emailLabel: 'Email',
+    phoneLabel: 'Phone',
+    genderLabel: 'Gender',
+    editButton: 'Edit',
+    languagePrefer: 'Language preference'
   }
 }

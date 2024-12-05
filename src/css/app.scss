@@ -1,5 +1,19 @@
 // app global css in SCSS form
 
+h1 {
+  font-size: 24pt;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+}
+
+h2 {
+  font-size: 20pt;
+  font-weight: 300;
+  line-height: normal;
+  margin: 0;
+}
+
 .q-item__section--avatar {
   min-width: fit-content !important;
 }

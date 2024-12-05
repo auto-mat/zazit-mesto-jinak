@@ -1,7 +1,12 @@
 <template>
-  <q-layout view="lhh lpR lFf">
+  <q-layout view="hHh Lpr lff">
 
-    <q-drawer v-model="leftDrawerOpen" side="left" overlay class="bg-secondary text-black">
+    <q-drawer 
+      v-model="leftDrawerOpen" 
+      show-if-above
+      side="left"
+      class="bg-secondary text-black"
+    >
 
       <DrawerHeader />
 
@@ -15,7 +20,7 @@
 
         <q-separator inset spaced/>
 
-        <q-item clickable>
+        <q-item to="/profile" exact>
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
