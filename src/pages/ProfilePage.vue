@@ -9,17 +9,21 @@
     <profile-row :label="$t('profile.emailLabel')">
       {{ data.email }}
     </profile-row>
-    <profile-page :label="$t('profile.phoneLabel')">
+    <profile-row :label="$t('profile.phoneLabel')">
       {{ data.phone }}
-    </profile-page>
+    </profile-row>
     <profile-row :label="$t('profile.genderLabel')">
       {{ data.gender }}
+    </profile-row>
+    <profile-row :label="$t('profile.languagePrefer')" no-button>
+      <language-switcher />
     </profile-row>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import ProfileRow from 'src/components/profile/ProfileRow.vue';
+import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 
 defineOptions({
   name: 'ProfilePage'

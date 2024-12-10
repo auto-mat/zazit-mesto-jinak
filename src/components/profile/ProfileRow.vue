@@ -1,13 +1,14 @@
 <template>
-  <div class="row items-center">
+  <div class="row items-center fit q-my-sm">
     <div class="col-2">
        {{ label }}
     </div>
-    <div class="col">
+    <div class="col-5">
       <slot />
     </div>
-    <div class="col">
+    <div class="col-5">
       <q-btn
+        v-if="!noButton"
         rounded
         unelevated
         outline
@@ -25,6 +26,10 @@ defineProps({
     type: String,
     default: ''
   },
+  noButton: {
+    type: Boolean,
+    defaul: false
+  }
 })
 
 </script>

@@ -1,5 +1,7 @@
 import en from './en'
+import cz from './cz'
 
 export default {
-  'en': en
+  'en': en,
+  'cz': cz
 }

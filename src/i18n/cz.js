@@ -1,5 +1,4 @@
-// This is just an example,
-// so you can safely delete all default props below
+//TODO
 
 export default {
   failed: 'Action failed',
@@ -72,7 +71,7 @@ export default {
     title: 'Profile',
     subtitle: 'Personal information',
     emailLabel: 'Email',
-    phoneLabel: 'Phone',
+    phoneLabel: 'Telefon',
     genderLabel: 'Gender',
     editButton: 'Edit',
     languagePrefer: 'Language preference'
