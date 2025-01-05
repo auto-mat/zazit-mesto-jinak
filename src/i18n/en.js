@@ -14,7 +14,8 @@ export default {
   gender: {
     male: 'Male',
     female: 'Female',
-    unknown: 'Unknown',
+    other: 'Other',
+    unknown: 'I prefer not to say',
   },
   menu: {
     myEventsHeader: 'My Events',
@@ -74,7 +75,11 @@ export default {
     emailLabel: 'Email',
     phoneLabel: 'Phone',
     genderLabel: 'Gender',
-    editButton: 'Edit',
-    languagePrefer: 'Language preference'
+    buttonEdit: 'Edit',
+    buttonAskForChange: 'Ask for change',
+    languagePrefer: 'Language preference',
+    editNameDialogTitle: 'Edit name',
+    buttonUpdate: 'Save changes',
+    buttonCancel: 'Cancel'
   }
 }
