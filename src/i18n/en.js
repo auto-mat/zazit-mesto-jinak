@@ -80,6 +80,8 @@ export default {
     languagePrefer: 'Language preference',
     editNameDialogTitle: 'Edit name',
     buttonUpdate: 'Save changes',
-    buttonCancel: 'Cancel'
+    buttonCancel: 'Cancel',
+    textEmailChange: 'Are you sure about changing email? Administrators will contact you soon.',
+    buttonYes: 'Yes',
   }
 }

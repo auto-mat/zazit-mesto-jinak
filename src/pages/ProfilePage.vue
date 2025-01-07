@@ -17,6 +17,7 @@
             color="primary"
             icon="mail"
             :label="$t('profile.buttonAskForChange')"
+            @click="openDialog('email')"
           />
         </template>
       </profile-row>
@@ -52,6 +53,11 @@
           @cancel="editDialogOpen = false"
           @update="updateGender"
         />
+        <dialog-content-email
+          v-if="currentComponent === 'email'"
+          @cancel="editDialogOpen = false"
+          @update="updateEmail"
+        />
       </div>
     </q-dialog>
   </q-page>
@@ -64,6 +70,7 @@ import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 import DialogContentName from 'src/components/profile/DialogContentName.vue';
 import DialogContentPhone from 'src/components/profile/DialogContentPhone.vue';
 import DialogContentGender from 'src/components/profile/DialogContentGender.vue';
+import DialogContentEmail from 'src/components/profile/DialogContentEmail.vue';
 
 defineOptions({
   name: 'ProfilePage'
@@ -101,6 +108,12 @@ const updatePhone = (phone: string) => {
 const updateGender = (gender: string) => {
   // TODO
   console.log(gender)
+  editDialogOpen.value = false
+}
+
+const updateEmail = () => {
+  // TODO
+  console.log('Email update message')
   editDialogOpen.value = false
 }
 

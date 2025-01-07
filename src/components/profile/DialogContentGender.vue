@@ -69,6 +69,7 @@ const emit = defineEmits(['update', 'cancel'])
 
 const newGender = ref(props.gender)
 
+// TODO also at registration, to one component
 const optionsGender: FormOption[] = [
       {
         label: t('gender.male'),
