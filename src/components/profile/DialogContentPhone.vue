@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ $t('profile.editNameDialogTitle') }}</h3>
+    <h3>{{ $t('profile.titleEditPhone') }}</h3>
     <q-separator spaced="lg"/>
     <q-form
       autofocus
