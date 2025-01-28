@@ -15,8 +15,9 @@
           {{ $t('menu.myEventsHeader') }}
         </q-item-label>
 
-        <LocationLinks event-name="My event 1" />
-        <LocationLinks event-name="My event 2" />
+        <!-- TODO fetch menu -->
+        <LocationLinks event-name="Husitská" event-slug="husitska"/>
+        <LocationLinks event-name="Arbesovo náměstí" event-slug="arbesovo-namesti" />
 
         <q-separator inset spaced/>
 

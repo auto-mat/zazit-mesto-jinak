@@ -6,7 +6,7 @@
     :label="eventName"
   >
     <q-list>
-      <q-item clickable>
+      <q-item :to="`/event/${eventSlug}/guide`" exact>
         <q-item-section avatar>
           <q-icon name="rule" />
         </q-item-section>
@@ -15,7 +15,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable>
+      <q-item :to="`/event/${eventSlug}/information`" exact>
         <q-item-section avatar>
           <q-icon name="info" />
         </q-item-section>
@@ -24,7 +24,16 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable>
+      <q-item :to="`/event/${eventSlug}/organizers`" exact>
+        <q-item-section avatar>
+          <q-icon name="groups" />
+        </q-item-section>
+        <q-item-section no-wrap>
+          {{ $t('menu.organizersLink') }}
+        </q-item-section>
+      </q-item>
+
+      <q-item :to="`/event/${eventSlug}/web-content`" exact>
         <q-item-section avatar>
           <q-icon name="language" />
         </q-item-section>
@@ -33,12 +42,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable>
+      <q-item :to="`/event/${eventSlug}/program`" exact>
         <q-item-section avatar>
-          <q-icon name="groups" />
+          <q-icon name="schedule" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.organizersLink') }}
+          {{ $t('menu.programLink') }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -49,6 +58,10 @@
 
 defineProps({
   eventName: {
+    type: String,
+    required: true
+  },
+  eventSlug: {
     type: String,
     required: true
   }

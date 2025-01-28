@@ -23,6 +23,7 @@ export default {
     informationLink: 'Information',
     contentOnWebLink: 'Content on web',
     organizersLink: 'Organizers',
+    programLink: 'Program',
     profileLink: 'Profile',
     forumLink: 'Forum',
     donateLink: 'Donate',
@@ -86,5 +87,9 @@ export default {
     buttonCancel: 'Cancel',
     textEmailChange: 'Are you sure about changing email? Administrators will contact you soon.',
     buttonYes: 'Yes',
+  },
+  event: {
+    titleStatus: 'Status of your event',
+
   }
 }

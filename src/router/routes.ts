@@ -12,6 +12,20 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/ProfilePage.vue') }],
   },
   {
+    path: '/event/:slug',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { 
+        path: '', 
+        component: () => import('pages/EventGuidePage.vue') 
+      },
+      { 
+        path: 'guide', 
+        component: () => import('pages/EventGuidePage.vue') 
+      }
+    ],
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
