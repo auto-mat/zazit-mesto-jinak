@@ -38,6 +38,7 @@ export default {
     labelPasswordConfirmation: 'Password confirmation',
     labelGender: 'Gender',
     labelDate: 'Date',
+    labelImage: 'Image',
     hintPassword: 'It must contain at least 6 characters and at least 1 letter',
     messageEmailInvalid: 'Please fill in a valid email',
     messageFieldRequired: '{fieldName} is required',
@@ -90,6 +91,22 @@ export default {
   },
   event: {
     titleStatus: 'Status of your event',
-
+    titleWebContent: 'Content for website ZMJ',
+    content: {
+      labelImage: 'Image',
+      sublabelImage: 'Main image on your event at website ZMJ',
+      labelMainText: 'Main text',
+      sublabelMainText: 'Description about event (program is below)',
+      labelLinks: 'Links',
+      labelProgram: 'Program',
+      buttonEdit: 'Edit'
+    },
+    program: {
+      labelTitle: 'Title',
+      labelDescription: 'Description',
+      labelTimeFrom: 'From',
+      labelTimeTo: 'To',
+      labelCategories: 'Categories'
+    }
   }
 }

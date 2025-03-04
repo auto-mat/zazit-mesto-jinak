@@ -22,6 +22,10 @@ const routes: RouteRecordRaw[] = [
       { 
         path: 'guide', 
         component: () => import('pages/EventGuidePage.vue') 
+      },
+      {
+        path: 'web-content',
+        component: () => import('pages/EventContentPage.vue') 
       }
     ],
   },
