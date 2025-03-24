@@ -89,6 +89,30 @@ export const useValidation = () => {
     return isLong && isDate;
   }
 
+  const isTimeLaterThan = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isLater = h1 > h2 || (h1 === h2 && m1 > m2);
+
+    return isLater;
+  }
+
+  const isTimeEqualTo = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isSame = h1 === h2 && m1 === m2;
+
+    return isSame;
+  }
+
+  const isTimeEarlierThan = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isEarlier = h1 < h2 || (h1 === h2 && m1 < m2);
+
+    return isEarlier;
+  }
+
   return {
     isEmail,
     isEmailList,
@@ -98,6 +122,9 @@ export const useValidation = () => {
     isPhone,
     isStrongPassword,
     isBusinessId,
-    isDate
+    isDate,
+    isTimeEarlierThan,
+    isTimeEqualTo,
+    isTimeLaterThan
   };
 };

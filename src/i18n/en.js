@@ -38,7 +38,10 @@ export default {
     labelPasswordConfirmation: 'Password confirmation',
     labelGender: 'Gender',
     labelDate: 'Date',
+    labelTimeFrom: 'From',
+    labelTimeTo: 'To',
     labelImage: 'Image',
+    labelClose: 'Close',
     hintPassword: 'It must contain at least 6 characters and at least 1 letter',
     messageEmailInvalid: 'Please fill in a valid email',
     messageFieldRequired: '{fieldName} is required',
@@ -46,6 +49,9 @@ export default {
     messagePasswordNotIdentical: 'Passwords don\'t match',
     messagePhoneInvalid: 'Please fill in a valid phone number',
     messageDateInvalid: 'Please fill in a valid date',
+    messageTimeEarlier: 'Time from has to be earlier than time to',
+    messageTimeEqual: 'Time from cannot be same as time to',
+    messageTimeLater: 'Time to has to be later than time from',
   },
   register: {
     personalDetails: {
@@ -106,7 +112,8 @@ export default {
       labelDescription: 'Description',
       labelTimeFrom: 'From',
       labelTimeTo: 'To',
-      labelCategories: 'Categories'
+      labelCategories: 'Categories',
+      titleAddProgramItem: 'Add program item',
     }
   }
 }
