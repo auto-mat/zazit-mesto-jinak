@@ -7,7 +7,7 @@
           <span class="text-caption">{{ $t('event.content.sublabelImage') }}</span>
         </div>
 
-        <event-content-edit-button />
+        <edit-button />
       </div>
       
       <q-img 
@@ -24,7 +24,7 @@
           <span class="text-caption">{{ $t('event.content.sublabelMainText') }}</span>
         </div>
 
-        <event-content-edit-button />
+        <edit-button />
       </div>
 
       <!-- sanitaze HTML -->
@@ -37,7 +37,7 @@
     <div class="q-mb-xl">
       <div class="q-mb-sm flex justify-between items-center">
         <h3 class="text-body1 text-bold">{{ $t('event.content.labelLinks') }}</h3>
-        <event-content-edit-button />
+        <edit-button />
       </div>
 
       <div>
@@ -53,15 +53,15 @@
         <h3 class="text-body1 text-bold">{{ $t('event.content.labelProgram') }}</h3>
       </div>
 
-      <!-- <event-program-table /> -->
+      <event-program-table />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EventContentEditButton from './EventContentEditButton.vue';
-// import EventProgramTable from '../program/EventProgramTable.vue';
+import EditButton from 'src/components/buttons/EditButton.vue';
+import EventProgramTable from '../program/EventProgramTable.vue';
 
 const mainContent = ref('<div>Lorem <b>ipsum</b> dolor sit amet, consectetur adipiscing elit. In rutrum metus quis diam luctus tristique. Integer at diam arcu. Sed aliquet tempus tempor. Donec efficitur porta ipsum eu fringilla. <i>Nullam eget risus</i> sed sem vehicula <a href="google.com">semper</a> non ornare nunc. Quisque et tincidunt nisi, nec ultrices nulla.</div> <div>Morbi ullamcorper sapien turpis, accumsan cursus ex tincidunt ac. Cras a tincidunt erat. Donec ac bibendum sapien.</div>')
 

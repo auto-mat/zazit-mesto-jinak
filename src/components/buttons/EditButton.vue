@@ -15,7 +15,7 @@
       outline
       color="primary"
       icon="edit"
-      :label="$t('event.content.buttonEdit')"
+      :label="$t('button.edit')"
       @click="$emit('edit')"
     />
   </div>
