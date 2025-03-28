@@ -53,6 +53,10 @@ export default {
     messageTimeEqual: 'Time from cannot be same as time to',
     messageTimeLater: 'Time to has to be later than time from',
   },
+  button: {
+    edit: 'Edit',
+    back: 'Back'
+  },
   register: {
     personalDetails: {
       title: 'Personal details',
@@ -98,6 +102,7 @@ export default {
   event: {
     titleStatus: 'Status of your event',
     titleWebContent: 'Content for website ZMJ',
+    titleProgram: 'Program',
     content: {
       labelImage: 'Image',
       sublabelImage: 'Main image on your event at website ZMJ',
@@ -105,7 +110,6 @@ export default {
       sublabelMainText: 'Description about event (program is below)',
       labelLinks: 'Links',
       labelProgram: 'Program',
-      buttonEdit: 'Edit'
     },
     program: {
       labelTitle: 'Title',
@@ -113,7 +117,9 @@ export default {
       labelTimeFrom: 'From',
       labelTimeTo: 'To',
       labelCategories: 'Categories',
+      titleExistingProgramItems: 'Existing program items',
       titleAddProgramItem: 'Add program item',
+      buttonSave: 'Save'
     }
   }
 }
