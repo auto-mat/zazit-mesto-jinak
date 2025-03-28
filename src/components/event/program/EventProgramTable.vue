@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="table-wrapper" :style="{ height: tableHeight + 'px' }">
+    <div class="fit">
     <q-table
-      flat bordered
+      flat 
+      bordered
       :rows="rows"
       :columns="columns"
       row-key="name"
@@ -9,7 +11,7 @@
     >
     <template v-slot:header="props">
         <q-tr :props="props">
-          <q-th auto-width />
+          <q-th v-if="editable" auto-width />
           <q-th
             v-for="col in props.cols"
             :key="col.name"
@@ -22,7 +24,7 @@
 
     <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td auto-width>
+          <q-td v-if="editable" auto-width>
             <q-btn 
               size="sm" 
               round
@@ -46,10 +48,12 @@
         </q-tr>
       </template>
     </q-table>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 defineProps({
@@ -85,10 +89,74 @@ const rows = [
     timeTo: '11:30',
     categories: 'Pro děti'
   },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    timeFrom: '11:00',
+    timeTo: '11:30',
+    categories: 'Pro děti'
+  },
 ]
+
+const element = ref<HTMLElement>()
+const tableHeight = ref(0)
+
+onMounted(() => {
+  element.value = document.querySelector('.table') as HTMLElement;
+  tableHeight.value = element.value ? element.value.offsetHeight : 0;
+})
+
+// watchEffect(() => {
+//   tableHeight.value = element.value?.offsetHeight ? element.value.offsetHeight : 0;
+// })
 </script>
 
 <style scoped>
+.table-wrapper {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+}
 
+.fit {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+}
 
 </style>
