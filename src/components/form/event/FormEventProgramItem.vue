@@ -1,15 +1,14 @@
 <script lang="ts">
 /**
- * FormRegisterEvent Component
+ * FormEventProgramItem Component
  *
- * The `FormRegisterEvent` is used to gather information about event in registeration.
+ * The `FormEventProgramItem` is used to gather information about program item in program editor.
  *
- * @description * Use this component to display registration form.
+ * @description * Use this component to display program item form.
  *
  * @example
- * <form-register-event />
+ * <form-event-program-item/>
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
 // libraries
@@ -18,15 +17,15 @@ import { defineComponent, reactive } from 'vue';
 // components
 import FormFieldText from 'src/components/form/global/FormFieldText.vue';
 import FormFieldTimeFromInput from 'src/components/form/event/FormFieldTimeFromInput.vue';
-import FormFieldTimeToField from 'src/components/form/event/FormFieldTimeToField.vue';
+import FormFieldTimeToInput from 'src/components/form/event/FormFieldTimeToInput.vue';
 
 
 export default defineComponent({
-  name: 'FormRegisterCoordinator',
+  name: 'FormProgramItem',
   components: {
     FormFieldText,
     FormFieldTimeFromInput,
-    FormFieldTimeToField,
+    FormFieldTimeToInput,
   },
   setup() {
 
@@ -105,7 +104,7 @@ export default defineComponent({
             />
           </div>
           <div class="col-12 col-sm-6">
-            <form-field-time-to-field
+            <form-field-time-to-input
               v-model="formEventProgramItem.timeTo"
               :time-from="formEventProgramItem.timeFrom"
               required

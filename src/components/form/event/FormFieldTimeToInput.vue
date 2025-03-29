@@ -27,7 +27,7 @@ import FormFieldTimeInput from '../global/FormFieldTimeInput.vue';
 import { useValidation } from 'src/composables/useValidation';
 
 export default defineComponent({
-  name: 'FormFieldTimeFromInput',
+  name: 'FormFieldTimeToInput',
   components: {
     FormFieldTimeInput
   },

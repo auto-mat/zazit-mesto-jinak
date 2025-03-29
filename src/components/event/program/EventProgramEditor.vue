@@ -10,12 +10,12 @@
     </div>
 
     <!-- form: program item -->
-    <event-program-item-form />
+    <form-event-program-item />
   </div>
 </template>
 
 <script setup lang="ts">
 import EventProgramTable from './EventProgramTable.vue';
-import EventProgramItemForm from './EventProgramItemForm.vue';
+import FormEventProgramItem from 'src/components/form/event/FormEventProgramItem.vue';
 
 </script>
