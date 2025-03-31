@@ -7,11 +7,12 @@
           <span class="text-caption">{{ $t('event.content.sublabelImage') }}</span>
         </div>
 
-        <edit-button />
+        <edit-button @edit="$emit('edit')"/>
       </div>
       
       <q-img 
-        src="https://picsum.photos/800/500"
+        :src="imageSrc"
+        :alt="$t('event.content.altImage')"
         fit="contain"
         class="image"
       />
@@ -24,64 +25,68 @@
           <span class="text-caption">{{ $t('event.content.sublabelMainText') }}</span>
         </div>
 
-        <edit-button />
+        <edit-button @edit="$emit('edit')"/>
       </div>
 
-      <!-- sanitaze HTML -->
+      <!-- TODO sanitaze HTML -->
       <div 
         class="content"
-        v-html="mainContent"
+        v-html="eventContent.mainContent"
       ></div>
     </div>
 
     <div class="q-mb-xl">
       <div class="q-mb-sm flex justify-between items-center">
         <h3 class="text-body1 text-bold">{{ $t('event.content.labelLinks') }}</h3>
-        <edit-button />
+        <edit-button @edit="$emit('edit')"/>
       </div>
 
       <div>
-        <div v-for="link in links" :key="link.id" class="row wrap q-mb-sm">
-          <span class="col-12 col-md-2">{{ link.urlTitle }}</span>
+        <div v-for="(link, index) in eventContent.links" :key="index" class="row wrap q-mb-sm">
+          <span class="col-12 col-md-2">{{ link.title }}</span>
           <a class="link col-12 col-md-10" :href="link.url">{{  link.url }}</a>
         </div>
       </div>
     </div>
 
-    <div>
+    <div class="q-pb-xl">
       <div class="q-mb-sm">
         <h3 class="text-body1 text-bold">{{ $t('event.content.labelProgram') }}</h3>
       </div>
 
-      <event-program-table />
+      <event-program-table :rows="eventProgram" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, PropType } from 'vue';
 import EditButton from 'src/components/buttons/EditButton.vue';
 import EventProgramTable from '../program/EventProgramTable.vue';
+import { EventContentType, EventProgramType } from 'src/types/Event';
 
-const mainContent = ref('<div>Lorem <b>ipsum</b> dolor sit amet, consectetur adipiscing elit. In rutrum metus quis diam luctus tristique. Integer at diam arcu. Sed aliquet tempus tempor. Donec efficitur porta ipsum eu fringilla. <i>Nullam eget risus</i> sed sem vehicula <a href="google.com">semper</a> non ornare nunc. Quisque et tincidunt nisi, nec ultrices nulla.</div> <div>Morbi ullamcorper sapien turpis, accumsan cursus ex tincidunt ac. Cras a tincidunt erat. Donec ac bibendum sapien.</div>')
 
-const links = [
-  {
-    id: 1,
-    urlTitle: 'Facebook událost',
-    url: 'https://www.facebook.com/ZazitMestoJinak/',
+const props = defineProps({
+  eventContent: {
+    type: Object as PropType<EventContentType>,
+    required: true
   },
-  {
-    id: 2,
-    urlTitle: 'Instagram',
-    url: 'https://www.instagram.com/zazitmestojinak/',
-  },
-  {
-    id: 3,
-    urlTitle: 'Webová stránka',
-    url: 'https://zazitmestojinak.cz/'
+  eventProgram: {
+    type: Array as PropType<EventProgramType>,
+    required: true
   }
-]
+})
+
+defineEmits(['edit'])
+
+const imageSrc = computed(() => {
+  if (props.eventContent.image) {
+    return URL.createObjectURL(props.eventContent.image)
+  } else {
+    return 'image-placeholder.jpg'
+  }
+})
+
 </script>
 
 <style scoped>
