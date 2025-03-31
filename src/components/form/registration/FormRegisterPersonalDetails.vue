@@ -23,7 +23,7 @@ import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldCheckbox from '../global/FormFieldCheckbox.vue';
 
 //types
-import { FormOption } from 'src/components/types/Form';
+import { FormOption } from 'src/types/Form';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
