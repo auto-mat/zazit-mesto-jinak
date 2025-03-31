@@ -30,13 +30,17 @@
               round
               flat
               color="primary"
-              icon="edit" />
+              icon="edit" 
+              @click="$emit('edit', props.row)"
+            />
             <q-btn 
               size="sm" 
               round
               flat
               color="primary"
-              icon="delete" />
+              icon="delete" 
+              @click="$emit('delete', props.row)"
+            />
           </q-td>
           <q-td
             v-for="col in props.cols"
@@ -53,86 +57,69 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { EventProgramType } from 'src/types/Event';
+import { onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 defineProps({
+  rows: {
+    type: Array as PropType<EventProgramType>,
+    required: true
+  },
   editable: {
     type: Boolean,
     default: false
   }
 })
+
+defineEmits(['edit', 'delete'])
+
 const { t } = useI18n()
 const leftAlign = 'left' as const
 const centerAlign = 'center' as const
 
 const columns = [
-  { name: 'title', required: true, align: leftAlign, label: t('event.program.labelTitle'), field: 'title', sortable: true },
-  { name: 'description', align: leftAlign, label: t('event.program.labelDescription'), field: 'description' },
-  { name: 'timeFrom', align: centerAlign, label: t('event.program.labelTimeFrom'), field: 'timeFrom', sortable: true },
-  { name: 'timeTo', align: centerAlign, label: t('event.program.labelTimeTo'), field: 'timeTo', sortable: true },
-  { name: 'categories', align: leftAlign, label: t('event.program.labelCategories'), field: 'categories' },
-]
-
-const rows = [
-  {
-    title: 'Divadlo',
-    description: 'Představení dobrovolnického spolku',
-    timeFrom: '9:00',
-    timeTo: '10:30',
-    categories: 'Divadlo, Pro děti'
+  { 
+    name: 'title', 
+    required: true, 
+    align: leftAlign, 
+    label: t('event.program.labelTitle'), 
+    field: 'title', 
+    sortable: true 
   },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
+  { 
+    name: 'description', 
+    align: leftAlign, 
+    label: t('event.program.labelDescription'), 
+    field: 'description' 
   },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
+  { 
+    name: 'timeFrom', 
+    align: centerAlign, 
+    label: t('event.program.labelTimeFrom'), 
+    field: 'timeFrom', 
+    sortable: true 
   },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
+  { 
+    name: 'timeTo', 
+    align: centerAlign, 
+    label: t('event.program.labelTimeTo'), 
+    field: 'timeTo', 
+    sortable: true 
   },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
-  },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
-  },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
-  },
-  {
-    title: 'Zpívánky',
-    description: 'Zpěv s dětmi',
-    timeFrom: '11:00',
-    timeTo: '11:30',
-    categories: 'Pro děti'
+  { 
+    name: 'categories', 
+    align: leftAlign, 
+    label: t('event.program.labelCategories'), 
+    field: 'categories',  
+    format: (val: string[]) => {
+      const list = val.map((category) => t(`event.program.category.${category}`))
+      return list.join(', ')
+    }
   },
 ]
 
+// TODO height of table, because of absolute position
 const element = ref<HTMLElement>()
 const tableHeight = ref(0)
 

@@ -40,7 +40,6 @@ export default {
     labelDate: 'Date',
     labelTimeFrom: 'From',
     labelTimeTo: 'To',
-    labelImage: 'Image',
     labelClose: 'Close',
     hintPassword: 'It must contain at least 6 characters and at least 1 letter',
     messageEmailInvalid: 'Please fill in a valid email',
@@ -110,6 +109,11 @@ export default {
       sublabelMainText: 'Description about event (program is below)',
       labelLinks: 'Links',
       labelProgram: 'Program',
+      titleEditContent: 'Edit content',
+      labelLinkTitle: 'Link title',
+      labelLinkUrl: 'URL',
+      buttonAddLink: 'Add new link',
+      altImage: 'Main image for event website'
     },
     program: {
       labelTitle: 'Title',
@@ -119,7 +123,22 @@ export default {
       labelCategories: 'Categories',
       titleExistingProgramItems: 'Existing program items',
       titleAddProgramItem: 'Add program item',
-      buttonSave: 'Save'
+      titleEditProgramItem: 'Edit program item',
+      buttonSave: 'Save',
+      buttonReset: 'Cancel',
+      category:  {
+        theater: 'Theater',
+        forchildren: 'For children',
+        film: 'Film',
+        workshop: 'Workshop',
+        food: 'Food',
+        music: 'Music',
+        games: 'Games',
+        dance: 'Dance',
+        sport: 'Sport',
+        sale: 'Sale',
+        other: 'Other'
+      }
     }
   }
 }
