@@ -9,12 +9,16 @@
 //   }
 // });
 
-import { eventContentData, eventProgramData } from 'app/mock/eventData';
+import { eventContentData, eventInformationData, eventProgramData } from 'app/mock/eventData';
 
 export default {
   // TODO
   getEventGuide(slug) {
     console.log(slug);
+  },
+  getEventInformation(slug) {
+    console.log(slug);
+    return eventInformationData;
   },
   getEventContent(slug) {
     console.log(slug);

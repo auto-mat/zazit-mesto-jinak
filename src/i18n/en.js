@@ -100,8 +100,20 @@ export default {
   },
   event: {
     titleStatus: 'Status of your event',
+    titleInformation: 'Information',
     titleWebContent: 'Content for website ZMJ',
     titleProgram: 'Program',
+    information: {
+      labelName: 'Name',
+      labelDate: 'Date of event',
+      labelAddress: 'Address',
+      labelMunicipalDistrict: 'Municipal district',
+      labelLocation: 'Location',
+      labelSpaceType: 'Space type',
+      labelSpaceArea: 'Space area',
+      titleEventLevel: 'Your event has been classified as',
+      buttonEventLevel: 'Disagree with the classification? Write to us.'
+    },
     content: {
       labelImage: 'Image',
       sublabelImage: 'Main image on your event at website ZMJ',

@@ -152,6 +152,24 @@ export const eventGuides = [
   }
 ]
 
+// const spaceTypes = ['none','park', 'sidewalk', 'roadway', 'courtyard']
+// const spaceAreas = ['none', '0', '500', '2000', '3000', '5000']
+// const eventTypes = ['small', 'medium', 'large', 'partner']
+
+export const eventInformationData = {
+  slug: 'husitska',
+  name: 'Husitská',
+  date: '22.08.2025',
+  address: 'Husitská 70/24, 130 00 Praha 3-Žižkov',
+  latitude: 50.087274,
+  longitude: 14.443054,
+  municipalDistrict: 'Praha 3',
+  spaceType: 'roadway',
+  spaceArea: '500',
+  eventType: 'small',
+  eventTypeDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut fringilla neque. Nulla facilisi. Vestibulum nec eros erat. Vestibulum semper interdum nisi facilisis sodales.' 
+}
+
 
 export const eventContentData = {
   slug: 'husitska',
