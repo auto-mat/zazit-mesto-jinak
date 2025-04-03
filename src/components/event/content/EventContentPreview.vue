@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div>
     <div class="q-mb-xl">
       <div class="q-mb-sm flex justify-between items-center no-wrap">
         <div>
@@ -94,11 +94,6 @@ const imageSrc = computed(() => {
   width: 100%;
   /* max-width: 800px; */
   max-height: 600px;
-}
-
-.content {
-  width: 100%;
-  max-width: 1000px;
 }
 
 .links {
