@@ -38,7 +38,7 @@ export default defineComponent({
     },
     label: {
       type: String,
-      required: true,
+      default: '',
     },
     required: {
       type: Boolean,
@@ -68,30 +68,39 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-input 
-    dense
-    outlined
-    v-model="inputValue"
-    mask="##/##/####"
-    :rules="[
-      (val: string) =>
-        !required ||
-        isFilled(val) ||
-        $t('form.messageFieldRequired', {
-          fieldName: $t('form.labelDate'),
-        }),
-      (val: string ) => isDate(val) || $t('form.messageDateInvalid')
-    ]">
-    <template v-slot:append>
-      <q-icon name="event" class="cursor-pointer">
-        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-          <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
-            <div class="row items-center justify-end">
-              <q-btn v-close-popup label="Close" color="primary" flat />
-            </div>
-          </q-date>
-        </q-popup-proxy>
-      </q-icon>
+  <div>
+    <template v-if="label">
+      <label for="date" class="text-grey-10 text-caption text-bold">
+        {{ label }}
+      </label>
     </template>
-  </q-input>
+    <q-input 
+      dense
+      outlined
+      v-model="inputValue"
+      name="date"
+      class="q-mt-sm"
+      mask="##/##/####"
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          $t('form.messageFieldRequired', {
+            fieldName: $t('form.labelDate'),
+          }),
+        (val: string ) => isDate(val) || $t('form.messageDateInvalid')
+      ]">
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+  </div>
 </template>
