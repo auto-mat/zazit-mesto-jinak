@@ -7,12 +7,20 @@ export type EventInformationType = {
   name: string,
   date: string,
   address: string,
-  municipalDistrinct: string,
+  municipalDistrict: string,
   coordinates: CoordinatesType,
   spaceType: string,
   spaceArea: string,
   eventType: string,
   eventTypeDescription: string
+}
+
+export type EventInformationFormType = {
+  name: string,
+  date: string,
+  address: string,
+  municipalDistrict: string,
+  coordinates: CoordinatesType,
 }
 
 export type LinkType = {

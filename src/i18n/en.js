@@ -112,7 +112,12 @@ export default {
       labelSpaceType: 'Space type',
       labelSpaceArea: 'Space area',
       titleEventLevel: 'Your event has been classified as',
-      buttonEventLevel: 'Disagree with the classification? Write to us.'
+      buttonEventLevel: 'Disagree with the classification? Write to us.',
+      titleEditInformation: 'Edit event information',
+      titleOtherInformation: 'Other information',
+      subtitleOtherInformation: 'This information can be change only by administators',
+      buttonAskForChange: 'Ask for change'
+
     },
     content: {
       labelImage: 'Image',
@@ -125,6 +130,7 @@ export default {
       labelLinkTitle: 'Link title',
       labelLinkUrl: 'URL',
       buttonAddLink: 'Add new link',
+      buttonSave: 'Save',
       altImage: 'Main image for event website'
     },
     program: {

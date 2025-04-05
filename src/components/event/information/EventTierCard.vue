@@ -4,7 +4,7 @@
       <span class="text-h5">{{ $t('event.information.titleEventLevel') }}</span>
       <h2 class="text-h4 text-bold">{{ eventType }}</h2>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class="text-center">
       {{ eventTypeDescription }}
     </q-card-section>
     <q-card-actions>

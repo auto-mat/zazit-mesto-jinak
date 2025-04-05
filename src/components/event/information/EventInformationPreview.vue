@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pt-md">
     <div class="q-mb-xl">
       <event-information-row 
         :label="$t('event.information.labelName')" 
@@ -15,7 +15,7 @@
       />
       <event-information-row 
         :label="$t('event.information.labelMunicipalDistrict')" 
-        :data="eventInformation.municipalDistrinct" 
+        :data="eventInformation.municipalDistrict" 
       />
       <event-information-row 
         :label="$t('event.information.labelLocation')"

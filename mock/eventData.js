@@ -159,7 +159,7 @@ export const eventGuides = [
 export const eventInformationData = {
   slug: 'husitska',
   name: 'Husitská',
-  date: '22.08.2025',
+  date: '22/08/2025',
   address: 'Husitská 70/24, 130 00 Praha 3-Žižkov',
   latitude: 50.087274,
   longitude: 14.443054,

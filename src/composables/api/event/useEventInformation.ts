@@ -35,7 +35,7 @@ export function useEventInformation(slug: Ref<string>) {
         name: response.name,
         date: response.date,
         address: response.address,
-        municipalDistrinct: response.municipalDistrict,
+        municipalDistrict: response.municipalDistrict,
         coordinates: {
           latitude: response.latitude,
           longitude: response.longitude,
