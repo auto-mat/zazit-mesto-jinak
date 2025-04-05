@@ -25,7 +25,7 @@ const props = defineProps({
    }
 });
 
-const emits = defineEmits(['getCoords']);
+const emits = defineEmits(['setCoords']);
 
 let map: leaflet.Map;
 let eventMarker: leaflet.Marker;
@@ -52,7 +52,7 @@ onMounted(() => {
       
          const { lat, lng } = e.latlng;
          eventMarker = leaflet.marker([lat, lng]).addTo(map);
-         emits('getCoords', lat, lng);
+         emits('setCoords', lat, lng);
       })
    }
 })
