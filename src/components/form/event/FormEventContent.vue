@@ -161,7 +161,7 @@ export default defineComponent({
             unelevated
             type="submit"
             color="primary"
-            :label="$t('event.program.buttonSave')"
+            :label="$t('event.content.buttonSave')"
           />
         </div>
     </q-form>
