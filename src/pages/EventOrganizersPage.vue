@@ -11,8 +11,15 @@
         </div>
       </div>
 
-      <!-- <event-information-editor v-if="edit" :event-information /> -->
-      <event-organizers-preview :event-organizers :company/>
+      <event-organizers-editor v-if="editOrganizers" :organizers="eventOrganizers" />
+      <event-organizer-company-editor v-if="company && editCompany" :company />
+      <event-organizers-preview 
+        v-if="!editOrganizers && !editCompany"
+        :event-organizers 
+        :company 
+        @edit-organizers="editOrganizers = true"
+        @edit-company="editCompany = true"
+      />
     </div>
     
   </q-page>
@@ -23,12 +30,13 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import EventOrganizersPreview from 'src/components/event/organizers/EventOrganizersPreview.vue';
-
+import EventOrganizerCompanyEditor from 'src/components/event/organizers/EventOrganizerCompanyEditor.vue';
+import EventOrganizersEditor from 'src/components/event/organizers/EventOrganizersEditor.vue';
 
 import { useEventOrganizers } from 'src/composables/api/event/useEventOrganizers';
 
-
-// const editOrganizers = ref(false);
+const editCompany = ref(false)
+const editOrganizers = ref(false);
 
 const route = useRoute();
 const slug = ref(route.params.slug[0]);

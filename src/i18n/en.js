@@ -172,6 +172,11 @@ export default {
       labelBusinessType: 'Business type',
       labelIco: 'ICO',
       labelDic: 'DIC',
+      titleEditCompany: 'Edit company information',
+      buttonAddOrganizer: 'Add organizer',
+      buttonDeleteOrganizer: 'Delete organizer',
+      buttonCancel: 'Cancel',
+      buttonSave: 'Save'
     }
   }
 }
