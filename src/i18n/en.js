@@ -103,6 +103,7 @@ export default {
     titleInformation: 'Information',
     titleWebContent: 'Content for website ZMJ',
     titleProgram: 'Program',
+    titleOrganizers: 'Organizers',
     information: {
       labelName: 'Name',
       labelDate: 'Date of event',
@@ -157,6 +158,20 @@ export default {
         sale: 'Sale',
         other: 'Other'
       }
+    },
+    organizers: {
+      titleMainOrganizer: 'Main organizer',
+      titleCompany: 'Company',
+      titleOtherOrganizers: 'Other organizers',
+      labelName: 'Name',
+      labelSurname: 'Surname',
+      labelEmail: 'Email',
+      labelPhone: 'Phone',
+      labelRole: 'Role',
+      labelCompanyTitle: 'Title',
+      labelBusinessType: 'Business type',
+      labelIco: 'ICO',
+      labelDic: 'DIC',
     }
   }
 }

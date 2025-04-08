@@ -34,7 +34,11 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'program',
         component: () => import('pages/EventProgramPage.vue')
-      }
+      },
+      {
+        path: 'organizers',
+        component: () => import('pages/EventOrganizersPage.vue')
+      },
     ],
   },
   {

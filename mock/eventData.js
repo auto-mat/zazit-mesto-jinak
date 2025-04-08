@@ -245,3 +245,40 @@ export const eventProgramData = {
   ]  
 }
 
+// const roles = ['main', 'program' ]
+// const businessTypes = ['po','fo','no']
+
+export const eventOrganizersData = {
+  slug: 'husitska',
+  name: 'Husitská',
+  organizers: [
+    {
+      name: 'Jan',
+      surname: 'Novak',
+      email: 'jan.novak@email.com',
+      phone: '+420741456231',
+      role: 'main'
+    },
+    {
+      name: 'Helena',
+      surname: 'Nova',
+      email: 'hel.nova@email.com',
+      phone: '+420741456231',
+      role: 'program'
+    },
+    {
+      name: 'Karel',
+      surname: 'Novy',
+      email: 'karl.novy@email.com',
+      phone: '+420741456231',
+      role: 'finance'
+    }
+  ],
+  company: {
+    title: 'Firma, s.r.o.',
+    businessType: 'po',
+    ico: '123456789',
+    dic: 'CZ123456789'
+  }
+}
+

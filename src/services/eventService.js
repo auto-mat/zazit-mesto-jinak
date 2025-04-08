@@ -9,7 +9,7 @@
 //   }
 // });
 
-import { eventContentData, eventInformationData, eventProgramData } from 'app/mock/eventData';
+import { eventContentData, eventInformationData, eventOrganizersData, eventProgramData } from 'app/mock/eventData';
 
 export default {
   // TODO
@@ -28,5 +28,9 @@ export default {
   getEventProgram(slug) {
     console.log(slug);
     return eventProgramData;
+  },
+  getEventOrganizers(slug) {
+    console.log(slug);
+    return eventOrganizersData;
   }
 };

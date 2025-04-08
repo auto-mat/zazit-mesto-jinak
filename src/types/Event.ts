@@ -43,3 +43,20 @@ export type EventProgramItemType = {
 }
 
 export type EventProgramType = EventProgramItemType[]
+
+export type EventOrganizerType = {
+  name: string,
+  surname: string,
+  email: string,
+  phone: string,
+  role: string
+}
+
+export type EventOrganizerCompanyType = {
+  title: string,
+  businessType: string,
+  ico: string,
+  dic: string
+}
+
+export type EventOrganizersType = EventOrganizerType[]
