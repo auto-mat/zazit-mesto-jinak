@@ -32,14 +32,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    bgColor: {
-      type: String as () => 'white' | 'transparent',
-      default: 'transparent',
-    },
-    testing: {
+    required: {
       type: Boolean,
       default: false,
-    },
+    }
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -68,25 +64,29 @@ export default defineComponent({
     <!-- Label -->
     <label for="form-email" class="text-caption text-bold">
       {{ $t('form.labelEmail') }}
+      <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${$t('form.labelOptional')})` }}
+      </span>
     </label>
     <!-- Input -->
     <q-input
       dense
       outlined
       v-model="email"
-      :lazy-rules="!testing"
       :rules="[
         (val: string) =>
+          !required ||
           isFilled(val) ||
           $t('form.messageFieldRequired', {
             fieldName: $t('form.labelEmail'),
           }),
         (val: string) => isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
-      :bg-color="bgColor"
+      v-bind="$attrs"
       class="q-mt-sm"
       id="form-email"
       name="email"
+      type="email"
       data-cy="form-email-input"
     />
   </div>

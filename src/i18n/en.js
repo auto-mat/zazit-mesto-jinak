@@ -41,6 +41,7 @@ export default {
     labelTimeFrom: 'From',
     labelTimeTo: 'To',
     labelClose: 'Close',
+    labelOptional: 'optional',
     hintPassword: 'It must contain at least 6 characters and at least 1 letter',
     messageEmailInvalid: 'Please fill in a valid email',
     messageFieldRequired: '{fieldName} is required',
@@ -76,9 +77,45 @@ export default {
       labelEventFromPast: 'Choose your event from the past',
       labelEventName: 'Event name',
       labelPickDate: 'Date of the event',
-      mainDate: 'Main date ZMJ',
-      otherDate: 'Other date',
-    }
+      labelSpaceType: 'Space type',
+      labelSpaceArea: 'Space area',
+      labelSpaceRent: 'Space rent',
+      labelActivities: 'Activities',
+      textInfoDate: 'Hlavní termín slavnosti je {date}, můžete však vybrat jiný termín, kdy uspořádáte vaši slavnost.',
+      textInfoSpaceType: 'Vyberte jen jednu variantu s převažujícím typem záboru. Zábor je nutný i v případě akce pořádané v zeleni (např. v parku). Variantu Zábor není možný vyberte jen v případě, že nebudete mít zábor.',
+      textInfoSpaceArea: 'Vyplňte odhadovanou plochu záboru, kterou pro vás budeme vyjednávat.',
+      textInfoSpaceRent: 'Budete pronajímat prostor záboru dalším subjektům (např. stánkařům) nebo budete mít procenta z tržby.',
+      buttonSubmit: 'Continue',
+      buttonBack: 'Back to personal details'
+    },
+    organizers: {
+      title: 'More about organizers',
+      choicePerson: 'I organize alone or with few friends',
+      choiceCompany: 'I organize under company\'s name',
+      titleCompany: 'Company',
+      titleOrganizers: 'Tell us about other organizers',
+      subtitleOrganizers: 'Fill only main ones',
+      titleOrganizer: 'Organizer {number}',
+      buttonAddOrganizer: 'Add organizer',
+      buttonSubmit: 'Continue',
+      buttonBack: 'Back to event information'
+    },
+    moreInformation: {
+      title: 'More information',
+      labelOrganizeReasons: 'Why are you going to organize the event?',
+      labelCollaborationSubject: 'Who are you planning to approach for possible collaboration?',
+      labelFundingTypes: 'How do you plan to finance the event?',
+      labelFundingCost: 'How much do you estimate the cost of organizing the event to be?',
+      labelOwnChanges: 'What positive changes will your action bring to the city\'s public space?',
+      labelOtherActivities: 'Are you planning other neighborhood or community activities?',
+      buttonSubmit: 'Finish registration',
+      buttonBack: 'Back to organizers',
+      fundingCost: {
+        low: '0-20 000 Kc',
+        mid: '20-50 000 Kc',
+        high: '50 000 Kc and more'
+      },
+    },
   },
   profile: {
     title: 'Profile',
@@ -177,6 +214,24 @@ export default {
       buttonDeleteOrganizer: 'Delete organizer',
       buttonCancel: 'Cancel',
       buttonSave: 'Save'
+    },
+    spaceType: {
+      none: 'None',
+      park: 'Park',
+      sidewalk: 'Sidewalk / Parking',
+      roadway: 'Roadway',
+      countryard: 'Countryard'
+    },
+    spaceArea: {
+      xs: 'less than 500 m2', 
+      sm: '500-2000 m2', 
+      md: '2000-3000 m2', 
+      lg: '3000-5000 m2', 
+      xl: 'more than 5000 m2'
+    },
+    spaceRent: {
+      yes: 'Yes',
+      no: 'No',
     }
   }
 }

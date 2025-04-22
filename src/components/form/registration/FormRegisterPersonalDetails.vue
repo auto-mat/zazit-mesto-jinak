@@ -18,7 +18,6 @@ import { useI18n } from 'vue-i18n';
 
 // components
 import FormFieldText from '../global/FormFieldText.vue';
-import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldCheckbox from '../global/FormFieldCheckbox.vue';
 
@@ -26,17 +25,20 @@ import FormFieldCheckbox from '../global/FormFieldCheckbox.vue';
 import { FormOption } from 'src/types/Form';
 
 export default defineComponent({
-  name: 'FormRegisterCoordinator',
+  name: 'FormRegisterPersonalDetails',
   components: {
     FormFieldCheckbox,
-    FormFieldEmail,
     FormFieldText,
     FormFieldPhone,
   },
+  props: {
+    email: {
+      type: String,
+      required: true
+    }
+  },
   setup() {
-    const { t } = useI18n()
-
-    const email = 'john.novak@email.com' // from store
+    const { t } = useI18n();
 
     const formRegisterPersonalDetails = reactive({
       firstName: '',
@@ -73,7 +75,6 @@ export default defineComponent({
     };
 
     return {
-      email,
       formRegisterPersonalDetails,
       optionsGender,
       onReset,
@@ -100,12 +101,15 @@ export default defineComponent({
         {{ $t('register.personalDetails.title') }}
       </h2>
       <div class="q-mt-lg">
-        <div class="row q-col-gutter-md q-mb-sm">
-          <form-field-email 
-            v-model="email"
-            disabled
-            class="col-12 col-sm-6"
-          />
+        <div class="row q-col-gutter-md q-mb-lg">
+          <div class="column">
+            <label class="text-caption text-bold q-mb-xs">
+              {{ $t('form.labelEmail') }}
+            </label>
+            <span>
+              {{ email }}
+            </span>
+          </div>
         </div>
         <div class="row q-col-gutter-md q-mb-sm">
           <!-- Input: first name -->
@@ -114,6 +118,7 @@ export default defineComponent({
             name="form-first-name"
             label="form.labelFirstName"
             autocomplete="given-name"
+            required
             class="col-12 col-sm-6"
             data-cy="form-register-personal-details-first-name"
           />
@@ -123,6 +128,7 @@ export default defineComponent({
             name="form-last-name"
             label="form.labelLastName"
             autocomplete="family-name"
+            required
             class="col-12 col-sm-6"
             data-cy="form-register-personal-details-last-name"
           />
@@ -131,6 +137,7 @@ export default defineComponent({
           <!-- Input: phone-->
           <form-field-phone
             v-model="formRegisterPersonalDetails.phone"
+            required
             data-cy="form-register-personal-details-phone"
           />
 
@@ -159,6 +166,9 @@ export default defineComponent({
         <div class="col-12">
           <label class="text-grey-10 text-caption text-bold">
             {{ $t('register.personalDetails.newsTitle') }}
+            <span class="text-grey-6 text-caption">
+              {{ ` (${$t('form.labelOptional')})` }}
+            </span>
           </label>
           <form-field-checkbox 
             v-model="formRegisterPersonalDetails.onlyOrganizerNews"
@@ -213,7 +223,6 @@ export default defineComponent({
             type="submit"
             color="primary"
             :label="$t('register.personalDetails.buttonSubmit')"
-            data-cy="form-register-coordinator-submit"
           />
         </div>
     </q-form>

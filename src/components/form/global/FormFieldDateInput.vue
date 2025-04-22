@@ -71,7 +71,10 @@ export default defineComponent({
   <div>
     <template v-if="label">
       <label for="date" class="text-grey-10 text-caption text-bold">
-        {{ label }}
+        {{ $t(label) }}
+        <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${$t('form.labelOptional')})` }}
+      </span>
       </label>
     </template>
     <q-input 

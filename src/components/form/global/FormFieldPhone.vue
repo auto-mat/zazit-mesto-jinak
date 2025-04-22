@@ -10,7 +10,7 @@
  * - `value` (string, required): The object representing user input.
  *   It should be of type `string`.
  * - `hint` (string, default: ''): The hint text.
- * - `required` (boolean, default: true): Whether the input is required.
+ * - `required` (boolean, default: false): Whether the input is required.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -44,7 +44,7 @@ export default defineComponent({
     },
     required: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   emits: ['update:modelValue'],
@@ -74,6 +74,9 @@ export default defineComponent({
     <!-- Label -->
     <label for="form-phone" class="text-caption text-bold">
       {{ $t(label) }}
+      <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${$t('form.labelOptional')})` }}
+      </span>
     </label>
     <!-- Input -->
     <q-input

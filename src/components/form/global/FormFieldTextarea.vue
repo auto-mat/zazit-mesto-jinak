@@ -1,26 +1,22 @@
 <script lang="ts">
 /**
- * FormFieldText Component
+ * FormFieldTextarea Component
  *
- * The `FormFieldText` displays text input.
+ * The `FormFieldTextarea` displays textarea input.
  *
- * @description * Use this component to render text input in forms.
+ * @description * Use this component to render textarea input in forms.
  *
  * @props
  * - `modelValue` (string, required): The object representing user input.
- * - `bgColor` (string, default: 'transparent'): The background color of the
  * - `name` (string, required): The name used for id and test selectors.
  * - `label` (string, required): The translation key for the label.
  * - `required` (boolean, default: false): Whether the input is required.
- * - `autocomplete` (string): The autocomplete attribute.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-text v-model="value" label="" name="" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
+ * <form-field-textarea v-model="value" label="" name="" />
  */
 
 // libraries
@@ -30,15 +26,11 @@ import { defineComponent, computed } from 'vue';
 import { useValidation } from 'src/composables/useValidation';
 
 export default defineComponent({
-  name: 'FormFieldText',
+  name: 'FormFieldTextarea',
   props: {
     modelValue: {
       type: String,
       required: true,
-    },
-    bgColor: {
-      type: String as () => 'white' | 'transparent',
-      default: 'transparent',
     },
     name: {
       type: String,
@@ -51,9 +43,6 @@ export default defineComponent({
     required: {
       type: Boolean,
       default: false,
-    },
-    autocomplete: {
-      type: String,
     },
   },
   emits: ['update:modelValue'],
@@ -78,7 +67,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :data-cy="`form-${name}`">
+  <div>
     <!-- Label -->
     <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
       {{ $t(label) }}
@@ -91,19 +80,17 @@ export default defineComponent({
       dense
       outlined
       v-model="inputValue"
+      type="textarea"
       lazy-rules
       :rules="[
         (val: string) =>
           !required || 
           isFilled(val) ||
-          $t('form.messageFieldRequired', { fieldName: $t(label)} ),
+          $t('form.messageFieldRequired', $t(label)),
       ]"
-      :bg-color="bgColor"
       class="q-mt-sm"
       :id="`form-${name}`"
       :name="name"
-      :autocomplete="autocomplete"
-      :data-cy="`form-${name}-input`"
     />
   </div>
 </template>
