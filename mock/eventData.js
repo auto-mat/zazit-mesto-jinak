@@ -71,6 +71,19 @@
 //   category: string
 // }
 
+export const events = [
+  {
+    id: 1, 
+    slug: 'husitska',
+    name: 'Husitská',
+  },
+  {
+    id: 2,
+    slug: 'arbesovo-namesti',
+    name: 'Arbesovo náměstí',
+  },
+]
+
 export const eventGuides = [
   {
     id: 1,
@@ -157,17 +170,16 @@ export const eventGuides = [
 // const eventTypes = ['small', 'medium', 'large', 'partner']
 
 export const eventInformationData = {
-  slug: 'husitska',
   name: 'Husitská',
   date: '22/08/2025',
   address: 'Husitská 70/24, 130 00 Praha 3-Žižkov',
   latitude: 50.087274,
   longitude: 14.443054,
-  municipalDistrict: 'Praha 3',
-  spaceType: 'roadway',
-  spaceArea: '500',
-  eventType: 'small',
-  eventTypeDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut fringilla neque. Nulla facilisi. Vestibulum nec eros erat. Vestibulum semper interdum nisi facilisis sodales.' 
+  municipal_district: 'Praha 3',
+  space_type: 'roadway',
+  space_area: '500',
+  event_type: 'small',
+  event_type_description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut fringilla neque. Nulla facilisi. Vestibulum nec eros erat. Vestibulum semper interdum nisi facilisis sodales.' 
 }
 
 

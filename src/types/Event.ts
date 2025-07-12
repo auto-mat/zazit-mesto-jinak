@@ -1,6 +1,43 @@
+/**
+ * @file Event.ts
+ * @description Types related to events in the application.
+ * @author Jana Schořová
+ * @version 1.0
+ */
+
+export type EventMetaType = {
+  slug: string,
+  name: string,
+}
+
+export type EventDetailsType = {
+  // guide: any,
+  information?: EventInformationType,
+  organizers?: {
+    company: EventOrganizerCompanyType,
+    people: EventOrganizersType
+  },
+  content?: EventContentType,
+  program?: EventProgramType,
+}
+
 type CoordinatesType = {
   latitude: number,
   longitude: number
+}
+
+export type EventType  = {
+  slug: string,
+  name: string,
+  // homepage: {},
+  // guide: {},
+  information: EventInformationType,
+  organizers: {
+    company: EventOrganizerCompanyType,
+    people: EventOrganizersType
+  },
+  content: EventContentType,
+  program: EventProgramType
 }
 
 export type EventInformationType = {

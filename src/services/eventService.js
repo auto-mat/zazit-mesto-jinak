@@ -9,10 +9,14 @@
 //   }
 // });
 
-import { eventContentData, eventInformationData, eventOrganizersData, eventProgramData } from 'app/mock/eventData';
+import { eventContentData, eventInformationData, eventOrganizersData, eventProgramData, events } from 'app/mock/eventData';
 
 export default {
   // TODO
+  getEventList(userId){
+    console.log(userId);
+    return events;
+  },
   getEventGuide(slug) {
     console.log(slug);
   },
