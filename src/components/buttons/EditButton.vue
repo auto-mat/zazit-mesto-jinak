@@ -6,6 +6,7 @@
       flat
       color="primary"
       icon="edit"
+      v-bind="$attrs"
       @click="$emit('edit')"
     />
     <q-btn
@@ -15,6 +16,7 @@
       outline
       color="primary"
       icon="edit"
+      v-bind="$attrs"
       :label="$t('button.edit')"
       @click="$emit('edit')"
     />

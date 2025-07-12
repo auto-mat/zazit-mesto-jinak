@@ -6,6 +6,7 @@
       flat
       color="primary"
       icon="arrow_back_ios"
+      v-bind="$attrs"
       @click="$emit('back')"
     />
     <q-btn
@@ -15,6 +16,7 @@
       outline
       color="primary"
       icon="chevron_left"
+      v-bind="$attrs"
       :label="$t('button.back')"
       @click="$emit('back')"
     />

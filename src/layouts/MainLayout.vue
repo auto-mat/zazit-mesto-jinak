@@ -15,9 +15,12 @@
           {{ $t('menu.myEventsHeader') }}
         </q-item-label>
 
-        <!-- TODO fetch menu -->
-        <LocationLinks event-name="Husitská" event-slug="husitska"/>
-        <LocationLinks event-name="Arbesovo náměstí" event-slug="arbesovo-namesti" />
+        <LocationLinks 
+          v-for="event in eventStore.eventList" 
+          :key="event.slug"
+          :event-name="event.name"
+          :event-slug="event.slug"
+        />
 
         <q-separator inset spaced/>
 
@@ -68,20 +71,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
 import LocationLinks from 'src/components/menu/LocationLinks.vue';
+import { useEventStore } from 'src/stores/eventStore';
 
 defineOptions({
   name: 'MainLayout'
 });
 
-
 const leftDrawerOpen = ref(true);
+const eventStore = useEventStore();
 
 // function toggleLeftDrawer () {
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }
+
+onMounted(() => {
+  if (eventStore.eventList.length === 0) {
+    eventStore.loadEventList();
+  }
+});
 </script>
 
 <style>
