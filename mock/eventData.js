@@ -71,6 +71,20 @@
 //   category: string
 // }
 
+export const userMeta = {
+  id: '123',
+  email: 'john.novak@email.com',
+}
+
+export const userDetails = {
+  name: 'John',
+  surname: 'Novak',
+  email: 'john.novak@gmail.com',
+  phone: '+420123456789',
+  gender: 'male',
+  language_preference: 'en',
+}
+
 export const events = [
   {
     id: 1, 
