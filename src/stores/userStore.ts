@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useApiUser } from 'src/composables/api/useApiUser';
 import { UserDetailsType, UserMetaType } from 'src/types/User';
 
-export const useEventStore = defineStore('user', {
+export const useUserStore = defineStore('user', {
   state: () => ({
     userMeta: {} as UserMetaType,
     userDetails: {} as UserDetailsType,
@@ -23,10 +23,11 @@ export const useEventStore = defineStore('user', {
       }
       this.loading = false;
     },
-    async loadUserDetails(userId: string) {
+    async loadUserDetails() {
       const { getUserDetails } = useApiUser();
       this.loading = true;
-      const userDetails = await getUserDetails(userId);
+      // TODO if user is not logged in
+      const userDetails = await getUserDetails(this.getUserMeta.id);
       if (userDetails) {
         this.userDetails = userDetails;
       }

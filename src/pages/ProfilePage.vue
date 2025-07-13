@@ -5,10 +5,10 @@
 
     <div class="q-mt-md" style="width: 800px; max-width: 100%;">
       <profile-row @edit="openDialog('name')">
-       <span class="name">{{ data.name }}</span>
+       <span class="name">{{ user.name }}</span>
       </profile-row>
       <profile-row :label="$t('profile.emailLabel')" >
-        {{ data.email }}
+        {{ user.email }}
         <template v-slot:button>
           <q-btn
             rounded
@@ -22,10 +22,10 @@
         </template>
       </profile-row>
       <profile-row :label="$t('profile.phoneLabel')" @edit="openDialog('phone')">
-        {{ data.phone }}
+        {{ user.phone }}
       </profile-row>
       <profile-row :label="$t('profile.genderLabel')" @edit="openDialog('gender')">
-        {{ $t(`gender.${data.gender}`) }}
+        {{ $t(`gender.${user.gender}`) }}
       </profile-row>
       <profile-row :label="$t('profile.languagePrefer')" no-button>
         <language-switcher />
@@ -36,20 +36,20 @@
       <div class="bg-white q-px-md q-py-lg" style="width: 600px; max-width: 90vw;">
         <dialog-content-name
           v-if="currentComponent === 'name'"
-          :first-name="data.firstName" 
-          :last-name="data.lastName"
+          :first-name="user.name" 
+          :last-name="user.surname"
           @cancel="editDialogOpen = false" 
           @update="updateName"
         />
         <dialog-content-phone
           v-if="currentComponent === 'phone'"
-          :phone="data.phone"
+          :phone="user.phone"
           @cancel="editDialogOpen = false"
           @update="updatePhone"
         />
         <dialog-content-gender
           v-if="currentComponent === 'gender'"
-          :gender="data.gender"
+          :gender="user.gender"
           @cancel="editDialogOpen = false"
           @update="updateGender"
         />
@@ -64,26 +64,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import ProfileRow from 'src/components/profile/ProfileRow.vue';
 import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 import DialogContentName from 'src/components/profile/DialogContentName.vue';
 import DialogContentPhone from 'src/components/profile/DialogContentPhone.vue';
 import DialogContentGender from 'src/components/profile/DialogContentGender.vue';
 import DialogContentEmail from 'src/components/profile/DialogContentEmail.vue';
+import { useUserStore } from 'src/stores/userStore';
 
 defineOptions({
   name: 'ProfilePage'
 });
 
-const data = {
-  name: 'John Novak',
-  firstName: 'John',
-  lastName: 'Novak',
-  email: 'john.novak@email.com',
-  phone: '+420 605 456 123',
-  gender: 'male'
-}
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.loadUserDetails();
+})
+
+// const isLoading = computed(() => userStore.isLoading);
+const user = computed(() => userStore.getUserDetails);
 
 const currentComponent = ref('')
 const editDialogOpen = ref(false)
