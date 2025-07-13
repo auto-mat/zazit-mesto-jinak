@@ -1,0 +1,53 @@
+<template>
+  <q-page class="column q-pa-xl">
+    <div v-if="isLoading" class="loading">Loading...</div>
+
+    <!-- <div v-if="error" class="error">{{ error }}</div> -->
+
+    <div v-if="eventContent && eventProgram" class="content">
+       <div class="row justify-between items-end q-mb-md">
+        <div>
+          <span>{{ eventName }}</span>
+          <h1>{{ $t('event.titleInformation') }}</h1>
+        </div>
+
+        <back-button :to="{ name: 'eventContent', params: { slug: slug }}" />
+      </div>
+
+      <!-- <embed 
+        src="https://zazitmestojinak.cz/locations_/praha/praha-3/husitska" 
+        style="width:500px; height: 300px;"
+      > -->
+
+
+      <event-content-editor :event-content />
+
+    </div>
+  </q-page>
+</template>
+
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import BackButton from 'src/components/buttons/BackButton.vue'
+import EventContentEditor from 'src/components/event/content/EventContentEditor.vue'
+import { useEventProgram } from 'src/composables/api/event/useEventProgram'
+import { useEventStore } from 'src/stores/eventStore'
+
+
+const route = useRoute()
+const slug = ref(route.params.slug as string)
+
+const eventStore = useEventStore()
+
+onMounted(() => {
+  eventStore.loadEventContent(slug.value);
+});
+
+const isLoading = computed(() => eventStore.isLoading);
+const eventName = computed(() => eventStore.getEventName(slug.value));
+const eventContent = computed(() => eventStore.getEventContent(slug.value));
+
+const { eventProgram } = useEventProgram(slug)
+
+</script>

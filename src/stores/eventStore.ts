@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { EventDetailsType, EventMetaType } from 'src/types/Event';
 
 import { useApiEvents } from 'src/composables/api/event/useApiEvents';
+import { useApiEventContent } from 'src/composables/api/event/useApiEventContent';
 
 
 export const useEventStore = defineStore('events', {
@@ -39,6 +40,22 @@ export const useEventStore = defineStore('events', {
 
       if (eventInformation) {
         this.eventDetails[slug].information = eventInformation
+      }
+
+      this.loading = false;
+    },
+
+    async loadEventContent(slug: string) {
+      const { fetchEventContent } = useApiEventContent();
+      this.loading = true;
+      const eventContent = await fetchEventContent(slug);
+
+      if (!this.eventDetails[slug]) {
+        this.eventDetails[slug] = {}
+      }
+
+      if (eventContent) {
+        this.eventDetails[slug].content = eventContent
       }
 
       this.loading = false;

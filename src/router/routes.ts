@@ -35,7 +35,13 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'web-content',
-        component: () => import('pages/EventContentPage.vue') 
+        name: 'eventContent',
+        component: () => import('pages/event/content/EventContentPage.vue') 
+      },
+      {
+        path: 'web-content/edit',
+        name: 'eventContentEdit',
+        component: () => import('pages/event/content/EventContentEditPage.vue') 
       },
       {
         path: 'program',

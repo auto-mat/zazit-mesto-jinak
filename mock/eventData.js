@@ -198,11 +198,8 @@ export const eventInformationData = {
 
 
 export const eventContentData = {
-  slug: 'husitska',
-  name: 'Husitská',
-  image: null
-  ,
-  mainContent: '<div>This is <b>main</b> content!</div>',
+  image: null,
+  main_content: '<div>This is <b>main</b> content!</div>',
   links: [
     {
       url: 'https://www.instagram.com/',

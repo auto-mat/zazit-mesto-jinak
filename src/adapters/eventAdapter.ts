@@ -1,4 +1,4 @@
-import { EventInformationType, EventMetaType } from 'src/types/Event'
+import { EventContentType, EventInformationType, EventMetaType } from 'src/types/Event'
 
 type ApiEvent = {
   slug: string,
@@ -16,6 +16,15 @@ type ApiEventInformation = {
   space_area: string,
   event_type: string,
   event_type_description: string,
+}
+
+type ApiEventContent = {
+  image: File | null,
+  main_content: string,
+  links: {
+    title: string,
+    url: string
+  }[]
 }
 
 export const eventsAdapter = {
@@ -46,5 +55,13 @@ export const eventsAdapter = {
       eventType: eventData.event_type,
       eventTypeDescription: eventData.event_type_description,
     };
+  },
+
+  toEventContent(eventData: ApiEventContent): EventContentType {
+    return {
+      image: eventData.image,
+      mainContent: eventData.main_content,
+      links: eventData.links
+    }
   }
 }
