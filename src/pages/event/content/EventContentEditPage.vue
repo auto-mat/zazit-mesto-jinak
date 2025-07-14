@@ -31,7 +31,6 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import BackButton from 'src/components/buttons/BackButton.vue'
 import EventContentEditor from 'src/components/event/content/EventContentEditor.vue'
-import { useEventProgram } from 'src/composables/api/event/useEventProgram'
 import { useEventStore } from 'src/stores/eventStore'
 
 
@@ -42,12 +41,12 @@ const eventStore = useEventStore()
 
 onMounted(() => {
   eventStore.loadEventContent(slug.value);
+  eventStore.loadEventProgram(slug.value);
 });
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 const eventContent = computed(() => eventStore.getEventContent(slug.value));
-
-const { eventProgram } = useEventProgram(slug)
+const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
 
 </script>

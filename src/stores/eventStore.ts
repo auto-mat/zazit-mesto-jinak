@@ -3,6 +3,7 @@ import { EventDetailsType, EventMetaType } from 'src/types/Event';
 
 import { useApiEvents } from 'src/composables/api/event/useApiEvents';
 import { useApiEventContent } from 'src/composables/api/event/useApiEventContent';
+import { useApiEventProgram } from 'src/composables/api/event/useApiEventProgram';
 
 
 export const useEventStore = defineStore('events', {
@@ -56,6 +57,21 @@ export const useEventStore = defineStore('events', {
 
       if (eventContent) {
         this.eventDetails[slug].content = eventContent
+      }
+
+      this.loading = false;
+    },
+    async loadEventProgram(slug: string) {
+      const { fetchEventProgram } = useApiEventProgram();
+      this.loading = true;
+      const eventProgram = await fetchEventProgram(slug);
+
+      if (!this.eventDetails[slug]) {
+        this.eventDetails[slug] = {}
+      }
+
+      if (eventProgram) {
+        this.eventDetails[slug].program = eventProgram
       }
 
       this.loading = false;

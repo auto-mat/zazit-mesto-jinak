@@ -212,61 +212,57 @@ export const eventContentData = {
   ],
 }
 
-export const eventProgramData = {
-  slug: 'husitska',
-  name: 'Husitská',
-  program: [
-    {
-      title: 'Divadlo',
-      description: 'Představení dobrovolnického spolku',
-      timeFrom: '09:00',
-      timeTo: '10:30',
-      categories: ['theater', 'forchildren']
-    },
-    {
-      title: 'Zpívánky',
-      description: 'Zpěv s dětmi',
-      timeFrom: '11:00',
-      timeTo: '11:30',
-      categories: ['forchildren', 'music']
-    },
-    {
-      title: 'Stánky s občerstvením',
-      description: 'Občerstvení od lokálních podniků',
-      timeFrom: '10:00',
-      timeTo: '22:00',
-      categories: ['food']
-    },
-    {
-      title: 'Rukodělky',
-      description: 'Pojďme si společně vytvořit draka',
-      timeFrom: '14:00',
-      timeTo: '16:00',
-      categories: ['workshop', 'forchildren']
-    },
-    {
-      title: 'Koncert skupiny Band',
-      description: 'Band, punková skupina z jihu',
-      timeFrom: '21:00',
-      timeTo: '22:00',
-      categories: ['music']
-    },
-    {
-      title: 'Just Dance!',
-      description: 'Pojďme si zatancovat na ty největší pecky minulého desetiletí',
-      timeFrom: '19:00',
-      timeTo: '20:00',
-      categories: ['dance', 'music']
-    },
-    {
-      title: 'Taneční vystoupení',
-      description: 'Uvidíte mnoho mladých talentovaných lidí tancovat klasické tance',
-      timeFrom: '17:00',
-      timeTo: '18:00',
-      categories: ['dance']
-    },
-  ]  
-}
+export const eventProgramData = [
+  {
+    title: 'Divadlo',
+    description: 'Představení dobrovolnického spolku',
+    time_from: '09:00',
+    time_to: '10:30',
+    categories: ['theater', 'forchildren']
+  },
+  {
+    title: 'Zpívánky',
+    description: 'Zpěv s dětmi',
+    time_from: '11:00',
+    time_to: '11:30',
+    categories: ['forchildren', 'music']
+  },
+  {
+    title: 'Stánky s občerstvením',
+    description: 'Občerstvení od lokálních podniků',
+    time_from: '10:00',
+    time_to: '22:00',
+    categories: ['food']
+  },
+  {
+    title: 'Rukodělky',
+    description: 'Pojďme si společně vytvořit draka',
+    time_from: '14:00',
+    time_to: '16:00',
+    categories: ['workshop', 'forchildren']
+  },
+  {
+    title: 'Koncert skupiny Band',
+    description: 'Band, punková skupina z jihu',
+    time_from: '21:00',
+    time_to: '22:00',
+    categories: ['music']
+  },
+  {
+    title: 'Just Dance!',
+    description: 'Pojďme si zatancovat na ty největší pecky minulého desetiletí',
+    time_from: '19:00',
+    time_to: '20:00',
+    categories: ['dance', 'music']
+  },
+  {
+    title: 'Taneční vystoupení',
+    description: 'Uvidíte mnoho mladých talentovaných lidí tancovat klasické tance',
+    time_from: '17:00',
+    time_to: '18:00',
+    categories: ['dance']
+  },
+] 
 
 // const roles = ['main', 'program' ]
 // const businessTypes = ['po','fo','no']

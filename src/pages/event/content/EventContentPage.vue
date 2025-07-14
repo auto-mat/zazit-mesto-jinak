@@ -30,8 +30,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import EditButton from 'src/components/buttons/EditButton.vue'
-import EventContentPreview from 'components/event/content/EventContentPreview.vue'
-import { useEventProgram } from 'src/composables/api/event/useEventProgram'
+import EventContentPreview from 'components/event/content/EventContentPreview.vue';
 import { useEventStore } from 'src/stores/eventStore'
 
 const route = useRoute()
@@ -41,12 +40,12 @@ const eventStore = useEventStore()
 
 onMounted(() => {
   eventStore.loadEventContent(slug.value);
+  eventStore.loadEventProgram(slug.value);
 });
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 const eventContent = computed(() => eventStore.getEventContent(slug.value));
-
-const { eventProgram } = useEventProgram(slug)
+const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
 
 </script>

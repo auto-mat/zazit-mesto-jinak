@@ -1,4 +1,4 @@
-import { EventContentType, EventInformationType, EventMetaType } from 'src/types/Event'
+import { EventContentType, EventInformationType, EventMetaType, EventProgramType } from 'src/types/Event'
 
 type ApiEvent = {
   slug: string,
@@ -25,6 +25,14 @@ type ApiEventContent = {
     title: string,
     url: string
   }[]
+}
+
+type ApiEventProgramItem = {
+  title: string,
+  description: string,
+  time_from: string,
+  time_to: string,
+  categories: string[]
 }
 
 export const eventsAdapter = {
@@ -63,5 +71,20 @@ export const eventsAdapter = {
       mainContent: eventData.main_content,
       links: eventData.links
     }
+  },
+
+  toEventProgram(eventData: ApiEventProgramItem[]): EventProgramType {
+    const eventProgram: EventProgramType = [];
+    eventData.forEach((programItem) => {
+      eventProgram.push({
+        title: programItem.title,
+        description: programItem.description,
+        timeFrom: programItem.time_from,
+        timeTo: programItem.time_to,
+        categories: programItem.categories,
+      })
+    })
+
+    return eventProgram;
   }
 }
