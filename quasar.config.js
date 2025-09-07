@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
@@ -9,15 +8,12 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers');
-
-const { getAppConfig } = require('./src/utils/get_app_conf');
-const {
-  getDeployedAppVersion,
-} = require('./src/utils/get_deployed_app_version');
+import { defineConfig } from '#q-app/wrappers';
+import getAppConfig from './src/utils/get_app_conf';
+import getDeployedAppVersion from './src/utils/get_deployed_app_version';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-module.exports = configure(function (ctx) {
+export default defineConfig((ctx) => {
   return {
     eslint: {
       // fix: true,
@@ -115,7 +111,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      // https: true
+      https: true,
       open: true, // opens browser window automatically
     },
 

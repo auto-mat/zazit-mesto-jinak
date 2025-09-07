@@ -1,54 +1,28 @@
-<script lang="ts">
-/**
- * RegisterPage Component
- *
- * The `RegisterPage` renders the page with login form and password reset form.
- *
- * @description
- * This component is used to allow user to login into their account. Or
- * reset their password. It allows login via Google and Facebook accounts.
- * It contains links to App stores.
- *
- * @components
- * - `FormRegister`: Component to render registration form.
- * - `LoginRegisterHeader`: Component to render page header.
- *
- * @layout
- * - `LoginRegisterLayout`: Displayed in the `LoginRegisterLayout` template.
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
- */
+<template>
+  <q-page class="column items-center">
+      <form-register-personal-details class="form" email="john.novak@email.cz" />
 
-// libraries
-import { defineComponent } from 'vue';
+      <form-register-event class="form" date="22/08/2025"/>
 
-// components
-import FormRegister from 'components/register/FormRegister.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+      <form-register-organizers class="form" />
 
-export default defineComponent({
-  name: 'RegisterPage',
-  components: {
-    FormRegister,
-    LoginRegisterHeader,
-  },
-  setup() {
-    return {};
-  },
+      <form-register-more-information class="form" />
+  </q-page>
+</template>
+
+<script setup lang="ts">
+import FormRegisterPersonalDetails from 'src/components/form/registration/FormRegisterPersonalDetails.vue';
+import FormRegisterEvent from 'src/components/form/registration/FormRegisterEvent.vue';
+import FormRegisterOrganizers from 'src/components/form/registration/FormRegisterOrganizers.vue';
+import FormRegisterMoreInformation from 'src/components/form/registration/FormRegisterMoreInformation.vue';
+
+defineOptions({
+  name: 'RegistrationPage'
 });
 </script>
 
-<template>
-  <q-page padding>
-    <div class="q-px-lg">
-      <!-- Page header -->
-      <login-register-header data-cy="login-register-header" />
-
-      <div class="row q-mt-xl">
-        <div class="col-12 col-md-4">
-          <form-register useFormFieldValidationErrorCssClass />
-        </div>
-      </div>
-    </div>
-  </q-page>
-</template>
+<style scoped>
+.form {
+  width: 50%;
+}
+</style>

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const { parse } = require('toml');
-const { readFileSync } = require('fs-extra');
+import { parse } from 'toml';
+import fs from 'fs-extra';
 
 const getAppConfig = (process) => {
   let config = parse(
-    readFileSync('./ride_to_work_by_bike_config.toml').toString(),
+    fs.readFileSync('./ride_to_work_by_bike_config.toml').toString(),
   );
 
   /*
@@ -57,4 +57,4 @@ const getAppConfig = (process) => {
   return config;
 };
 
-module.exports.getAppConfig = getAppConfig;
+export default getAppConfig;

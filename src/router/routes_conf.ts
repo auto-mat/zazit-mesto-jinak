@@ -9,27 +9,6 @@ type RoutesConf = {
 };
 
 const routesConf: RoutesConf = {
-  challenge_inactive: {
-    path: '/challenge-inactive',
-    children: {
-      fullPath: '/challenge-inactive',
-      name: 'challenge-inactive',
-    },
-  },
-  community: {
-    path: '/community',
-    children: {
-      fullPath: '/community',
-      name: 'community',
-    },
-  },
-  become_coordinator: {
-    path: '/become-coordinator',
-    children: {
-      fullPath: '/become-coordinator',
-      name: 'become-coordinator',
-    },
-  },
   verify_email: {
     path: '/verify-email',
     children: {
@@ -65,102 +44,11 @@ const routesConf: RoutesConf = {
       name: 'reset-password',
     },
   },
-  prizes: {
-    path: '/prizes',
-    children: {
-      fullPath: '/prizes',
-      name: 'prizes',
-    },
-  },
   register: {
     path: '/register',
     children: {
       fullPath: '/register',
       name: 'register',
-    },
-  },
-  register_coordinator: {
-    path: '/register-coordinator',
-    children: {
-      fullPath: '/register-coordinator',
-      name: 'register-coordinator',
-    },
-  },
-  register_challenge: {
-    path: '/register-challenge',
-    children: {
-      fullPath: '/register-challenge',
-      name: 'register-challenge',
-    },
-  },
-  results: {
-    path: '/results',
-    children: {
-      fullPath: '/results',
-      name: 'results',
-    },
-  },
-  results_detail: {
-    path: 'detail',
-    children: {
-      fullPath: '/results/detail',
-      name: 'results-detail',
-    },
-  },
-  results_report: {
-    path: 'report',
-    children: {
-      fullPath: '/results/detail/report',
-      name: 'results-detail-report',
-    },
-  },
-  results_regularity: {
-    path: 'regularity',
-    children: {
-      fullPath: '/results/detail/regularity',
-      name: 'results-detail-regularity',
-    },
-  },
-  results_performance: {
-    path: 'performance',
-    children: {
-      fullPath: '/results/detail/performance',
-      name: 'results-detail-performance',
-    },
-  },
-  routes: {
-    path: '/routes',
-    children: {
-      fullPath: '/routes',
-      name: 'routes',
-    },
-  },
-  routes_calendar: {
-    path: 'calendar',
-    children: {
-      fullPath: '/routes/calendar',
-      name: 'routes-calendar',
-    },
-  },
-  routes_list: {
-    path: 'list',
-    children: {
-      fullPath: '/routes/list',
-      name: 'routes-list',
-    },
-  },
-  routes_map: {
-    path: 'map',
-    children: {
-      fullPath: '/routes/map',
-      name: 'routes-map',
-    },
-  },
-  routes_app: {
-    path: 'connect-third-party-apps',
-    children: {
-      fullPath: '/routes/connect-third-party-apps',
-      name: 'routes-app',
     },
   },
   profile: {
@@ -170,90 +58,83 @@ const routesConf: RoutesConf = {
       name: 'profile',
     },
   },
-  profile_details: {
-    path: 'details',
+  event: {
+    path: '/event/:slug',
     children: {
-      fullPath: '/profile/details',
-      name: 'profile-details',
+      fullPath: '/event/:slug',
+      name: 'event',
     },
   },
-  profile_forms: {
-    path: 'forms',
+  event_guide: {
+    path: '/event/:slug/guide',
     children: {
-      fullPath: '/profile/forms',
-      name: 'profile-forms',
+      fullPath: '/event/:slug/guide',
+      name: 'event-guide',
     },
   },
-  profile_newsletter: {
-    path: 'newsletter',
+  event_information: {
+    path: '/event/:slug/information',
     children: {
-      fullPath: '/profile/newsletter',
-      name: 'profile-newsletter',
+      fullPath: '/event/:slug/information',
+      name: 'event-information',
     },
   },
-  profile_notifications: {
-    path: 'notifications',
+  event_information_edit: {
+    path: '/event/:slug/information/edit',
     children: {
-      fullPath: '/profile/notifications',
-      name: 'profile-notifications',
+      fullPath: '/event/:slug/information/edit',
+      name: 'event-information-edit',
     },
   },
-  coordinator: {
-    path: '/coordinator',
+  event_web_content: {
+    path: '/event/:slug/web-content',
     children: {
-      fullPath: '/coordinator',
-      name: 'coordinator',
+      fullPath: '/event/:slug/web-content',
+      name: 'event-web-content',
     },
   },
-  coordinator_tasks: {
-    path: 'tasks',
+  event_web_content_edit: {
+    path: '/event/:slug/web-content/edit',
     children: {
-      fullPath: '/coordinator/tasks',
-      name: 'coordinator-tasks',
+      fullPath: '/event/:slug/web-content/edit',
+      name: 'event-web-content-edit',
     },
   },
-  coordinator_fees: {
-    path: 'fees',
+  event_program: {
+    path: '/event/:slug/program',
     children: {
-      fullPath: '/coordinator/fees',
-      name: 'coordinator-fees',
+      fullPath: '/event/:slug/program',
+      name: 'event-program',
     },
   },
-  coordinator_invoices: {
-    path: 'invoices',
+  event_program_edit: {
+    path: '/event/:slug/program/edit',
     children: {
-      fullPath: '/coordinator/invoices',
-      name: 'coordinator-invoices',
+      fullPath: '/event/:slug/program/edit',
+      name: 'event-program-edit',
     },
   },
-  coordinator_packages: {
-    path: 'packages',
+  event_organizers: {
+    path: '/event/:slug/organizers',
     children: {
-      fullPath: '/coordinator/packages',
-      name: 'coordinator-packages',
+      fullPath: '/event/:slug/organizers',
+      name: 'event-organizers',
     },
   },
-  coordinator_attendance: {
-    path: 'attendance',
+  event_organizers_edit: {
+    path: '/event/:slug/organizers/edit',
     children: {
-      fullPath: '/coordinator/attendance',
-      name: 'coordinator-attendance',
+      fullPath: '/event/:slug/organizers/edit',
+      name: 'event-organizers-edit',
     },
   },
-  coordinator_challenges: {
-    path: 'challenges',
-    children: {
-      fullPath: '/coordinator/challenges',
-      name: 'coordinator-challenges',
-    },
-  },
-  coordinator_results: {
-    path: 'results',
-    children: {
-      fullPath: '/coordinator/results',
-      name: 'coordinator-results',
-    },
-  },
+  // profile_notifications: {
+  //   path: 'notifications',
+  //   children: {
+  //     fullPath: '/profile/notifications',
+  //     name: 'profile-notifications',
+  //   },
+  // },
 };
 
 export { routesConf };

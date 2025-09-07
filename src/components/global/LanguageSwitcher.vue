@@ -5,123 +5,53 @@
  * The `LanguageSwitcher` component provides an interface for users to switch
  * between different languages available in the application.
  *
- * Note: This component is commonly used in `FooterBar` and in header sections.
- *
  * @description
  * This component renders a list of available languages and allows users to
- * switch their preferred language. It uses the `$i18n` global property to
+ * switch their preferred language. It uses the `i18n` to
  * manage and retrieve the current language and available translations.
  *
  * @props
- * - `variant`: Controls color and backdrop of buttons.
+ * - `shortVariant`: Enable short variant of language in text.
  *
  * @example
  * <language-switcher />
- *
- * @see
- * [Figma Design: Variant Dark](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105614&mode=dev)
- * [Figma Design: Variant Light](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6269%3A24797&mode=dev)
  */
 
 // libraries
-import { computed, defineComponent, onMounted, watch } from 'vue';
-import { i18n } from '../../boot/i18n';
-import { defaultLocale } from 'src/i18n/def_locale';
-
-// adapters
-import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
-
-// composables
-import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterChallenge';
-
-// stores
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { defineComponent } from 'vue';
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
+
   props: {
-    variant: {
-      type: String as () => 'dark' | 'light',
-      default: 'dark',
-    },
+    shortVersion: {
+      type: Boolean,
+      default: false
+    }
   },
-  setup(props) {
-    const registerChallengeStore = useRegisterChallengeStore();
 
-    const locales = computed(() => {
-      return Object.keys(i18n.global.messages);
-    });
+  setup() {
+    const { locale, t } = useI18n({ useScope: 'global' })
 
-    const registrationId = computed(() => {
-      return registerChallengeStore.getRegistrationId;
-    });
+    const localeOptions = [
+      { value: 'en', label: t('locale.en') },
+      { value: 'cz', label: t('locale.cz') }
+    ]
 
-    onMounted(async () => {
-      if (registerChallengeStore.getLanguage) {
-        i18n.global.locale = registerChallengeStore.getLanguage;
-      } else {
-        i18n.global.locale = defaultLocale;
-      }
-    });
-    /**
-     * If language changes in store by update from backend via API,
-     * update the language in i18n.
-     */
-    watch(
-      () => registerChallengeStore.getLanguage,
-      (newVal: string) => {
-        i18n.global.locale = newVal;
-      },
-    );
+    const setLocale = (item: string) => {
+      locale.value = item
+    }
 
     const isActive = (item: string): boolean => {
-      return i18n.global.locale === item;
-    };
-
-    const getButtonClasses = (item: string): string => {
-      // Default black variant
-      let baseCssClass = 'bg-grey-10 text-white';
-      let extendedCssClass = isActive(item)
-        ? `text-bold ${baseCssClass}`
-        : baseCssClass;
-      // Light variant
-      if (props.variant === 'light') {
-        baseCssClass = 'text-primary text-bold';
-        extendedCssClass = isActive(item)
-          ? `bg-secondary ${baseCssClass}`
-          : `bg-white ${baseCssClass}`;
-      }
-      return extendedCssClass;
-    };
-
-    const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
-      registerChallengeStore.$log,
-    );
-    const onSetLanguage = async (item: string) => {
-      i18n.global.locale = item;
-      registerChallengeStore.setLanguage(item);
-      /**
-       * Registraion ID may not be available (if user is not logged in)
-       * or registred. In this case, the settings will be saved in local
-       * storage.
-       */
-      if (registrationId.value) {
-        const payload = registerChallengeAdapter.toApiPayload({
-          personalDetails: {
-            language: item,
-          },
-        });
-        await updateChallenge(registrationId.value, payload);
-        registerChallengeStore.loadRegisterChallengeToStore();
-      }
-    };
+      return locale.value === item;
+    }
 
     return {
-      locales,
-      isActive,
-      isLoading,
-      getButtonClasses,
-      onSetLanguage,
+      locale,
+      localeOptions,
+      setLocale,
+      isActive
     };
   },
 });
@@ -129,25 +59,23 @@ export default defineComponent({
 
 <template>
   <ul
-    class="language-list flex items-center text-subtitle1 gap-4"
-    :class="{ 'q-pa-xs bg-white': variant === 'light' }"
+    class="language-list flex"
   >
     <!-- Language switcher items -->
     <li
-      v-for="item in locales"
-      :key="item"
+      v-for="item in localeOptions"
+      :key="item.value"
       class="text-uppercase"
-      :data-cy="'switcher-' + item"
+      :data-cy="'switcher-' + item.value"
     >
       <q-btn
         unelevated
-        round
-        @click.prevent="onSetLanguage(item)"
-        :class="getButtonClasses(item)"
+        rounded
+        @click.prevent="setLocale(item.value)"
+        :class="{'bg-dark text-white': isActive(item.value) }"
         size="13px"
-        :data-cy="'switcher-button-' + item"
       >
-        {{ item }}
+        {{ shortVersion ? item.value : item.label }}
       </q-btn>
     </li>
   </ul>
@@ -156,7 +84,9 @@ export default defineComponent({
 <style scoped>
 .language-list {
   list-style: none;
-  font-size: 14px;
+  border: 1px solid black;
   border-radius: 999px;
+  width: fit-content;
+  padding: 1px;
 }
 </style>

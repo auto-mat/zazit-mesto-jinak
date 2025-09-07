@@ -10,7 +10,7 @@ export const useValidation = () => {
      * https://uibakery.io/regex-library/email
      */
     const regex =
-      /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
     return regex.test(value);
   };
 
@@ -31,16 +31,18 @@ export const useValidation = () => {
       return false;
     }
     /**
-     * Matches Czech phone number entered with delimiters
+     * Match international phone number entered with delimiters
      * (spaces, dots, brackets, etc.)
+     *
+     * Note: does not account for specific mistakes such as:
+     * Leading Zero in Area Code: +420 012 345 678
+     * Too Many Digits: +420 123 456 7890
+     * Starts with an Invalid Country Code: +999 123 456 789
+     *
+     * https://uibakery.io/regex-library/email
      */
-    // const regex = /^(\+420\s?)?((5\d{2}|60[1-8]|70[2-5]|72\d|73[0-9]|77[0-9])\s?\d{3}\s?\d{3})$/;
-
-    /**
-     * Matches a generic format of a phone number with allowed delimiters.
-     * https://stackoverflow.com/a/20349730
-     */
-    const regex = /^(\+|00)?[1-9][0-9 \-\(\)\.]{7,32}$/;
+    const regex =
+      /^(\+420\s?)?((5\d{2}|60[1-8]|70[2-5]|72\d|73[0-9]|77[0-9])\s?\d{3}\s?\d{3})$/;
     return regex.test(value);
   };
 
@@ -48,25 +50,12 @@ export const useValidation = () => {
     return confirm === password;
   };
 
-  const isFilled = (val: string | number | object): boolean => {
-    // null is object so check first
-    if (val === null) {
-      return false;
-    } else if (typeof val === 'object') {
-      // array
-      if (Array.isArray(val)) {
-        return val.length > 0;
-      }
-      // object
-      return Object.keys(val).length > 0;
-    } else if (typeof val === 'number') {
-      // number
+  const isFilled = (val: string | number): boolean => {
+    if (typeof val === 'number') {
       return val !== 0;
-    } else if (typeof val === 'string') {
-      // string
-      return val.trim().length > 0;
+    } else {
+      return val?.length > 0;
     }
-    return false;
   };
 
   const isAboveZero = (val: string | number): boolean => {
@@ -94,16 +83,35 @@ export const useValidation = () => {
     return isLong && allNumbers;
   };
 
-  /**
-   * Check if the value is a valid ZIP code
-   * @param {string} value - The value to check
-   * @returns {boolean} - True if the value is a valid ZIP code, false otherwise
-   */
-  const isZip = (value: string): boolean => {
-    const zipNumber = Number(value);
-    // check if value is number and in range
-    return !isNaN(zipNumber) && zipNumber >= 10000 && zipNumber <= 99999;
-  };
+  const isDate = (value: string) : boolean => {
+    const isLong = value.length === 10;
+    const isDate = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0,1,2])\/(19|20)\d{2}$/.test(value);
+    return isLong && isDate;
+  }
+
+  const isTimeLaterThan = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isLater = h1 > h2 || (h1 === h2 && m1 > m2);
+
+    return isLater;
+  }
+
+  const isTimeEqualTo = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isSame = h1 === h2 && m1 === m2;
+
+    return isSame;
+  }
+
+  const isTimeEarlierThan = (t1: string, t2: string): boolean => {
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    const isEarlier = h1 < h2 || (h1 === h2 && m1 < m2);
+
+    return isEarlier;
+  }
 
   return {
     isEmail,
@@ -114,6 +122,9 @@ export const useValidation = () => {
     isPhone,
     isStrongPassword,
     isBusinessId,
-    isZip,
+    isDate,
+    isTimeEarlierThan,
+    isTimeEqualTo,
+    isTimeLaterThan
   };
 };

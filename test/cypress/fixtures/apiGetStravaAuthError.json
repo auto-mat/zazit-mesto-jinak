@@ -1,3 +1,0 @@
-{
-  "error": "400 Client Error: Bad Request [Bad Request: [{'resource': 'AuthorizationCode', 'field': 'code', 'code': 'invalid'}]]"
-}

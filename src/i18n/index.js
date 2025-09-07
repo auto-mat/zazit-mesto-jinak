@@ -9,10 +9,9 @@ export const loadLocaleMessages = async () => {
     const matched = localeFile.match(/([a-z0-9-_]+)\./i);
     if (matched && matched.length > 1) {
       const locale = matched[1];
-      // Dynamic import TOML translation file content
-      await localesFiles[localeFile]().then((content) => {
-        messages[locale] = content.default;
-      });
+      // Import TOML translation file content
+      const mod = localesFiles[localeFile];
+      messages[locale] = mod.default;
     }
   }
   return messages;
