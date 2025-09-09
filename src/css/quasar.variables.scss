@@ -14,6 +14,22 @@
 
 $typography-font-family: 'Poppins', sans-serif !default;
 
+$h1: (
+  size: 24pt,
+  line-height: normal,
+  weight: 700,
+) !default;
+$h2: (
+  size: 20pt,
+  line-height: normal,
+  weight: 500,
+) !default;
+$h3: (
+  size: 18pt,
+  line-height: normal,
+  weight: 500,
+) !default;
+
 $primary: #1976d2;
 $secondary: #26a69a;
 $accent: #9c27b0;
