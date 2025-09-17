@@ -11,7 +11,12 @@
           <h1>{{ $t('event.titleInformation') }}</h1>
         </div>
 
-        <edit-button :to="{ name: 'eventContentEdit', params: { slug: slug }}" />
+        <edit-button
+          :to="{
+            name: routesConf['event_web_content_edit']['children']['name'],
+            params: { slug: slug },
+          }"
+        />
       </div>
 
       <!-- <embed 
@@ -19,24 +24,24 @@
         style="width:500px; height: 300px;"
       > -->
 
-
       <event-content-preview :event-content :event-program />
-
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import EditButton from 'src/components/buttons/EditButton.vue'
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { routesConf } from 'src/router/routes_conf';
+
+import EditButton from 'src/components/buttons/EditButton.vue';
 import EventContentPreview from 'components/event/content/EventContentPreview.vue';
-import { useEventStore } from 'src/stores/eventStore'
+import { useEventStore } from 'src/stores/eventStore';
 
-const route = useRoute()
-const slug = ref(route.params.slug as string)
+const route = useRoute();
+const slug = ref(route.params.slug as string);
 
-const eventStore = useEventStore()
+const eventStore = useEventStore();
 
 onMounted(() => {
   eventStore.loadEventContent(slug.value);
@@ -47,5 +52,4 @@ const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 const eventContent = computed(() => eventStore.getEventContent(slug.value));
 const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
-
 </script>
