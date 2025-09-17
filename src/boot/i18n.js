@@ -1,17 +1,34 @@
-import { createI18n } from 'vue-i18n'
-import messages from 'src/i18n'
-import { defaultLocale, fallbackLocale } from 'src/i18n/def_locale'
+import { boot } from 'quasar/wrappers';
 
-export default ({ app }) => {
-  // Create I18n instance
-  const i18n = createI18n({
-    locale: defaultLocale,
-    fallbackLocale: fallbackLocale,
-    globalInjection: true,
-    legacy: false, // comment this out if not using Composition API
-    messages,
-  })
+import { createI18n } from 'vue-i18n';
 
+import {
+  getDateTimeFormats,
+  getNumberFormats,
+  loadLocaleMessages,
+  pluralizationRuleCsSkLang,
+} from '../i18n';
+import { defaultLocale, fallbackLocale } from 'src/i18n/def_locale';
+
+const messages = await loadLocaleMessages();
+const datetimeFormats = getDateTimeFormats(Object.keys(messages));
+const numberFormats = getNumberFormats(Object.keys(messages));
+
+// Create I18n instance
+export const i18n = createI18n({
+  locale: defaultLocale,
+  fallbackLocale: fallbackLocale,
+  globalInjection: true,
+  messages: messages,
+  datetimeFormats,
+  numberFormats,
+  pluralizationRules: {
+    cs: pluralizationRuleCsSkLang,
+    sk: pluralizationRuleCsSkLang,
+  },
+});
+
+export default boot(({ app }) => {
   // Tell app to use the I18n instance
-  app.use(i18n)
-}
+  app.use(i18n);
+});

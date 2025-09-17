@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="lucide-home" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></g>
+  </symbol>
+  <symbol id="lucide-route" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></g>
+  </symbol>
+  <symbol id="chart-graph" viewBox="0 0 18 18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 2.25v13.5h13.5"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.85 5.85-4.5 4.5L8.1 8.1l-3.15 3.15"/>
+  </symbol>
+  <symbol id="three-circles" viewBox="0 0 18 18">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="m14.528 14.615.383.924-.383-.924a2.384 2.384 0 1 1-1.825-4.406 2.384 2.384 0 0 1 1.825 4.406ZM8.999 7.412a2.385 2.385 0 1 1 .002-4.77 2.385 2.385 0 0 1-.002 4.77Zm-5.94 3.017a2.385 2.385 0 1 1 2.65 3.965 2.385 2.385 0 0 1-2.65-3.965Z"/>
+  </symbol>
+  <symbol id="lucide-badge-percent" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.85 8.62a4 4 0 0 1 4.78-4.77a4 4 0 0 1 6.74 0a4 4 0 0 1 4.78 4.78a4 4 0 0 1 0 6.74a4 4 0 0 1-4.77 4.78a4 4 0 0 1-6.75 0a4 4 0 0 1-4.78-4.77a4 4 0 0 1 0-6.76M15 9l-6 6m0-6h.01M15 15h.01"/>
+  </symbol>
+  <symbol id="lucide-building" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></g>
+  </symbol>
+  <symbol id="ion-person-outline" viewBox="0 0 18 18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.094 5.063C11.956 6.92 10.547 8.438 9 8.438S6.042 6.921 5.906 5.062C5.766 3.13 7.136 1.688 9 1.688c1.863 0 3.234 1.477 3.094 3.375Z"/><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M9 10.688c-3.059 0-6.163 1.687-6.737 4.872-.07.384.148.752.55.752h12.375c.402 0 .619-.368.55-.752-.575-3.185-3.68-4.873-6.738-4.873Z"/>
+  </symbol>
+  <symbol id="email" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3 7l9 6l9-6"/></g>
+  </symbol>
+  <symbol id="lucide-gift" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="4" x="3" y="8" rx="1"/><path d="M12 8v13m7-9v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7m2.5-4a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5a2.5 2.5 0 0 1 0 5"/></g>
+  </symbol>
+  <symbol id="lucide:settings-2" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M20 7h-9m3 10H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></g>
+  </symbol>
+  <symbol id="lucide-mail-question" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/><path d="m22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7m16 8.28c.2-.4.5-.8.9-1a2.1 2.1 0 0 1 2.6.4c.3.4.5.8.5 1.3c0 1.3-2 2-2 2M20 22v.01"/></g>
+  </symbol>
+</svg>

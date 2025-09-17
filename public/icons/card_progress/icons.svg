@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="winners-cup" viewBox="0 0 18 18" fill="none">
+    <g stroke="currentColor" stroke-width="2" clip-path="url(#a)"><path stroke-linecap="round" d="M12.578 1.358c.53.111.845.234 1.116.602.342.46.324.957.287 1.952C13.852 7.489 13.123 12 9.001 12c-4.122 0-4.852-4.51-4.983-8.088-.035-.995-.053-1.493.287-1.952.34-.46.747-.536 1.562-.687A17.226 17.226 0 0 1 9 1c.514 0 2.385.11 3.578.358Z"/><path d="m14.25 3.75.712.237c.742.247 1.114.371 1.326.666.212.295.212.686.212 1.469v.054c0 .645 0 .968-.155 1.232s-.438.421-1.002.735l-2.218 1.232M3.75 3.75l-.712.237c-.742.247-1.113.371-1.326.666-.212.295-.212.687-.212 1.469v.054c0 .645 0 .968.155 1.232s.438.421 1.002.735l2.218 1.232"/><path stroke-linecap="round" d="M9 12.75V16M13.5 16.5h-9"/></g><defs><clipPath id="a"><path fill="currentColor" d="M0 0h18v18H0z"/></clipPath></defs>
+  </symbol>
+  <symbol id="share" viewBox="0 0 18 18" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9v6a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 15 15V9m-3-4.5-3-3m0 0-3 3m3-3v9.75"/></svg>
+  </symbol>
+</svg>

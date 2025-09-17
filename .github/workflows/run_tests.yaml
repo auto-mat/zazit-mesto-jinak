@@ -1,0 +1,271 @@
+name: Run tests
+
+# Run tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  test-and-build:
+    name: Cypress components/e2e tests
+
+    concurrency:
+      group:
+        ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.name }}-${{ matrix.os }}
+      cancel-in-progress: true
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+    timeout-minutes: 720
+
+    env:
+      timeout: 720
+      dev_server_url: 'http://localhost:9000'
+      # browser_connect_timeout: 180000
+
+    steps:
+      - name: Install Mozilla Firefox/Microsoft Edge
+        run: |
+          if [ "$RUNNER_OS" == 'macOS' ]; then
+            brew update
+            brew install --cask firefox microsoft-edge
+          fi
+        shell: bash
+
+      - name: Checkout app repository code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # - name: Make cypress dir required for cypress-parallel parallel-weights.json file
+      #   run: |
+      #     mkdir ./cypress
+      #   shell: bash
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+      - run: node -v
+
+      - name: Run Cypress e2e test on Mozilla Firefox/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          start: yarn dev
+          browser: firefox
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:e2e:ci:firefox
+
+      - name: Run Cypress e2e test on Google Chrome/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: chrome
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:e2e:ci:chrome
+
+      - name: Run Cypress e2e test on MS Edge/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: edge
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:e2e:ci:edge
+
+      - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: firefox
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:component:ci:firefox
+
+      - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: chrome
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:component:ci:chrome
+
+      - name: Run Cypress component test on MS Edge/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v6
+        # env:
+        #   DEBUG: "cypress:*"
+        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: edge
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: yarn test:component:ci:edge
+
+      - name: Build app
+        run: npx quasar build
+
+      - name: Archive runned cypress tests snapshots result
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-snapshots-${{ matrix.os }}
+          path: test/cypress/snapshots
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: Archive runned cypress tests videos result
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-videos-${{ matrix.os }}
+          path: test/cypress/videos
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: Archive runned cypress tests log files
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-log-files-${{ matrix.os }}
+          path: test/cypress/logs
+          if-no-files-found: ignore
+          retention-days: 3
+
+  # dump-github-context:
+  #   name: Dump GitHub context
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Dump GitHub context
+  #       env:
+  #         GITHUB_CONTEXT: ${{ toJson(github) }}
+  #       run: echo "$GITHUB_CONTEXT"
+
+  sonarcloud:
+    name: SonarCloud scan analysis
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout app repository code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+      - run: node -v
+
+      - name: Run yarn install
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  push-docker-img:
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [test-and-build, sonarcloud]
+
+    outputs:
+      dockerhub_image_version: ${{ steps.set_output.outputs.dockerhub_image_version }}
+
+    steps:
+      - name: Checkout app repository code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Get Docker image version
+        run: |
+          .github/workflows/get_docker_image_tag_number.sh \
+          ${{ secrets.DOCKERHUB_REPO_OWNER }} ${{ secrets.DOCKERHUB_REPO_NAME }}
+
+      - name: Create deployed_app_version.toml file with deployed app Docker image version
+        run: |
+          echo "version = ${{ env.DOCKERHUB_IMAGE_VERSION }}" > deployed_app_version.toml
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_REPO_OWNER }}/${{ secrets.DOCKERHUB_REPO_NAME }}:${{ env.DOCKERHUB_IMAGE_VERSION }}
+
+      - id: set_output
+        run: |
+          echo "dockerhub_image_version=${{ env.DOCKERHUB_IMAGE_VERSION }}" >> "$GITHUB_OUTPUT"
+
+  deploy-app-to-k8:
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [push-docker-img]
+
+    steps:
+      - name: Checkout k8 repository
+        uses: actions/checkout@v4
+        with:
+          repository: auto-mat/k8s
+          token: ${{ secrets.GH_PAT }}
+          path: k8s
+
+      - env:
+          DOCKERHUB_IMAGE_VERSION: ${{ needs.push-docker-img.outputs.dockerhub_image_version }}
+
+        run: |
+          cd ./k8s
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          echo "DOCKERHUB_IMAGE_VERSION: ${DOCKERHUB_IMAGE_VERSION}"
+          file ./manifests/ytt/ride-to-work-by-bike-frontend-test.yaml
+          sed -i -e "2s/.*/#@ image = \"${{ secrets.DOCKERHUB_REPO_OWNER }}\/${{ secrets.DOCKERHUB_REPO_NAME }}:${DOCKERHUB_IMAGE_VERSION}\"/" ./manifests/ytt/ride-to-work-by-bike-frontend-test.yaml
+          git commit -am "manifests/ytt: bump ride-to-work-by-bike-frontend-test app build image to version ${DOCKERHUB_IMAGE_VERSION}"
+          git push
