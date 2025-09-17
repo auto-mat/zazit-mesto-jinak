@@ -1,6 +1,6 @@
-# Ride to work by bike frontend (ride-to-work-by-bike)
+# Zažít město jinak frontend (zazit-mesto-jinak)
 
-A Ride to work by bike web app is based on the [Quasar framework](https://quasar.dev/)
+A Zažít město jinak web app is based on the [Quasar framework](https://quasar.dev/)
 ([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/),
 [TOML](https://toml.io)).
 
@@ -45,18 +45,18 @@ yarn
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
-Adjust app config via [TOML](https://toml.io/en/) config file `ride_to_work_by_bike_config.toml` or
+Adjust app config via [TOML](https://toml.io/en/) config file `zazit_mesto_jinak_config.toml` or
 via SHELL/ENV variables (check vars with `cat ./src/utils/get_app_conf.js`).
 
-App global vars defined inside config file `ride_to_work_by_bike_config.toml` are overrided
+App global vars defined inside config file `zazit_mesto_jinak_config.toml` are overrided
 by SHELL/ENV vars (defined here `./src/utils/get_app_conf.js`).
 
-When you add some app new global var inside config file `ride_to_work_by_bike_config.toml` you must
+When you add some app new global var inside config file `zazit_mesto_jinak_config.toml` you must
 add correspoding SHELL/ENV var here `./src/utils/get_app_conf.js`.
 
 And before create your PR (deploy to k8) you must add new/changed correspoding SHELL/ENV var here
-[ride-to-work-by-bike-frontend-test.yaml](https://github.com/auto-mat/k8s/blob/master/manifests/config-maps/ride-to-work-by-bike-frontend-test.yaml#)
-and here [ride-to-work-by-bike-frontend.lib.yaml](https://github.com/auto-mat/k8s/blob/master/manifests/ytt/lib/ride-to-work-by-bike-frontend.lib.yaml).
+[zazit-mesto-jinak-frontend-test.yaml](https://github.com/auto-mat/k8s/blob/master/manifests/config-maps/zazit-mesto-jinak-frontend-test.yaml#)
+and here [zazit-mesto-jinak-frontend.lib.yaml](https://github.com/auto-mat/k8s/blob/master/manifests/ytt/lib/zazit-mesto-jinak-frontend.lib.yaml).
 
 Start dev server with
 
@@ -175,14 +175,14 @@ test@test:~$ xdg-open https://rtwbb-test.dopracenakole.net
 ### Develoment app with build Docker image/container
 
 ```bash
-APP_NAME=ride-to-work-by-bike-app
+APP_NAME=zazit-mesto-jinak-app
 APP_DIR=/home/dev/$APP_NAME
 
 # Build Docker image
 docker buildx build \
 --build-arg="UID=$(id -u)" \
 --build-arg="GID=$(id -g)" \
--t ride-to-work-by-bike-frontend-dev \
+-t zazit-mesto-jinak-frontend-dev \
 -f ./docker/dev/Dockerfile .
 
 # Run Docker app container
@@ -196,7 +196,7 @@ docker run -it --rm \
 --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 --device="/dev/dri/card0:/dev/dri/card0" \
 --name=$APP_NAME \
-ride-to-work-by-bike-frontend-dev OR auto0mat/ride-to-work-by-bike-frontend-dev:latest
+zazit-mesto-jinak-frontend-dev OR auto0mat/zazit-mesto-jinak-frontend-dev:latest
 
 # Or if you want override some Docker app container ENV variables (-e flag)
 xhost local:$(id -u)
@@ -210,26 +210,26 @@ docker run -it --rm  \
 --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 --device="/dev/dri/card0:/dev/dri/card0" \
 --name=$APP_NAME
-ride-to-work-by-bike-frontend-dev OR auto0mat/ride-to-work-by-bike-frontend-dev:latest
+zazit-mesto-jinak-frontend-dev OR auto0mat/zazit-mesto-jinak-frontend-dev:latest
 
 # Install app JS dependencies
-dev@61b150727994:~/ride-to-work-by-bike-app$ ./docker/dev/install_app_dependencies.sh
+dev@61b150727994:~/zazit-mesto-jinak-app$ ./docker/dev/install_app_dependencies.sh
 
 # Run quasar app dev server from emulator terminal
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn dev
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn dev
 
 # Run app component/e2e tests, see Run app tests section
 #
 # Run quasar app dev server on the background from emulator terminal
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn dev &
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn dev &
 # Run component tests
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:component:firefox
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn test:component:firefox
 # Open component tests
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:component:open:firefox
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn test:component:open:firefox
 # Run e2e tests
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:e2e:firefox
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn test:e2e:firefox
 # Open e2e tests
-dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:e2e:open:firefox
+dev@61b150727994:~/zazit-mesto-jinak-app$ yarn test:e2e:open:firefox
 
 
 # Check web app from your host OS via web browser

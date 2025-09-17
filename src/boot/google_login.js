@@ -1,8 +1,8 @@
 import { boot } from 'quasar/wrappers';
 import vue3GoogleLogin from 'vue3-google-login';
-import { rideToWorkByBikeConfig } from './global_vars';
+import { zazitMestoJinakConfig } from './global_vars';
 
-const clientId = rideToWorkByBikeConfig.googleLoginAppId;
+const clientId = zazitMestoJinakConfig.googleLoginAppId;
 
 export default boot(({ app }) => {
   if (clientId) {
