@@ -20,12 +20,13 @@
       <event-information-row 
         :label="$t('event.information.labelLocation')"
       >
-        <leaflet-map 
+        <!-- TODO fix map -->
+        <!-- <leaflet-map 
           class="map q-mt-sm" 
           :latitude="eventInformation.coordinates.latitude" 
           :longitude="eventInformation.coordinates.longitude"
           marker
-        />
+        /> -->
       </event-information-row>
       <event-information-row 
         :label="$t('event.information.labelSpaceType')" 

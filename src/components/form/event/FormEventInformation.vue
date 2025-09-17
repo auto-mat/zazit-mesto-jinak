@@ -124,14 +124,15 @@ export default defineComponent({
           <label class="text-caption text-bold">
             {{ $t('event.information.labelLocation') }}
           </label>
-          <leaflet-map
+          <!-- TODO fix map -->
+          <!-- <leaflet-map
             class="map q-mt-sm q-ml-md" 
             :latitude="formEventInformation.coordinates.latitude"
             :longitude="formEventInformation.coordinates.longitude"
             marker
             editable
             @set-coords="setCoords"
-          />
+          /> -->
         </div>
       </div>
         <!-- Button: submit -->
