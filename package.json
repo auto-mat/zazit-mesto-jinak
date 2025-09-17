@@ -1,8 +1,8 @@
 {
-  "name": "ride-to-work-by-bike",
+  "name": "zazit-mesto-jinak",
   "version": "0.0.1",
-  "description": "Ride to work by bike",
-  "productName": "Ride to work by bike",
+  "description": "Zažít město jinak",
+  "productName": "Zažít město jinak",
   "author": "Auto*Mat, z. s. auto-mat@auto-mat.cz",
   "private": true,
   "type": "module",

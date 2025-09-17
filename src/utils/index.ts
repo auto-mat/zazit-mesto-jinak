@@ -10,7 +10,7 @@ import type { Countdown } from '../components/types/Countdown';
  * command.
  */
 const getAppConfig = (): ConfigGlobal => {
-  return JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG) as ConfigGlobal;
+  return JSON.parse(process.env.ZAZIT_MESTO_JINAK_CONFIG) as ConfigGlobal;
 };
 
 interface RgbaI {

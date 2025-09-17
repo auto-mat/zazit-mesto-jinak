@@ -1,4 +1,4 @@
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
+import { zazitMestoJinakConfig } from '../boot/global_vars';
 
 export const loadLocaleMessages = async () => {
   const localesFiles = await import.meta.glob('./[A-Za-z0-9-_,s]+.toml', {
@@ -32,7 +32,7 @@ export const getDateTimeFormats = (locales) => {
   let dateTimeFormats = {};
 
   const dateTimeFormatsAllLocales = JSON.parse(
-    rideToWorkByBikeConfig.dateTimeFormatsAllLocales,
+    zazitMestoJinakConfig.dateTimeFormatsAllLocales,
   );
   locales.forEach((locale) => {
     dateTimeFormats[locale] = dateTimeFormatsAllLocales;
@@ -63,7 +63,7 @@ export const getNumberFormats = (locales) => {
   let numberFormats = {};
 
   const numberFormatsAllLocales = JSON.parse(
-    rideToWorkByBikeConfig.numberFormatsAllLocales,
+    zazitMestoJinakConfig.numberFormatsAllLocales,
   );
   locales.forEach((locale) => {
     numberFormats[locale] = numberFormatsAllLocales;

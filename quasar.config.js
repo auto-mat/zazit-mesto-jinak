@@ -58,8 +58,8 @@ export default defineConfig((ctx) => {
       },
 
       env: {
-        RIDE_TO_WORK_BY_BIKE_CONFIG: JSON.stringify(getAppConfig(process)),
-        RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION: JSON.stringify(
+        ZAZIT_MESTO_JINAK_CONFIG: JSON.stringify(getAppConfig(process)),
+        ZAZIT_MESTO_JINAK_DEPLOYED_VERSION: JSON.stringify(
           getDeployedAppVersion(),
         ),
       },

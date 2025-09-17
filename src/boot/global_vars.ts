@@ -5,24 +5,24 @@ import { boot } from 'quasar/wrappers';
 import { ConfigGlobal } from '../components/types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
+const zazitMestoJinakConfig: ConfigGlobal = JSON.parse(
+  process.env.ZAZIT_MESTO_JINAK_CONFIG,
 );
 
 const initVars = (): void => {
-  setCssVar('white', rideToWorkByBikeConfig.colorWhite);
-  setCssVar('black', rideToWorkByBikeConfig.colorBlack);
-  setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
-  setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
-  setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
-  setCssVar('red', rideToWorkByBikeConfig.colorRed);
+  setCssVar('white', zazitMestoJinakConfig.colorWhite);
+  setCssVar('black', zazitMestoJinakConfig.colorBlack);
+  setCssVar('primary', zazitMestoJinakConfig.colorPrimary);
+  setCssVar('secondary', zazitMestoJinakConfig.colorSecondary);
+  setCssVar('info', zazitMestoJinakConfig.colorGrayLight);
+  setCssVar('red', zazitMestoJinakConfig.colorRed);
   setCssVar(
     'custom-form-field-validation-err',
-    rideToWorkByBikeConfig.colorCustomFormFieldValidationErr,
+    zazitMestoJinakConfig.colorCustomFormFieldValidationErr,
   );
 };
 
-export { rideToWorkByBikeConfig, initVars };
+export { zazitMestoJinakConfig, initVars };
 
 export default boot((): void => {
   initVars();

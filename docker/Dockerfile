@@ -3,7 +3,7 @@ FROM alpine:3.22
 LABEL authors="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 LABEL maintainer="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 
-ENV APP_PATH=/tmp/nginx/ride-to-work-by-bike-app \
+ENV APP_PATH=/tmp/nginx/zazit-mesto-jinak-app \
     LOCAL_BIN=/usr/local/bin
 RUN apk add --update --no-cache nginx nodejs yarn
 

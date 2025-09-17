@@ -28,19 +28,14 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { i18n } from '../boot/i18n';
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
-
-// set global i18n object (for test purposes)
-if (window.Cypress) {
-  window.i18n = i18n;
-}
+import { zazitMestoJinakConfig } from '../boot/global_vars';
+import imageMaskUrl from '../assets/svg/image-mask.svg';
 
 export default defineComponent({
   name: 'LoginLayout',
   setup() {
-    const imageMask = `url(${new URL('../assets/svg/image-mask.svg', import.meta.url).href})`;
-    const imageUrl = rideToWorkByBikeConfig.urlLoginRegisterBackgroundImage;
+    const imageMask = `url(${imageMaskUrl})`;
+    const imageUrl = zazitMestoJinakConfig.urlLoginRegisterBackgroundImage;
 
     return {
       imageMask,

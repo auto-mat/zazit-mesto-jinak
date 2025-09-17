@@ -1,4 +1,4 @@
-name: Build and push development Dockerfile Docker ride-to-work-by-bike-frontend-dev image
+name: Build and push development Dockerfile Docker zazit-mesto-jinak-frontend-dev image
 on:
   schedule:
     - cron: '0 0 * * 1'

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 
 const getAppConfig = (process) => {
   let config = parse(
-    fs.readFileSync('./ride_to_work_by_bike_config.toml').toString(),
+    fs.readFileSync('./zazit_mesto_jinak_config.toml').toString(),
   );
 
   /*
