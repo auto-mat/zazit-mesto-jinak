@@ -54,6 +54,13 @@ messageTimeLater = "Čas do musí být pozdější než čas od"
 edit = "Upravit"
 back = "Zpět"
 
+[login]
+title = "Přihlášení"
+withoutAccount = "Nemáte zatím účet?"
+register = "Registujte se."
+submitLogin = "Přihlásit se"
+forgotPassword = "Zapomenuté heslo?"
+
 [register.personalDetails]
 title = "Osobní údaje"
 newsTitle = "O čem chcete být informováni e-mailem"

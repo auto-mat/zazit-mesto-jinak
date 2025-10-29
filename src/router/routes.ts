@@ -20,6 +20,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // login
+  {
+    path: routesConf['login']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['login']['children']['name'],
+        component: () => import('pages/LoginPage.vue'),
+      },
+    ],
+  },
   // profile
   {
     path: routesConf['profile']['path'],
@@ -163,18 +175,6 @@ const routes: RouteRecordRaw[] = [
   //       path: '',
   //       name: routesConf['confirm_email']['children']['name'],
   //       component: () => import('pages/ConfirmEmailPage.vue'),
-  //     },
-  //   ],
-  // },
-  // login
-  // {
-  //   path: routesConf['login']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['login']['children']['name'],
-  //       component: () => import('pages/LoginPage.vue'),
   //     },
   //   ],
   // },
