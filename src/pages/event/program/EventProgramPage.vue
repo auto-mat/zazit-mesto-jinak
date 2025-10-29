@@ -31,7 +31,7 @@ import { routesConf } from 'src/router/routes_conf';
 import EventProgramTable from 'src/components/event/program/EventProgramTable.vue';
 import EditButton from 'src/components/buttons/EditButton.vue';
 
-import { useEventStore } from 'src/stores/eventStore';
+import { useEventStore } from 'src/stores/event';
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);

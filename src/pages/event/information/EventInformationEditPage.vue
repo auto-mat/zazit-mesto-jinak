@@ -30,7 +30,7 @@ import { routesConf } from 'src/router/routes_conf';
 import BackButton from 'src/components/buttons/BackButton.vue';
 import EventInformationEditor from 'src/components/event/information/EventInformationEditor.vue';
 
-import { useEventStore } from 'src/stores/eventStore';
+import { useEventStore } from 'src/stores/event';
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);

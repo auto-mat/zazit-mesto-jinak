@@ -6,7 +6,7 @@ LABEL maintainer="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 ARG UID=1000
 ARG GID=1000
 ENV APP_USER=dev
-ENV APP_PATH=/home/$APP_USER/ride-to-work-by-bike-app
+ENV APP_PATH=/home/$APP_USER/zazit-mesto-jinak-app
 ENV ADD_CUSTOM_PACKAGES_REPOSITORIES_SCRIPT_NAME=install_custom_packages.sh
 ENV ADD_CUSTOM_PACKAGES_REPOSITORIES_SCRIPT_PATH=\
 /usr/local/bin/$ADD_CUSTOM_PACKAGES_REPOSITORIES_SCRIPT_NAME

@@ -5,7 +5,6 @@ import { useApiEvents } from 'src/composables/api/event/useApiEvents';
 import { useApiEventContent } from 'src/composables/api/event/useApiEventContent';
 import { useApiEventProgram } from 'src/composables/api/event/useApiEventProgram';
 
-
 export const useEventStore = defineStore('events', {
   state: () => ({
     eventList: [] as EventMetaType[],
@@ -15,15 +14,20 @@ export const useEventStore = defineStore('events', {
   getters: {
     isLoading: (state) => state.loading,
     getEventList: (state) => state.eventList,
-    getEventName: (state) => (slug: string) => state.eventList.find(event => event.slug === slug)?.name ?? '',
-    getEventInformation: (state) => (slug: string) => state.eventDetails[slug]?.information,
-    getEventOrganizers: (state) => (slug: string) => state.eventDetails[slug]?.organizers,
-    getEventContent: (state) => (slug: string) => state.eventDetails[slug]?.content,
-    getEventProgram: (state) => (slug: string) => state.eventDetails[slug]?.program,
+    getEventName: (state) => (slug: string) =>
+      state.eventList.find((event) => event.slug === slug)?.name ?? '',
+    getEventInformation: (state) => (slug: string) =>
+      state.eventDetails[slug]?.information,
+    getEventOrganizers: (state) => (slug: string) =>
+      state.eventDetails[slug]?.organizers,
+    getEventContent: (state) => (slug: string) =>
+      state.eventDetails[slug]?.content,
+    getEventProgram: (state) => (slug: string) =>
+      state.eventDetails[slug]?.program,
   },
   actions: {
     async loadEventList() {
-      const { getEventList } = useApiEvents(); 
+      const { getEventList } = useApiEvents();
       this.loading = true;
       const events = await getEventList(0); // TODO user id
       this.eventList = events;
@@ -36,11 +40,11 @@ export const useEventStore = defineStore('events', {
       const eventInformation = await getEventInformation(slug);
 
       if (!this.eventDetails[slug]) {
-        this.eventDetails[slug] = {}
+        this.eventDetails[slug] = {};
       }
 
       if (eventInformation) {
-        this.eventDetails[slug].information = eventInformation
+        this.eventDetails[slug].information = eventInformation;
       }
 
       this.loading = false;
@@ -52,11 +56,11 @@ export const useEventStore = defineStore('events', {
       const eventContent = await fetchEventContent(slug);
 
       if (!this.eventDetails[slug]) {
-        this.eventDetails[slug] = {}
+        this.eventDetails[slug] = {};
       }
 
       if (eventContent) {
-        this.eventDetails[slug].content = eventContent
+        this.eventDetails[slug].content = eventContent;
       }
 
       this.loading = false;
@@ -67,11 +71,11 @@ export const useEventStore = defineStore('events', {
       const eventProgram = await fetchEventProgram(slug);
 
       if (!this.eventDetails[slug]) {
-        this.eventDetails[slug] = {}
+        this.eventDetails[slug] = {};
       }
 
       if (eventProgram) {
-        this.eventDetails[slug].program = eventProgram
+        this.eventDetails[slug].program = eventProgram;
       }
 
       this.loading = false;
@@ -79,6 +83,6 @@ export const useEventStore = defineStore('events', {
 
     clearEventDetails(slug: string) {
       delete this.eventDetails[slug];
-    }
+    },
   },
 });

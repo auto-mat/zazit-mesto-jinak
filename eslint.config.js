@@ -1,53 +1,48 @@
-// eslint.config.js
+// @ts-check
+import js from '@eslint/js';
+import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import vuePlugin from 'eslint-plugin-vue';
-import prettierConfig from 'eslint-config-prettier';
+import vueParser from 'vue-eslint-parser';
+import globals from 'globals';
 
 export default [
+  js.configs.recommended,
+  ...vuePlugin.configs['flat/recommended'], // Vue recommended rules
   {
-    files: ['**/*.{js,jsx,ts,tsx,vue}'],
-    ignores: ['node_modules', 'dist'],
+    files: ['**/*.vue', '**/*.ts'],
+    ignores: [
+      '/dist',
+      '/src-capacitor',
+      '/src-cordova',
+      '/.quasar',
+      '/node_modules',
+      '.eslintrc.js',
+      '/src-ssr',
+    ],
     languageOptions: {
-      parser: tsParser,
+      parser: vueParser,
       parserOptions: {
+        parser: tsParser,
         ecmaVersion: 'latest',
         sourceType: 'module',
-        extraFileExtensions: ['.vue'],
       },
       globals: {
-        ga: 'readonly',
-        cordova: 'readonly',
-        __statics: 'readonly',
-        __QUASAR_SSR__: 'readonly',
-        __QUASAR_SSR_SERVER__: 'readonly',
-        __QUASAR_SSR_CLIENT__: 'readonly',
-        __QUASAR_SSR_PWA__: 'readonly',
-        process: 'readonly',
-        Capacitor: 'readonly',
-        chrome: 'readonly',
+        ...globals.browser,
+        ...globals.node,
       },
     },
     plugins: {
-      '@typescript-eslint': typescriptPlugin,
+      '@typescript-eslint': ts,
       vue: vuePlugin,
     },
     rules: {
-      'prefer-promise-reject-errors': 'off',
-      quotes: ['warn', 'single', { avoidEscape: true }],
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
-      'no-unused-vars': 'off',
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
+      'vue/multi-word-component-names': 'off',
+      'vue/no-v-html': 'off',
     },
   },
-
-  // TypeScript rules
-  ...typescriptPlugin.configs.recommended,
-
-  // Vue rules
-  ...vuePlugin.configs['flat/recommended'],
-
-  // Prettier (disable conflicting formatting rules)
-  prettierConfig,
 ];

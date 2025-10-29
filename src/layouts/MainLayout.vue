@@ -1,13 +1,11 @@
 <template>
   <q-layout view="hHh Lpr lff">
-
-    <q-drawer 
-      v-model="leftDrawerOpen" 
+    <q-drawer
+      v-model="leftDrawerOpen"
       show-if-above
       side="left"
       class="bg-secondary text-black"
     >
-
       <DrawerHeader />
 
       <q-list>
@@ -15,14 +13,14 @@
           {{ $t('menu.myEventsHeader') }}
         </q-item-label>
 
-        <LocationLinks 
-          v-for="event in eventStore.eventList" 
+        <LocationLinks
+          v-for="event in eventStore.eventList"
           :key="event.slug"
           :event-name="event.name"
           :event-slug="event.slug"
         />
 
-        <q-separator inset spaced/>
+        <q-separator inset spaced />
 
         <q-item to="/profile" exact>
           <q-item-section avatar>
@@ -62,11 +60,9 @@
       </q-list>
     </q-drawer>
 
-
     <q-page-container>
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -74,10 +70,10 @@
 import { ref, onMounted } from 'vue';
 import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
 import LocationLinks from 'src/components/menu/LocationLinks.vue';
-import { useEventStore } from 'src/stores/eventStore';
+import { useEventStore } from 'src/stores/event';
 
 defineOptions({
-  name: 'MainLayout'
+  name: 'MainLayout',
 });
 
 const leftDrawerOpen = ref(true);

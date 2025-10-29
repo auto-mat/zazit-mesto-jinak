@@ -1,15 +1,17 @@
 <template>
   <q-page class="column q-pa-xl">
-    <h1 class="q-mb-md">{{ $t('profile.title') }}</h1>
+    <h1 class="q-mb-md">
+      {{ $t('profile.title') }}
+    </h1>
     <h2>{{ $t('profile.subtitle') }}</h2>
 
-    <div class="q-mt-md" style="width: 800px; max-width: 100%;">
+    <div class="q-mt-md" style="width: 800px; max-width: 100%">
       <profile-row @edit="openDialog('name')">
-       <span class="name">{{ user.name }}</span>
+        <span class="name">{{ user.name }}</span>
       </profile-row>
-      <profile-row :label="$t('profile.emailLabel')" >
+      <profile-row :label="$t('profile.emailLabel')">
         {{ user.email }}
-        <template v-slot:button>
+        <template #button>
           <q-btn
             rounded
             unelevated
@@ -21,10 +23,16 @@
           />
         </template>
       </profile-row>
-      <profile-row :label="$t('profile.phoneLabel')" @edit="openDialog('phone')">
+      <profile-row
+        :label="$t('profile.phoneLabel')"
+        @edit="openDialog('phone')"
+      >
         {{ user.phone }}
       </profile-row>
-      <profile-row :label="$t('profile.genderLabel')" @edit="openDialog('gender')">
+      <profile-row
+        :label="$t('profile.genderLabel')"
+        @edit="openDialog('gender')"
+      >
         {{ $t(`gender.${user.gender}`) }}
       </profile-row>
       <profile-row :label="$t('profile.languagePrefer')" no-button>
@@ -33,12 +41,15 @@
     </div>
 
     <q-dialog v-model="editDialogOpen">
-      <div class="bg-white q-px-md q-py-lg" style="width: 600px; max-width: 90vw;">
+      <div
+        class="bg-white q-px-md q-py-lg"
+        style="width: 600px; max-width: 90vw"
+      >
         <dialog-content-name
           v-if="currentComponent === 'name'"
-          :first-name="user.name" 
+          :first-name="user.name"
           :last-name="user.surname"
-          @cancel="editDialogOpen = false" 
+          @cancel="editDialogOpen = false"
           @update="updateName"
         />
         <dialog-content-phone
@@ -71,53 +82,52 @@ import DialogContentName from 'src/components/profile/DialogContentName.vue';
 import DialogContentPhone from 'src/components/profile/DialogContentPhone.vue';
 import DialogContentGender from 'src/components/profile/DialogContentGender.vue';
 import DialogContentEmail from 'src/components/profile/DialogContentEmail.vue';
-import { useUserStore } from 'src/stores/userStore';
+import { useUserStore } from 'src/stores/user';
 
 defineOptions({
-  name: 'ProfilePage'
+  name: 'ProfilePage',
 });
 
 const userStore = useUserStore();
 
 onMounted(() => {
   userStore.loadUserDetails();
-})
+});
 
 // const isLoading = computed(() => userStore.isLoading);
 const user = computed(() => userStore.getUserDetails);
 
-const currentComponent = ref('')
-const editDialogOpen = ref(false)
+const currentComponent = ref('');
+const editDialogOpen = ref(false);
 
 const openDialog = (componentKey: string) => {
-  currentComponent.value = componentKey
-  editDialogOpen.value = true
-}
+  currentComponent.value = componentKey;
+  editDialogOpen.value = true;
+};
 
 const updateName = (firstName: string, lastName: string) => {
   // TODO
-  console.log(firstName, lastName)
-  editDialogOpen.value = false
-}
+  console.log(firstName, lastName);
+  editDialogOpen.value = false;
+};
 
 const updatePhone = (phone: string) => {
   // TODO
-  console.log(phone)
-  editDialogOpen.value = false
-}
+  console.log(phone);
+  editDialogOpen.value = false;
+};
 
 const updateGender = (gender: string) => {
   // TODO
-  console.log(gender)
-  editDialogOpen.value = false
-}
+  console.log(gender);
+  editDialogOpen.value = false;
+};
 
 const updateEmail = () => {
   // TODO
-  console.log('Email update message')
-  editDialogOpen.value = false
-}
-
+  console.log('Email update message');
+  editDialogOpen.value = false;
+};
 </script>
 
 <style scoped>

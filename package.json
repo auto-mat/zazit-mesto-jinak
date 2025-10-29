@@ -37,19 +37,22 @@
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.38.0",
     "@quasar/app-vite": "^2.0.0",
     "@types/node": "^22.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
     "autoprefixer": "^10.4.2",
-    "eslint": "^8.10.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.0.0",
-    "eslint-plugin-vue": "^9.0.0",
+    "eslint-plugin-vue": "^10.5.1",
+    "globals": "^16.4.0",
     "husky": "^9.0.0",
     "lint-staged": "^16.0.0",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0",
-    "vite-plugin-top-level-await": "^1.4.4"
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vue-eslint-parser": "^10.2.0"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19 || ^20.0.0 || ^22.0.0",
