@@ -1,4 +1,29 @@
-<script lang="ts">
+<template>
+  <q-field
+    dense
+    borderless
+    hide-bottom-space
+    :model-value="model"
+    :rules="[(val: string) => !required || !!val || validationMessage]"
+    data-cy="form-field-checkbox"
+  >
+    <q-checkbox
+      dense
+      v-model="model"
+      color="primary"
+      :true-value="true"
+      :false-value="false"
+      class="text-grey-10"
+      data-cy="form-field-checkbox-input"
+    >
+      <span data-cy="form-field-checkbox-label">
+        <slot />
+      </span>
+    </q-checkbox>
+  </q-field>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldCheckbox Component
  *
@@ -24,59 +49,29 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
 
-export default defineComponent({
-  name: 'FormFieldCheckboxRequired',
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true,
-    },
-    validationMessage: {
-      type: String,
-      default: '',
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    }
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const model = computed({
-      get: (): boolean => props.modelValue,
-      set: (value: boolean) => emit('update:modelValue', value),
-    });
-
-    return {
-      model,
-    };
+  validationMessage: {
+    type: String,
+    default: '',
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <q-field
-    dense
-    borderless
-    hide-bottom-space
-    :model-value="model"
-    :rules="[(val: string) => !required || !!val || validationMessage]"
-    data-cy="form-field-checkbox"
-  >
-    <q-checkbox
-      dense
-      v-model="model"
-      color="primary"
-      :true-value="true"
-      :false-value="false"
-      class="text-grey-10"
-      data-cy="form-field-checkbox-input"
-    >
-      <span data-cy="form-field-checkbox-label">
-        <slot />
-      </span>
-    </q-checkbox>
-  </q-field>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean];
+}>();
+
+const model = computed({
+  get: (): boolean => props.modelValue,
+  set: (value: boolean) => emit('update:modelValue', value),
+});
+</script>

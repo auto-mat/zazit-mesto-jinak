@@ -1,4 +1,46 @@
-<script lang="ts">
+<template>
+  <div>
+    <template v-if="label">
+      <label for="date" class="text-grey-10 text-caption text-bold">
+        {{ t(label) }}
+        <span v-if="!required" class="text-grey-6 text-caption">
+          {{ ` (${t('form.labelOptional')})` }}
+        </span>
+      </label>
+    </template>
+    <q-input
+      dense
+      outlined
+      v-model="inputValue"
+      name="date"
+      class="q-mt-sm"
+      mask="##/##/####"
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          t('form.messageFieldRequired', {
+            fieldName: t('form.labelDate'),
+          }),
+        (val: string) => isDate(val) || t('form.messageDateInvalid'),
+      ]"
+    >
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldDateInput Component
  *
@@ -24,86 +66,41 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldText',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      default: '',
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const inputValue = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isFilled, isDate } = useValidation();
-
-    return {
-      inputValue,
-      isFilled,
-      isDate
-    };
+  label: {
+    type: String,
+    default: '',
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <div>
-    <template v-if="label">
-      <label for="date" class="text-grey-10 text-caption text-bold">
-        {{ $t(label) }}
-        <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-      </label>
-    </template>
-    <q-input 
-      dense
-      outlined
-      v-model="inputValue"
-      name="date"
-      class="q-mt-sm"
-      mask="##/##/####"
-      :rules="[
-        (val: string) =>
-          !required ||
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelDate'),
-          }),
-        (val: string ) => isDate(val) || $t('form.messageDateInvalid')
-      ]">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const inputValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isFilled, isDate } = useValidation();
+</script>

@@ -1,4 +1,33 @@
-<script lang="ts">
+<template>
+  <div>
+    <!-- Label -->
+    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
+      {{ t(label) }}
+      <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${t('form.labelOptional')})` }}
+      </span>
+    </label>
+    <!-- Input -->
+    <q-input
+      dense
+      outlined
+      v-model="inputValue"
+      type="textarea"
+      lazy-rules
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          t('form.messageFieldRequired', { fieldName: t(label) }),
+      ]"
+      class="q-mt-sm"
+      :id="`form-${name}`"
+      :name="name"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldTextarea Component
  *
@@ -20,77 +49,45 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldTextarea',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const inputValue = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isFilled } = useValidation();
-
-    return {
-      inputValue,
-      isFilled,
-    };
+  name: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <div>
-    <!-- Label -->
-    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
-      {{ $t(label) }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-    </label>
-    <!-- Input -->
-    <q-input
-      dense
-      outlined
-      v-model="inputValue"
-      type="textarea"
-      lazy-rules
-      :rules="[
-        (val: string) =>
-          !required || 
-          isFilled(val) ||
-          $t('form.messageFieldRequired', $t(label)),
-      ]"
-      class="q-mt-sm"
-      :id="`form-${name}`"
-      :name="name"
-    />
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const inputValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isFilled } = useValidation();
+</script>

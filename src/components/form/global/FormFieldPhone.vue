@@ -1,4 +1,37 @@
-<script lang="ts">
+<template>
+  <div class="col-12 col-sm-6" data-cy="form-phone">
+    <!-- Label -->
+    <label for="form-phone" class="text-caption text-bold">
+      {{ t(label) }}
+      <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${t('form.labelOptional')})` }}
+      </span>
+    </label>
+    <!-- Input -->
+    <q-input
+      dense
+      outlined
+      reactive-rules
+      v-model="phone"
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          t('form.messageFieldRequired', {
+            fieldName: t('form.labelPhone'),
+          }),
+        (val: string) => !val || isPhone(val) || t('form.messagePhoneInvalid'),
+      ]"
+      :hint="hint"
+      class="q-mt-sm"
+      id="form-phone"
+      name="phone"
+      data-cy="form-phone-input"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldPhone Component
  *
@@ -22,82 +55,45 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldPhone',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    hint: {
-      type: String,
-      default: '',
-    },
-    label: {
-      type: String,
-      default: 'form.labelPhone',
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const phone = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isFilled, isPhone } = useValidation();
-
-    return {
-      phone,
-      isFilled,
-      isPhone,
-    };
+  hint: {
+    type: String,
+    default: '',
+  },
+  label: {
+    type: String,
+    default: 'form.labelPhone',
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <div class="col-12 col-sm-6" data-cy="form-phone">
-    <!-- Label -->
-    <label for="form-phone" class="text-caption text-bold">
-      {{ $t(label) }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-    </label>
-    <!-- Input -->
-    <q-input
-      dense
-      outlined
-      reactive-rules
-      v-model="phone"
-      :rules="[
-        (val: string) =>
-          !required ||
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelPhone'),
-          }),
-        (val: string) => !val || isPhone(val) || $t('form.messagePhoneInvalid'),
-      ]"
-      :hint="hint"
-      class="q-mt-sm"
-      id="form-phone"
-      name="phone"
-      data-cy="form-phone-input"
-    />
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const phone = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isFilled, isPhone } = useValidation();
+</script>
