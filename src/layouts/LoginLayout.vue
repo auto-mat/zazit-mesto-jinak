@@ -4,7 +4,7 @@
       <img src="logo-zmj.svg" />
     </q-avatar>
 
-    <q-page-container>
+    <q-page-container class="q-px-xl q-py-xl">
       <router-view />
     </q-page-container>
   </q-layout>

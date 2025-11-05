@@ -49,7 +49,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable>
+        <q-item clickable @click="loginStore.logout">
           <q-item-section avatar>
             <q-icon name="logout" />
           </q-item-section>
@@ -71,6 +71,7 @@ import { ref, onMounted } from 'vue';
 import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
 import LocationLinks from 'src/components/menu/LocationLinks.vue';
 import { useEventStore } from 'src/stores/event';
+import { useLoginStore } from 'src/stores/login';
 
 defineOptions({
   name: 'MainLayout',
@@ -78,7 +79,7 @@ defineOptions({
 
 const leftDrawerOpen = ref(true);
 const eventStore = useEventStore();
-
+const loginStore = useLoginStore();
 // function toggleLeftDrawer () {
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }

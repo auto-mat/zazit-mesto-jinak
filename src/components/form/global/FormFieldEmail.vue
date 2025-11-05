@@ -1,4 +1,37 @@
-<script lang="ts">
+<template>
+  <div class="col-12 col-sm-6" data-cy="form-email">
+    <!-- Label -->
+    <label for="form-email" class="text-caption text-bold">
+      {{ t('form.labelEmail') }}
+      <span v-if="!required" class="text-grey-6 text-caption">
+        {{ ` (${t('form.labelOptional')})` }}
+      </span>
+    </label>
+    <!-- Input -->
+    <q-input
+      dense
+      outlined
+      v-model="email"
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          t('form.messageFieldRequired', {
+            fieldName: t('form.labelEmail'),
+          }),
+        (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
+      ]"
+      v-bind="$attrs"
+      class="q-mt-sm"
+      id="form-email"
+      name="email"
+      type="email"
+      data-cy="form-email-input"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldEmail Component
  *
@@ -20,74 +53,37 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldEmail',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    }
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const email = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isEmail, isFilled } = useValidation();
-
-    return {
-      email,
-      isFilled,
-      isEmail,
-    };
+  required: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <div class="col-12 col-sm-6" data-cy="form-email">
-    <!-- Label -->
-    <label for="form-email" class="text-caption text-bold">
-      {{ $t('form.labelEmail') }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-    </label>
-    <!-- Input -->
-    <q-input
-      dense
-      outlined
-      v-model="email"
-      :rules="[
-        (val: string) =>
-          !required ||
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelEmail'),
-          }),
-        (val: string) => isEmail(val) || $t('form.messageEmailInvalid'),
-      ]"
-      v-bind="$attrs"
-      class="q-mt-sm"
-      id="form-email"
-      name="email"
-      type="email"
-      data-cy="form-email-input"
-    />
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const email = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isEmail, isFilled } = useValidation();
+</script>

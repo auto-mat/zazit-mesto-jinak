@@ -9,13 +9,13 @@
       />
       <div class="text-right">
         <router-link :to="routesConf['login']['path']">
-          {{ $t('login.forgotPassword') }}
+          {{ t('login.forgotPassword') }}
         </router-link>
       </div>
     </div>
 
     <q-btn
-      :label="$t('login.submitLogin')"
+      :label="t('login.submitLogin')"
       type="submit"
       unelevated
       rounded
@@ -28,19 +28,27 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { routesConf } from 'src/router/routes_conf';
-
+import { useI18n } from 'vue-i18n';
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
+import { useLoginStore } from 'src/stores/login';
 
 defineOptions({
   name: 'FormLogin',
 });
 
+const { t } = useI18n();
+
+const loginStore = useLoginStore();
+
 const email = ref('');
 const password = ref('');
 
-const onSubmit = () => {
-  console.log('submit');
+const onSubmit = async () => {
+  await loginStore.login({
+    username: email.value,
+    password: password.value,
+  });
 };
 
 const onReset = () => {
