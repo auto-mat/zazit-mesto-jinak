@@ -193,12 +193,24 @@ const routes: RouteRecordRaw[] = [
   // register
   {
     path: routesConf['register']['path'],
-    component: () => import('layouts/LoginRegisterLayout.vue'),
+    component: () => import('layouts/LoginLayout.vue'),
     children: [
       {
         path: '',
         name: routesConf['register']['children']['name'],
         component: () => import('pages/RegisterPage.vue'),
+      },
+    ],
+  },
+  // registration details
+  {
+    path: routesConf['registration']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['registration']['children']['name'],
+        component: () => import('pages/RegistrationPage.vue'),
       },
     ],
   },

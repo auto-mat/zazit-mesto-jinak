@@ -61,6 +61,10 @@ register = "Registujte se."
 submitLogin = "Přihlásit se"
 forgotPassword = "Zapomenuté heslo?"
 
+[register]
+title = "Registrace"
+submitRegister = "Registrovat se"
+
 [register.personalDetails]
 title = "Osobní údaje"
 newsTitle = "O čem chcete být informováni e-mailem"

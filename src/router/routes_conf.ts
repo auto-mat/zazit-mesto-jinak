@@ -51,6 +51,13 @@ const routesConf: RoutesConf = {
       name: 'register',
     },
   },
+  registration: {
+    path: '/registration',
+    children: {
+      fullPath: '/registration',
+      name: 'registration',
+    },
+  },
   profile: {
     path: '/profile',
     children: {
