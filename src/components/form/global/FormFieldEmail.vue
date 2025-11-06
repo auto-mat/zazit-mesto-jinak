@@ -22,6 +22,7 @@
         (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
       ]"
       v-bind="$attrs"
+      :bg-color="bgColor"
       class="q-mt-sm"
       id="form-email"
       name="email"
@@ -49,7 +50,7 @@
  * @example
  * <form-field-email />
  *
- * @see 
+ * @see
  */
 
 // libraries
@@ -67,6 +68,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
   },
 });
 

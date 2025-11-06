@@ -24,6 +24,7 @@
           }),
         (val: string) => isDate(val) || t('form.messageDateInvalid'),
       ]"
+      :bg-color="bgColor"
     >
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
@@ -84,6 +85,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
   },
 });
 

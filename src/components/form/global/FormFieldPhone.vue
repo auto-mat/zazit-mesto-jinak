@@ -23,6 +23,7 @@
         (val: string) => !val || isPhone(val) || t('form.messagePhoneInvalid'),
       ]"
       :hint="hint"
+      :bg-color="bgColor"
       class="q-mt-sm"
       id="form-phone"
       name="phone"
@@ -77,6 +78,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
   },
 });
 

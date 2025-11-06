@@ -19,9 +19,11 @@
           t('form.messageFieldRequired', {
             fieldName: t('form.labelPassword'),
           }),
-        (val: string) => isStrongPassword(val) || t('form.messagePasswordStrong'),
+        (val: string) =>
+          isStrongPassword(val) || t('form.messagePasswordStrong'),
       ]"
       lazy-rules
+      :bg-color="bgColor"
       class="q-mt-sm"
     >
       <!-- Icon: show password -->

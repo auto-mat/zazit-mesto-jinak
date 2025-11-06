@@ -21,6 +21,7 @@
           t('form.messagePasswordNotIdentical'),
       ]"
       lazy-rules
+      :bg-color="bgColor"
       class="q-mt-sm"
       data-cy="form-password-confirm-input"
     >

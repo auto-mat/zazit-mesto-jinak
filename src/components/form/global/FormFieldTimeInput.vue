@@ -1,5 +1,12 @@
 <template>
-  <q-input dense outlined v-model="inputValue" mask="time" class="q-mt-sm">
+  <q-input
+    dense
+    outlined
+    v-model="inputValue"
+    mask="time"
+    class="q-mt-sm"
+    :bg-color="bgColor"
+  >
     <template v-slot:append>
       <q-icon name="access_time" class="cursor-pointer">
         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -50,6 +57,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
   },
 });
 

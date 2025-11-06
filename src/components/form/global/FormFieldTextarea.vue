@@ -23,6 +23,7 @@
       class="q-mt-sm"
       :id="`form-${name}`"
       :name="name"
+      :bg-color="bgColor"
     />
   </div>
 </template>
@@ -71,6 +72,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
   },
 });
 
