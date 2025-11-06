@@ -1,5 +1,8 @@
 <template>
-  <div :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }">
+  <div
+    class="bg-white q-pa-md rounded-borders"
+    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
+  >
     <h1 class="q-mb-lg">{{ t('register.title') }}</h1>
     <form-register />
   </div>

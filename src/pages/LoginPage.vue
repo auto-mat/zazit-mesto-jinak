@@ -1,11 +1,14 @@
 <template>
-  <div :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }">
+  <div
+    class="bg-white q-pa-md rounded-borders"
+    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
+  >
     <h1>{{ t('login.title') }}</h1>
     <div class="q-mt-lg">
       <form-login />
       <div class="q-mt-xl">
         {{ t('login.withoutAccount') }}
-        <router-link :to="registerLink">
+        <router-link :to="routesConf['register']['path']">
           {{ t('login.register') }}
         </router-link>
       </div>
@@ -20,8 +23,6 @@ import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
-
-const registerLink = routesConf['register']['path'];
 
 defineOptions({
   name: 'LoginPage',

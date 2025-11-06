@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="login-layout">
     <q-avatar square size="100px" class="q-my-sm">
       <img src="logo-zmj.svg" />
     </q-avatar>
@@ -21,12 +21,20 @@ defineOptions({
 </script>
 
 <style scoped lang="scss">
+.login-layout {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
 .background-image-container {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
 }
 
 .background-image {
