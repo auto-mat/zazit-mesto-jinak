@@ -9,7 +9,7 @@ import { useJwt } from '../composables/useJwt';
 import { routesConf } from '../router/routes_conf';
 
 // mock data
-import { mockLoginResponse } from '../../mock/loginData';
+import { mockLoginResponse, mockRefreshTokenResponse } from '../../mock/loginData';
 
 // types
 interface UserLogin {
@@ -249,86 +249,78 @@ export const useLoginStore = defineStore('login', () => {
    * If the token is not expired, returns true.
    * @returns {Promise<boolean>} - Token is valid
    */
-  // async function validateAccessToken(): Promise<boolean> {
-  //   this.$log?.info('Validate access token.');
-  //   if (!this.getJwtExpiration) {
-  //     // no expiration set - user is not logged in
-  //     this.$log?.info(
-  //       'No access token expiration set, user is not logged in.',
-  //     );
-  //     return false;
-  //   } else {
-  //     // token is set - check if it is expired
-  //     if (this.isJwtExpired()) {
-  //       this.$log?.info('Access token is expired.');
-  //       // try to refresh tokens
-  //       await this.refreshTokens();
-  //       // check if refresh was successful
-  //       if (this.isJwtExpired()) {
-  //         // refresh failed - logout
-  //         this.$log?.info('Refresh access token failed, logout user.');
-  //         this.logout();
-  //         return false;
-  //       } else {
-  //         // refresh successful
-  //         this.$log?.info('Refresh access token was successfull.');
-  //         return true;
-  //       }
-  //     } else {
-  //       // token is not expired
-  //       this.$log?.info('Access token is not expired.');
-  //       return true;
-  //     }
-  //   }
-  // }
+  async function validateAccessToken(): Promise<boolean> {
+    console.log('Validate access token.');
+    if (!jwtExpiration.value) {
+      // no expiration set - user is not logged in
+      console.log('No access token expiration set, user is not logged in.');
+      return false;
+    } else {
+      // token is set - check if it is expired
+      if (isJwtExpired()) {
+        console.log('Access token is expired.');
+        // try to refresh tokens
+        await refreshTokens();
+        // check if refresh was successful
+        if (isJwtExpired()) {
+          // refresh failed - logout
+          console.log('Refresh access token failed, logout user.');
+          logout();
+          return false;
+        } else {
+          // refresh successful
+          console.log('Refresh access token was successfull.');
+          return true;
+        }
+      } else {
+        // token is not expired
+        console.log('Access token is not expired.');
+        return true;
+      }
+    }
+  }
   /**
    * Refresh tokens
    * Sends a request to refresh the access token using the refresh token.
    * If successful, sets the new access token.
    * @returns {Promise<RefreshTokenResponse | null>} - Refresh token response or null
    */
-  // async function refreshTokens(): Promise<RefreshTokenResponse | null> {
-  //   // check that refresh token is set
-  //   console.log('Call refresh token.');
-  //   if (!refreshToken.value) {
-  //     console.log(`No refresh token <${refreshToken.value}>.`);
-  //     return null;
-  //   }
-  //   // refresh tokens
-  //   const payload = { refresh: refreshToken.value };
-  //   console.log('Obtain new API access token.');
-  //   const { data } = await apiFetch<RefreshTokenResponse>({
-  //     endpoint: zazitMestoJinakConfig.urlApiRefresh,
-  //     method: 'post',
-  //     payload,
-  //     translationKey: 'refreshTokens',
-  //   });
+  async function refreshTokens(): Promise<RefreshTokenResponse | null> {
+    // check that refresh token is set
+    console.log('Call refresh token.');
+    if (!refreshToken.value) {
+      console.log(`No refresh token <${refreshToken.value}>.`);
+      return null;
+    }
+    // refresh tokens
+    const payload = { refresh: refreshToken.value };
+    console.log('Obtain new API access token.', payload);
+    // TODO: fetch new access token
 
-  //   // set new access token
-  //   if (data && data.access) {
-  //     console.log('Save newly obtained access token into store.');
-  //     setAccessToken(data.access);
-  //     console.log(`Login store saved newly obtained access token <${accessToken.value}>.`);
+    const data = mockRefreshTokenResponse
 
-  //     // set JWT expiration
-  //     const { readJwtExpiration } = useJwt();
-  //     const expiration = readJwtExpiration(data.access);
-  //     if (expiration) {
-  //       setJwtExpiration(expiration);
-  //       console.log(
-  //         `Current time <${timestampToDatetimeString(Date.now() / 1000)}>.`,
-  //       );
-  //       console.log(
-  //         `Login store saved newly obtained access token expiration time <${this.getJwtExpiration ? timestampToDatetimeString(this.getJwtExpiration) : null}>.`,
-  //       );
-  //     }
+    // set new access token
+    if (data && data.access) {
+      console.log('Save newly obtained access token into store.');
+      setAccessToken(data.access);
+      console.log(`Login store saved newly obtained access token <${accessToken.value}>.`);
 
-  //     // token refresh (if no page reload before expiration)
-  //     scheduleTokenRefresh();
-  //   }
+      // set JWT expiration
+      const { readJwtExpiration } = useJwt();
+      const expiration = readJwtExpiration(data.access);
+      if (expiration) {
+        setJwtExpiration(expiration);
+        console.log(
+          `Access token expiration time <${new Date(expiration * 1000).toLocaleString()}>.`,
+        );
+      }
 
-  //   return data;
-  // }
+      // token refresh (if no page reload before expiration)
+      // scheduleTokenRefresh();
+    }
+
+    return data;
+  }
   /**
    * Calculates the time until JWT expiration.
    * Action is used instead of getter to provide reactive value in tests.
@@ -349,17 +341,13 @@ export const useLoginStore = defineStore('login', () => {
    * Action is used instead of getter to provide reactive value in tests.
    * @returns {boolean} True if expired, else false.
    */
-  // function isJwtExpired(): boolean {
-  //   const expiration = this.jwtExpiration;
-  //   const currentTimeSeconds = Math.floor(Date.now() / 1000); // seconds
-  //   this.$log?.debug(
-  //     `Is access token expired <${!expiration || currentTimeSeconds > expiration}>.`,
-  //   );
-  //   this.$log?.debug(
-  //     `Current date time <${timestampToDatetimeString(currentTimeSeconds)}, JWT expiration date time <${expiration ? timestampToDatetimeString(expiration) : null}>.`,
-  //   );
-  //   return !expiration || currentTimeSeconds > expiration;
-  // }
+  function isJwtExpired(): boolean {
+    const expiration = jwtExpiration.value;
+    const currentTimeSeconds = Math.floor(Date.now() / 1000); // seconds
+    console.log(`Is access token expired <${!expiration || currentTimeSeconds > expiration}>.`);
+    console.log(`Current date time <${new Date(currentTimeSeconds * 1000).toLocaleString()}, JWT expiration date time <${expiration ? new Date(expiration * 1000).toLocaleString() : null}>.`);
+    return !expiration || currentTimeSeconds > expiration;
+  }
   /**
    * Reset password
    * Sends a request to reset the password using the email.
@@ -409,5 +397,6 @@ export const useLoginStore = defineStore('login', () => {
     login,
     logout,
     resetPassword,
+    validateAccessToken
   }
 });

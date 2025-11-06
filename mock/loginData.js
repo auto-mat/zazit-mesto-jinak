@@ -2,8 +2,10 @@
 
 // Mock JWT tokens (format: header.payload.signature)
 // These are example tokens, not real JWT tokens
-const mockAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImpvaG4ubm92YWsiLCJlbWFpbCI6ImpvaG4ubm92YWtAZW1haWwuY29tIiwiZXhwIjoxNzMwMDAwMDAwfQ.mock_access_token_signature'
-const mockRefreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMDAwMDAwMH0.mock_refresh_token_signature'
+// Access token expires in 1 year from now (exp: 1793968287 = 2026-11-06)
+const mockAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImpvaG4ubm92YWsiLCJlbWFpbCI6ImpvaG4ubm92YWtAZW1haWwuY29tIiwiZXhwIjoxNzkzOTY4Mjg3fQ.mock_access_token_signature'
+// Refresh token expires in 1 year from now (exp: 1793968287 = 2026-11-06)
+const mockRefreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5Mzk2ODI4N30.mock_refresh_token_signature'
 
 // Mock user data
 export const mockUser = {
