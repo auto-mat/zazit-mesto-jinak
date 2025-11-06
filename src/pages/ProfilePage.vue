@@ -1,16 +1,16 @@
 <template>
   <q-page class="column q-pa-xl">
     <h1 class="q-mb-md">
-      {{ $t('profile.title') }}
+      {{ t('profile.title') }}
     </h1>
-    <h2>{{ $t('profile.subtitle') }}</h2>
+    <h2>{{ t('profile.subtitle') }}</h2>
 
     <div class="q-mt-md" style="width: 800px; max-width: 100%">
       <profile-row @edit="openDialog('name')">
-        <span class="name">{{ user.name }}</span>
+        <span class="name">{{ userDetails.name }}</span>
       </profile-row>
-      <profile-row :label="$t('profile.emailLabel')">
-        {{ user.email }}
+      <profile-row :label="t('profile.emailLabel')">
+        {{ userDetails.email }}
         <template #button>
           <q-btn
             rounded
@@ -18,24 +18,21 @@
             outline
             color="primary"
             icon="mail"
-            :label="$t('profile.buttonAskForChange')"
+            :label="t('profile.buttonAskForChange')"
             @click="openDialog('email')"
           />
         </template>
       </profile-row>
-      <profile-row
-        :label="$t('profile.phoneLabel')"
-        @edit="openDialog('phone')"
-      >
-        {{ user.phone }}
+      <profile-row :label="t('profile.phoneLabel')" @edit="openDialog('phone')">
+        {{ userDetails.phone }}
       </profile-row>
       <profile-row
-        :label="$t('profile.genderLabel')"
+        :label="t('profile.genderLabel')"
         @edit="openDialog('gender')"
       >
-        {{ $t(`gender.${user.gender}`) }}
+        {{ t(`gender.${userDetails.gender}`) }}
       </profile-row>
-      <profile-row :label="$t('profile.languagePrefer')" no-button>
+      <profile-row :label="t('profile.languagePrefer')" no-button>
         <language-switcher />
       </profile-row>
     </div>
@@ -47,20 +44,20 @@
       >
         <dialog-content-name
           v-if="currentComponent === 'name'"
-          :first-name="user.name"
-          :last-name="user.surname"
+          :first-name="userDetails.name"
+          :last-name="userDetails.surname"
           @cancel="editDialogOpen = false"
           @update="updateName"
         />
         <dialog-content-phone
           v-if="currentComponent === 'phone'"
-          :phone="user.phone"
+          :phone="userDetails.phone"
           @cancel="editDialogOpen = false"
           @update="updatePhone"
         />
         <dialog-content-gender
           v-if="currentComponent === 'gender'"
-          :gender="user.gender"
+          :gender="userDetails.gender"
           @cancel="editDialogOpen = false"
           @update="updateGender"
         />
@@ -75,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import ProfileRow from 'src/components/profile/ProfileRow.vue';
 import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 import DialogContentName from 'src/components/profile/DialogContentName.vue';
@@ -83,19 +80,20 @@ import DialogContentPhone from 'src/components/profile/DialogContentPhone.vue';
 import DialogContentGender from 'src/components/profile/DialogContentGender.vue';
 import DialogContentEmail from 'src/components/profile/DialogContentEmail.vue';
 import { useUserStore } from 'src/stores/user';
+import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
 
 defineOptions({
   name: 'ProfilePage',
 });
 
+const { t } = useI18n();
 const userStore = useUserStore();
+const { userDetails } = storeToRefs(userStore);
 
 onMounted(() => {
   userStore.loadUserDetails();
 });
-
-// const isLoading = computed(() => userStore.isLoading);
-const user = computed(() => userStore.getUserDetails);
 
 const currentComponent = ref('');
 const editDialogOpen = ref(false);

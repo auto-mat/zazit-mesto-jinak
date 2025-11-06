@@ -58,7 +58,6 @@ export default route(function (/* { store, ssrContext } */) {
     //     const isUserOrganizationAdmin: boolean =
     //       registerChallengeStore.getIsUserOrganizationAdmin || false;
 
-
     if (
       !isAuthenticated &&
       /**
@@ -70,7 +69,6 @@ export default route(function (/* { store, ssrContext } */) {
         (record) =>
           record.path === routesConf['login']['path'] ||
           record.path === routesConf['register']['path'] ||
-          record.path === routesConf['registration']['path'] ||
           record.path === routesConf['confirm_email']['path'] ||
           record.path === routesConf['reset_password']['path'],
       )

@@ -1,13 +1,13 @@
-export type UserMetaType = {
-  id: string,
-  email: string,
+export interface UserMeta {
+  id: string;
+  email: string;
 }
 
-export type UserDetailsType = {
-  name: string,
-  surname: string,
-  email: string,
-  phone: string,
-  gender: string,
-  languagePreference: string,
+export interface UserDetails {
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+  gender: string;
+  languagePreference: string;
 }

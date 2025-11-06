@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useUserStore } from './user';
 import { useRouter } from 'vue-router';
 import { routesConf } from 'src/router/routes_conf';
+import { useLoginStore } from './login';
 
 export const useRegisterStore = defineStore('register', () => {
-  const userStore = useUserStore();
+  const loginStore = useLoginStore();
   const router = useRouter();
 
   const email = ref('');
@@ -61,7 +61,8 @@ export const useRegisterStore = defineStore('register', () => {
 
   const register = async () => {
     console.log('register');
-    userStore.setEmail(email.value);
+    // TODO: send register request to API
+    await loginStore.login({ username: email.value, password: password.value });
     await router.push(routesConf['registration']['path']);
   };
 

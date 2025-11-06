@@ -64,6 +64,8 @@ forgotPassword = "Zapomenuté heslo?"
 [register]
 title = "Registrace"
 submitRegister = "Registrovat se"
+alreadyHaveAccount = "Již máte účet?"
+login = "Přihlašte se."
 
 [register.details]
 title = "Registrace do portálu organizátora"

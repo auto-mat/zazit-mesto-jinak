@@ -1,5 +1,5 @@
 <template>
-  <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
+  <q-form class="q-gutter-md text-grey-10" @submit="onSubmit" @reset="onReset">
     <form-field-email v-model="email" name="form-login-email" required />
     <form-field-password
       v-model="password"

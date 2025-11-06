@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia';
 import { useApiUser } from 'src/composables/api/useApiUser';
-import { UserDetailsType, UserMetaType } from 'src/types/User';
+import { UserDetails, UserMeta } from 'src/types/User';
 import { ref } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   const defaultUserMeta = {
     id: '',
     email: '',
-  } as UserMetaType;
+  } as UserMeta;
 
   const defaultUserDetails = {
     name: '',
@@ -15,10 +15,10 @@ export const useUserStore = defineStore('user', () => {
     email: '',
     gender: '',
     languagePreference: '',
-  } as UserDetailsType;
+  } as UserDetails;
 
-  const userMeta = ref<UserMetaType>(defaultUserMeta);
-  const userDetails = ref<UserDetailsType>(defaultUserDetails);
+  const userMeta = ref<UserMeta>(defaultUserMeta);
+  const userDetails = ref<UserDetails>(defaultUserDetails);
   const loading = ref(false);
 
   const setEmail = (email: string) => {

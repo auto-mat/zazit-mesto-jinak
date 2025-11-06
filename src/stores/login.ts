@@ -1,5 +1,5 @@
 // libraries
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
 // composables
@@ -9,16 +9,13 @@ import { useJwt } from '../composables/useJwt';
 import { routesConf } from '../router/routes_conf';
 
 // mock data
-import { mockLoginResponse, mockRefreshTokenResponse } from '../../mock/loginData';
+import {
+  mockLoginResponse,
+  mockRefreshTokenResponse,
+} from '../../mock/loginData';
 
 // types
-interface UserLogin {
-  pk: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-}
+import { UserMeta } from 'src/types/User';
 
 interface LoginPayload {
   username: string;
@@ -28,11 +25,12 @@ interface LoginPayload {
 interface LoginResponse {
   access: string;
   refresh: string;
-  user: UserLogin;
+  user: UserMeta;
 }
 
 // utils
 import { computed, ref } from 'vue';
+import { useUserStore } from './user';
 
 interface RefreshTokenResponse {
   access: string;
@@ -43,35 +41,25 @@ interface PasswordResetResponse {
   detail: string;
 }
 
-export const emptyUser: UserLogin = {
+export const emptyUser: UserMeta = {
+  id: '',
   email: '',
-  first_name: '',
-  last_name: '',
-  pk: 0,
-  username: '',
 };
-
-export enum LoginFormState {
-  login = 'login',
-  passwordReset = 'password-reset',
-  resetFinished = 'reset-finished',
-}
 
 export const useLoginStore = defineStore('login', () => {
   const router = useRouter();
+  const userStore = useUserStore();
+  const { userMeta } = storeToRefs(userStore);
+  const accessToken = ref('');
+  const refreshToken = ref(''); // persisted
+  const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
+  // const refreshTokenTimeout = ref<NodeJS.Timeout | null>(null) // unit: seconds
+  const passwordResetEmail = ref('');
 
-  const user = ref<UserLogin>(emptyUser) // persisted
-  const accessToken = ref('')
-  const refreshToken = ref('') // persisted
-  const jwtExpiration = ref<number | null>(null) // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
-  const refreshTokenTimeout = ref<NodeJS.Timeout | null>(null) // unit: seconds
-  const loginFormState = ref<LoginFormState>(LoginFormState.login)
-  const passwordResetEmail = ref('')
+  const isUserLoggedIn = computed(() => (userMeta.value.email ? true : false));
 
-  const isUserLoggedIn = computed(() => (user.value.email ? true : false))
-
-  function setUser(newUser: UserLogin): void {
-    user.value = newUser;
+  function setUser(newUser: UserMeta): void {
+    userMeta.value = newUser;
   }
 
   function setAccessToken(token: string): void {
@@ -86,10 +74,6 @@ export const useLoginStore = defineStore('login', () => {
     jwtExpiration.value = expiration;
   }
 
-  function setLoginFormState(state: LoginFormState): void {
-    loginFormState.value = state;
-  }
-
   function setPasswordResetEmail(email: string): void {
     passwordResetEmail.value = email;
   }
@@ -99,12 +83,11 @@ export const useLoginStore = defineStore('login', () => {
   // }
 
   function clearRefreshTokenTimeout(): void {
-    if (refreshTokenTimeout.value) {
-      clearTimeout(refreshTokenTimeout.value);
-      refreshTokenTimeout.value = null;
-    }
+    // if (refreshTokenTimeout.value) {
+    //   clearTimeout(refreshTokenTimeout.value);
+    //   refreshTokenTimeout.value = null;
+    // }
   }
-
 
   /**
    * Get access token, if token does not exists
@@ -132,9 +115,7 @@ export const useLoginStore = defineStore('login', () => {
    * @param {LoginPayload} payload - Login input data (username, password)
    * @returns {Promise<LoginResponse | null>} - Response
    */
-  async function login(
-    payload: LoginPayload,
-  ): Promise<LoginResponse | null> {
+  async function login(payload: LoginPayload): Promise<LoginResponse | null> {
     console.log(`Login payload <${JSON.stringify(payload, null, 2)}>.`);
     // check that email is set
     if (!payload.username) {
@@ -155,7 +136,7 @@ export const useLoginStore = defineStore('login', () => {
     //   payload,
     // });
 
-    const data = mockLoginResponse
+    const data = mockLoginResponse as LoginResponse;
 
     await processLoginData(data);
 
@@ -199,7 +180,7 @@ export const useLoginStore = defineStore('login', () => {
    * Sets the access token, refresh token and user to empty values.
    */
   function logout(): void {
-    console.log(`Logout user <${user.value.email}>.`);
+    console.log(`Logout user <${userMeta.value.email}>.`);
     setAccessToken('');
     setRefreshToken('');
     setJwtExpiration(null);
@@ -209,7 +190,6 @@ export const useLoginStore = defineStore('login', () => {
 
     // redirect to login page
     router.push(routesConf['login']['path']);
-
   }
   /**
    * Schedule token refresh (on page load, if logged in)
@@ -297,13 +277,15 @@ export const useLoginStore = defineStore('login', () => {
     console.log('Obtain new API access token.', payload);
     // TODO: fetch new access token
 
-    const data = mockRefreshTokenResponse
+    const data = mockRefreshTokenResponse;
 
     // set new access token
     if (data && data.access) {
       console.log('Save newly obtained access token into store.');
       setAccessToken(data.access);
-      console.log(`Login store saved newly obtained access token <${accessToken.value}>.`);
+      console.log(
+        `Login store saved newly obtained access token <${accessToken.value}>.`,
+      );
 
       // set JWT expiration
       const { readJwtExpiration } = useJwt();
@@ -344,8 +326,12 @@ export const useLoginStore = defineStore('login', () => {
   function isJwtExpired(): boolean {
     const expiration = jwtExpiration.value;
     const currentTimeSeconds = Math.floor(Date.now() / 1000); // seconds
-    console.log(`Is access token expired <${!expiration || currentTimeSeconds > expiration}>.`);
-    console.log(`Current date time <${new Date(currentTimeSeconds * 1000).toLocaleString()}, JWT expiration date time <${expiration ? new Date(expiration * 1000).toLocaleString() : null}>.`);
+    console.log(
+      `Is access token expired <${!expiration || currentTimeSeconds > expiration}>.`,
+    );
+    console.log(
+      `Current date time <${new Date(currentTimeSeconds * 1000).toLocaleString()}, JWT expiration date time <${expiration ? new Date(expiration * 1000).toLocaleString() : null}>.`,
+    );
     return !expiration || currentTimeSeconds > expiration;
   }
   /**
@@ -354,7 +340,9 @@ export const useLoginStore = defineStore('login', () => {
    * @param {string} email - Email
    * @return {Promise<void>}
    */
-  async function resetPassword(email: string): Promise<PasswordResetResponse | null> {
+  async function resetPassword(
+    email: string,
+  ): Promise<PasswordResetResponse | null> {
     const payload = { email };
     console.log(`Reset password email <${payload.email}>.`);
     // const { data } = await useFetch<PasswordResetResponse>({
@@ -363,7 +351,7 @@ export const useLoginStore = defineStore('login', () => {
     //   payload,
     // });
 
-    const data = { detail: 'Password reset e-mail has been sent.' }
+    const data = { detail: 'Password reset e-mail has been sent.' };
 
     if (data) {
       console.log(`Reset password response <${data.detail}>.`);
@@ -373,30 +361,20 @@ export const useLoginStore = defineStore('login', () => {
       console.log(
         `Login store password reset email <${passwordResetEmail.value}>.`,
       );
-      // set login form state
-      console.log(
-        `Set login form state to <${LoginFormState.resetFinished}>.`,
-      );
-      setLoginFormState(LoginFormState.resetFinished);
-      console.log(
-        `Login store login form state <${loginFormState.value}>.`,
-      );
     }
 
     return data;
   }
 
   return {
-    user,
     accessToken,
     refreshToken,
     jwtExpiration,
-    loginFormState,
     passwordResetEmail,
     isUserLoggedIn,
     login,
     logout,
     resetPassword,
-    validateAccessToken
-  }
+    validateAccessToken,
+  };
 });
