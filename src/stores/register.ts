@@ -24,7 +24,7 @@ export const useRegisterStore = defineStore('register', () => {
     },
     eventDetails: {
       eventName: '',
-      date: new Date().toISOString(),
+      date: '06/11/2025',
       gps: '',
       spaceType: 'none', //option
       spaceArea: 'none', //option

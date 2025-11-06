@@ -1,13 +1,14 @@
 <template>
-  <q-page>
+  <div :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }">
     <h1 class="q-mb-lg">{{ t('register.title') }}</h1>
     <form-register />
-  </q-page>
+  </div>
 </template>
 
 <script setup lang="ts">
 import FormRegister from 'src/components/form/registration/FormRegister.vue';
 import { useI18n } from 'vue-i18n';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const { t } = useI18n();
 

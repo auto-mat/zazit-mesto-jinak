@@ -20,7 +20,7 @@
         autocomplete="given-name"
         required
         class="col-12 col-sm-6"
-        data-cy="form-register-personal-details-first-name"
+        bg-color="white"
       />
       <!-- Input: last name -->
       <form-field-text
@@ -30,7 +30,7 @@
         autocomplete="family-name"
         required
         class="col-12 col-sm-6"
-        data-cy="form-register-personal-details-last-name"
+        bg-color="white"
       />
     </div>
     <div class="row q-col-gutter-md q-mb-sm">
@@ -38,6 +38,7 @@
       <form-field-phone
         v-model="registerFormState.personalDetails.phone"
         required
+        bg-color="white"
       />
       <!-- Input: gender -->
       <div class="col-12 col-sm-6">

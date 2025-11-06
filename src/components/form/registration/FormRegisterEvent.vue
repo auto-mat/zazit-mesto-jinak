@@ -7,146 +7,141 @@
       @reset="onReset"
       class="q-gutter-md text-grey-10"
     >
-      <!-- Heading -->
-      <h2
-        class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
-        data-cy="register-form-event-title"
-      >
-        {{ t('register.event.title') }}
-      </h2>
-      <div class="q-mt-lg">
-        <div class="row q-col-gutter-md q-mb-lg">
+      <div class="row q-col-gutter-md q-mb-lg">
+        <form-field-radio-group
+          v-model="choice"
+          :options="optionsChoiceEvent"
+        />
+      </div>
+
+      <div v-if="choice == 'past'" class="row q-col-gutter-md q-mb-md">
+        <div class="col-12">
+          <label
+            for="event-from-past"
+            class="text-grey-10 text-caption text-bold"
+          >
+            {{ t('register.event.labelEventFromPast') }}
+          </label>
+          <q-select
+            outlined
+            dense
+            id="event-from-past"
+            v-model="fromPast"
+            :options="eventsFromPast"
+            class="q-mt-sm"
+            bg-color="white"
+          />
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-md q-mt-lg q-mb-sm">
+        <!-- Input: event name -->
+        <form-field-text
+          v-model="registerFormState.eventDetails.eventName"
+          name="form-event-name"
+          label="register.event.labelEventName"
+          required
+          class="col-12"
+          bg-color="white"
+        />
+      </div>
+      <div class="row q-col-gutter-md q-mb-sm">
+        <div class="col-12 col-sm-6">
+          <label
+            for="date"
+            class="text-grey-10 text-caption text-bold row items-center"
+          >
+            {{ t('register.event.labelPickDate') }}
+            <info-button
+              class="q-ml-sm"
+              :content="
+                t('register.event.textInfoDate', {
+                  date: registerFormState.eventDetails.date,
+                })
+              "
+            />
+          </label>
+          <form-field-date-input
+            v-model="registerFormState.eventDetails.date"
+            id="date"
+            bg-color="white"
+          />
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-md q-mb-xl">
+        <div class="col-12 col-sm-4">
+          <label
+            for="space-type"
+            class="text-grey-10 text-caption text-bold row items-center"
+          >
+            {{ t('register.event.labelSpaceType') }}
+            <info-button
+              class="q-ml-sm"
+              :content="t('register.event.textInfoSpaceType')"
+            />
+          </label>
           <form-field-radio-group
-            v-model="choice"
-            :options="optionsChoiceEvent"
+            v-model="registerFormState.eventDetails.spaceType"
+            :options="optionsSpaceType"
+            id="space-type"
+            class="q-mt-md"
           />
         </div>
-
-        <div v-if="choice == 'past'" class="row q-col-gutter-md q-mb-md">
-          <div class="col-12">
-            <label
-              for="event-from-past"
-              class="text-grey-10 text-caption text-bold"
-            >
-              {{ t('register.event.labelEventFromPast') }}
-            </label>
-            <q-select
-              outlined
-              dense
-              id="event-from-past"
-              v-model="fromPast"
-              :options="eventsFromPast"
-              class="q-mt-sm"
-            />
-          </div>
-        </div>
-
-        <div class="row q-col-gutter-md q-mt-lg q-mb-sm">
-          <!-- Input: event name -->
-          <form-field-text
-            v-model="registerFormState.eventDetails.eventName"
-            name="form-event-name"
-            label="register.event.labelEventName"
-            required
-            class="col-12"
-            data-cy="form-register-event-name"
-          />
-        </div>
-        <div class="row q-col-gutter-md q-mb-sm">
-          <div class="col-12 col-sm-6">
-            <label
-              for="date"
-              class="text-grey-10 text-caption text-bold row items-center"
-            >
-              {{ t('register.event.labelPickDate') }}
-              <info-button
-                class="q-ml-sm"
-                :content="
-                  t('register.event.textInfoDate', {
-                    date: registerFormState.eventDetails.date,
-                  })
-                "
-              />
-            </label>
-            <form-field-date-input
-              v-model="registerFormState.eventDetails.date"
-              id="date"
-            />
-          </div>
-        </div>
-        <div class="row q-col-gutter-md q-mb-xl">
-          <div class="col-12 col-sm-4">
-            <label
-              for="space-type"
-              class="text-grey-10 text-caption text-bold row items-center"
-            >
-              {{ t('register.event.labelSpaceType') }}
-              <info-button
-                class="q-ml-sm"
-                :content="t('register.event.textInfoSpaceType')"
-              />
-            </label>
-            <form-field-radio-group
-              v-model="registerFormState.eventDetails.spaceType"
-              :options="optionsSpaceType"
-              id="space-type"
-              class="q-mt-md"
-            />
-          </div>
-          <div
-            v-if="registerFormState.eventDetails.spaceType !== 'none'"
-            class="col-12 col-sm-4"
+        <div
+          v-if="registerFormState.eventDetails.spaceType !== 'none'"
+          class="col-12 col-sm-4"
+        >
+          <label
+            for="space-area"
+            class="text-grey-10 text-caption text-bold row items-center"
           >
-            <label
-              for="space-area"
-              class="text-grey-10 text-caption text-bold row items-center"
-            >
-              {{ t('register.event.labelSpaceArea') }}
-              <info-button
-                class="q-ml-sm"
-                :content="t('register.event.textInfoSpaceArea')"
-              />
-            </label>
-            <form-field-radio-group
-              v-model="registerFormState.eventDetails.spaceArea"
-              :options="optionsSpaceArea"
-              id="space-area"
-              class="q-mt-md"
+            {{ t('register.event.labelSpaceArea') }}
+            <info-button
+              class="q-ml-sm"
+              :content="t('register.event.textInfoSpaceArea')"
             />
-          </div>
-          <div
-            v-if="registerFormState.eventDetails.spaceType !== 'none'"
-            class="col-12 col-sm-4"
-          >
-            <label
-              for="space-area"
-              class="text-grey-10 text-caption text-bold row items-center"
-            >
-              {{ t('register.event.labelSpaceRent') }}
-              <info-button
-                class="q-ml-sm"
-                :content="t('register.event.textInfoSpaceRent')"
-              />
-            </label>
-            <form-field-radio-group
-              v-model="registerFormState.eventDetails.spaceRent"
-              :options="optionsSpaceRent"
-              id="space-area"
-              class="q-mt-md"
-            />
-          </div>
-        </div>
-        <!-- TODO inside space -->
-        <!-- TODO sales -->
-        <div class="row q-col-gutter-md q-mb-sm">
-          <form-field-textarea
-            v-model="registerFormState.eventDetails.activities"
-            label="register.event.labelActivities"
-            name="activities"
-            required
-            class="col-12"
+          </label>
+          <form-field-radio-group
+            v-model="registerFormState.eventDetails.spaceArea"
+            :options="optionsSpaceArea"
+            id="space-area"
+            class="q-mt-md"
           />
         </div>
+        <div
+          v-if="registerFormState.eventDetails.spaceType !== 'none'"
+          class="col-12 col-sm-4"
+        >
+          <label
+            for="space-area"
+            class="text-grey-10 text-caption text-bold row items-center"
+          >
+            {{ t('register.event.labelSpaceRent') }}
+            <info-button
+              class="q-ml-sm"
+              :content="t('register.event.textInfoSpaceRent')"
+            />
+          </label>
+          <form-field-radio-group
+            v-model="registerFormState.eventDetails.spaceRent"
+            :options="optionsSpaceRent"
+            id="space-area"
+            class="q-mt-md"
+          />
+        </div>
+      </div>
+      <!-- TODO inside space -->
+      <!-- TODO sales -->
+      <div class="row q-col-gutter-md q-mb-sm">
+        <form-field-textarea
+          v-model="registerFormState.eventDetails.activities"
+          label="register.event.labelActivities"
+          name="activities"
+          required
+          bg-color="white"
+          class="col-12"
+        />
       </div>
       <!-- Button: back and submit -->
       <div class="flex justify-end q-gutter-sm q-mt-lg">

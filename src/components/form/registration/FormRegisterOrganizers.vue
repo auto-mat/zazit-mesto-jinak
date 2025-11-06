@@ -7,119 +7,124 @@
       @reset="onReset"
       class="q-gutter-md text-grey-10"
     >
-      <div class="q-mt-lg">
-        <div class="row q-col-gutter-md q-mb-xl">
-          <form-field-radio-group
-            v-model="choice"
-            :options="optionsChoiceOrganizers"
+      <div class="row q-col-gutter-md q-mb-xl">
+        <form-field-radio-group
+          v-model="choice"
+          :options="optionsChoiceOrganizers"
+        />
+      </div>
+
+      <div v-if="choice == 'company'" class="q-mb-md">
+        <h3 class="text-body2 text-weight-bold q-mb-md">
+          {{ t('register.organizers.titleCompany') }}
+        </h3>
+        <div class="row q-col-gutter-md">
+          <form-field-text
+            v-model="registerFormState.organizers.company.title"
+            name="form-title"
+            label="event.organizers.labelCompanyTitle"
+            required
+            bg-color="white"
+            class="col-12 col-sm-6"
+          />
+          <!-- TODO select -->
+          <form-field-text
+            v-model="registerFormState.organizers.company.businessType"
+            name="form-business-type"
+            label="event.organizers.labelBusinessType"
+            required
+            bg-color="white"
+            class="col-12 col-sm-6"
+          />
+          <form-field-text
+            v-model="registerFormState.organizers.company.ico"
+            name="form-ico"
+            label="event.organizers.labelIco"
+            required
+            bg-color="white"
+            class="col-12 col-sm-6"
+          />
+          <form-field-text
+            v-model="registerFormState.organizers.company.dic"
+            name="form-dic"
+            label="event.organizers.labelDic"
+            required
+            bg-color="white"
+            class="col-12 col-sm-6"
           />
         </div>
+      </div>
 
-        <div v-if="choice == 'company'" class="q-mb-md">
-          <h3 class="text-body2 text-weight-bold q-mb-md">
-            {{ t('register.organizers.titleCompany') }}
-          </h3>
+      <div class="column q-mt-lg">
+        <h3 class="text-body2 text-weight-bold">
+          {{ t('register.organizers.titleOrganizers') }}
+        </h3>
+        <span class="text-caption">
+          {{ t('register.organizers.subtitleOrganizers') }}
+        </span>
+        <div
+          v-for="(organizer, index) in registerFormState.organizers.organizers"
+          :key="index"
+          class="q-mb-sm"
+        >
+          <div class="text-right">
+            <span class="text-caption">
+              {{
+                t('register.organizers.titleOrganizer', { number: index + 1 })
+              }}
+            </span>
+            <q-btn
+              round
+              flat
+              color="primary"
+              icon="delete"
+              @click="deleteOrganizer(index)"
+            />
+          </div>
           <div class="row q-col-gutter-md">
             <form-field-text
-              v-model="registerFormState.organizers.company.title"
-              name="form-title"
-              label="event.organizers.labelCompanyTitle"
+              v-model="organizer.name"
+              name="form-name"
+              label="form.labelFirstName"
               required
-              class="col-12 col-sm-6"
-            />
-            <!-- TODO select -->
-            <form-field-text
-              v-model="registerFormState.organizers.company.businessType"
-              name="form-business-type"
-              label="event.organizers.labelBusinessType"
-              required
+              bg-color="white"
               class="col-12 col-sm-6"
             />
             <form-field-text
-              v-model="registerFormState.organizers.company.ico"
-              name="form-ico"
-              label="event.organizers.labelIco"
+              v-model="organizer.surname"
+              name="form-surname"
+              label="form.labelLastName"
               required
+              bg-color="white"
               class="col-12 col-sm-6"
             />
-            <form-field-text
-              v-model="registerFormState.organizers.company.dic"
-              name="form-dic"
-              label="event.organizers.labelDic"
+            <form-field-email
+              v-model="organizer.email"
               required
+              bg-color="white"
+              class="col-12 col-sm-6"
+            />
+            <form-field-phone
+              v-model="organizer.phone"
+              label="form.labelPhone"
+              required
+              bg-color="white"
               class="col-12 col-sm-6"
             />
           </div>
+          <!-- <q-separator spaced="md" /> -->
         </div>
-
-        <div class="column q-mt-lg">
-          <h3 class="text-body2 text-weight-bold">
-            {{ t('register.organizers.titleOrganizers') }}
-          </h3>
-          <span class="text-caption">
-            {{ t('register.organizers.subtitleOrganizers') }}
-          </span>
-          <div
-            v-for="(organizer, index) in registerFormState.organizers
-              .organizers"
-            :key="index"
-            class="q-mb-sm"
-          >
-            <div class="text-right">
-              <span class="text-caption">
-                {{
-                  t('register.organizers.titleOrganizer', { number: index + 1 })
-                }}
-              </span>
-              <q-btn
-                round
-                flat
-                color="primary"
-                icon="delete"
-                @click="deleteOrganizer(index)"
-              />
-            </div>
-            <div class="row q-col-gutter-md">
-              <form-field-text
-                v-model="organizer.name"
-                name="form-name"
-                label="form.labelFirstName"
-                required
-                class="col-12 col-sm-6"
-              />
-              <form-field-text
-                v-model="organizer.surname"
-                name="form-surname"
-                label="form.labelLastName"
-                required
-                class="col-12 col-sm-6"
-              />
-              <form-field-email
-                v-model="organizer.email"
-                required
-                class="col-12 col-sm-6"
-              />
-              <form-field-phone
-                v-model="organizer.phone"
-                label="form.labelPhone"
-                required
-                class="col-12 col-sm-6"
-              />
-            </div>
-            <!-- <q-separator spaced="md" /> -->
-          </div>
-          <div>
-            <q-btn
-              rounded
-              unelevated
-              outline
-              color="primary"
-              icon="add"
-              :label="t('register.organizers.buttonAddOrganizer')"
-              class="q-mt-md"
-              @click="addOrganizer"
-            />
-          </div>
+        <div>
+          <q-btn
+            rounded
+            unelevated
+            outline
+            color="primary"
+            icon="add"
+            :label="t('register.organizers.buttonAddOrganizer')"
+            class="q-mt-md"
+            @click="addOrganizer"
+          />
         </div>
       </div>
       <!-- Button: back and submit -->

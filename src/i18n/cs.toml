@@ -65,6 +65,9 @@ forgotPassword = "Zapomenuté heslo?"
 title = "Registrace"
 submitRegister = "Registrovat se"
 
+[register.details]
+title = "Registrace do portálu organizátora"
+
 [register.personalDetails]
 title = "Osobní údaje"
 newsTitle = "O čem chcete být informováni e-mailem"

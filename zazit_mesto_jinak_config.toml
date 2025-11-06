@@ -17,8 +17,8 @@ colorWhiteBorderOpacity = 0.5
 
 # STYLING ATTRIBUTES
 
-# container used for registration forms
-containerFormWidth = "752px"
+# container used for register and login forms
+containerFormWidth = "600px"
 
 # container used for main layout
 containerContentWidth = "1024px"
@@ -147,7 +147,7 @@ urlApiTrips = "trips/"
 urlApiChallengeRegistrationUser = "challenge/registration/user/"
 urlApiThisCampaign = "this_campaign/"
 
-checkIsEmailVerifiedInterval = 20 # seconds
+checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
 feedRefreshCachedPostsIntervalHours = 24
 apiFeedMaxOffersNumber = 50
