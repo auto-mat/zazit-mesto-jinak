@@ -40,7 +40,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['profile']['children']['name'],
-        component: () => import('pages/ProfilePage.vue'),
+        component: () => import('pages/profile/ProfilePage.vue'),
+      },
+    ],
+  },
+  // profile edit
+  {
+    path: routesConf['profile_edit']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['profile_edit']['children']['name'],
+        component: () => import('pages/profile/ProfileEditPage.vue'),
       },
     ],
   },

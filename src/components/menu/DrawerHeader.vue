@@ -11,7 +11,7 @@
           <q-badge color="red" floating rounded />
         </q-btn>
       </div>
-      <p>{{ userMeta.email }}</p>
+      <p>{{ userDetails?.email ?? '' }}</p>
     </div>
   </div>
 </template>
@@ -21,5 +21,5 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from 'src/stores/user';
 
 const userStore = useUserStore();
-const { userMeta } = storeToRefs(userStore);
+const { userDetails } = storeToRefs(userStore);
 </script>

@@ -7,7 +7,7 @@
           {{ t('form.labelEmail') }}
         </label>
         <span>
-          {{ userMeta.email }}
+          {{ userDetails?.email ?? '' }}
         </span>
       </div>
     </div>
@@ -150,7 +150,7 @@ const emit = defineEmits(['submit']);
 const { t } = useI18n();
 
 const userStore = useUserStore();
-const { userMeta } = storeToRefs(userStore);
+const { userDetails } = storeToRefs(userStore);
 
 const registerStore = useRegisterStore();
 const { registerFormState } = storeToRefs(registerStore);

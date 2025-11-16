@@ -1,4 +1,26 @@
-<script lang="ts">
+<template>
+  <ul class="language-list flex">
+    <!-- Language switcher items -->
+    <li
+      v-for="item in localeOptions"
+      :key="item.value"
+      class="text-uppercase"
+      :data-cy="'switcher-' + item.value"
+    >
+      <q-btn
+        unelevated
+        rounded
+        @click.prevent="setLocale(item.value)"
+        :class="{ 'bg-dark text-white': isActive(item.value) }"
+        size="13px"
+      >
+        {{ shortVersion ? item.value : item.label }}
+      </q-btn>
+    </li>
+  </ul>
+</template>
+
+<script setup lang="ts">
 /**
  * LanguageSwitcher Component
  *
@@ -18,68 +40,27 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
 
-export default defineComponent({
-  name: 'LanguageSwitcher',
+defineProps<{
+  shortVersion?: boolean;
+}>();
 
-  props: {
-    shortVersion: {
-      type: Boolean,
-      default: false
-    }
-  },
+const { locale, t } = useI18n({ useScope: 'global' });
 
-  setup() {
-    const { locale, t } = useI18n({ useScope: 'global' })
+const localeOptions = [
+  { value: 'en', label: t('locale.en') },
+  { value: 'cs', label: t('locale.cz') },
+];
 
-    const localeOptions = [
-      { value: 'en', label: t('locale.en') },
-      { value: 'cz', label: t('locale.cz') }
-    ]
+const setLocale = (item: string) => {
+  locale.value = item;
+};
 
-    const setLocale = (item: string) => {
-      locale.value = item
-    }
-
-    const isActive = (item: string): boolean => {
-      return locale.value === item;
-    }
-
-    return {
-      locale,
-      localeOptions,
-      setLocale,
-      isActive
-    };
-  },
-});
+const isActive = (item: string): boolean => {
+  return locale.value === item;
+};
 </script>
-
-<template>
-  <ul
-    class="language-list flex"
-  >
-    <!-- Language switcher items -->
-    <li
-      v-for="item in localeOptions"
-      :key="item.value"
-      class="text-uppercase"
-      :data-cy="'switcher-' + item.value"
-    >
-      <q-btn
-        unelevated
-        rounded
-        @click.prevent="setLocale(item.value)"
-        :class="{'bg-dark text-white': isActive(item.value) }"
-        size="13px"
-      >
-        {{ shortVersion ? item.value : item.label }}
-      </q-btn>
-    </li>
-  </ul>
-</template>
 
 <style scoped>
 .language-list {
