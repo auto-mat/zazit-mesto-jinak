@@ -1,12 +1,9 @@
 <template>
   <div>
     <!-- Label -->
-    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
+    <form-label :for="`form-${name}`" :optional="!required">
       {{ t(label) }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${t('form.labelOptional')})` }}
-      </span>
-    </label>
+    </form-label>
     <!-- Input -->
     <q-input
       dense
@@ -41,12 +38,13 @@
  * - `name` (string, required): The name used for id and test selectors.
  * - `label` (string, required): The translation key for the label.
  * - `required` (boolean, default: false): Whether the input is required.
+ * - `bgColor` (string, default: 'transparent'): The background color of the input.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-textarea v-model="value" label="" name="" />
+ * <form-field-textarea v-model="value" label="t('form.labelTextarea')" name="form-textarea" />
  */
 
 // libraries
@@ -55,6 +53,9 @@ import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+// components
+import FormLabel from './FormLabel.vue';
 
 const props = defineProps({
   modelValue: {

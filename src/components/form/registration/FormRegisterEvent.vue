@@ -26,7 +26,7 @@
             outlined
             dense
             id="event-from-past"
-            v-model="fromPast"
+            v-model="eventFromPast"
             :options="eventsFromPast"
             class="q-mt-sm"
             bg-color="white"
@@ -203,7 +203,7 @@ const registerStore = useRegisterStore();
 const { registerFormState } = storeToRefs(registerStore);
 
 const choice = ref('new'); // watch -> get events
-const fromPast = ref('');
+const eventFromPast = ref('');
 
 const optionsChoiceEvent: FormOption[] = [
   {

@@ -5,7 +5,6 @@
     hide-bottom-space
     :model-value="model"
     :rules="[(val: string) => !required || !!val || validationMessage]"
-    data-cy="form-field-checkbox"
   >
     <q-checkbox
       dense
@@ -14,9 +13,9 @@
       :true-value="true"
       :false-value="false"
       class="text-grey-10"
-      data-cy="form-field-checkbox-input"
     >
-      <span data-cy="form-field-checkbox-label">
+      <!-- Label -->
+      <span>
         <slot />
       </span>
     </q-checkbox>
@@ -44,8 +43,6 @@
  *
  * @example
  * <form-field-checkbox v-model="isChecked" :validation-message="validationMessage" required >Label</form-field-checkbox>
- *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=6417-29946&t=22yqDCEydrJ2RQgL-1)
  */
 
 // libraries

@@ -1,5 +1,5 @@
 <template>
-  <div data-cy="form-password-confirm">
+  <div>
     <!-- Label -->
     <label
       for="form-password-confirm"
@@ -23,7 +23,6 @@
       lazy-rules
       :bg-color="bgColor"
       class="q-mt-sm"
-      data-cy="form-password-confirm-input"
     >
       <!-- Icon: show password -->
       <template v-slot:append>
@@ -33,7 +32,6 @@
           class="cursor-pointer"
           size="18px"
           @click="isHiddenPassword = !isHiddenPassword"
-          data-cy="form-password-confirm-icon"
         />
       </template>
     </q-input>
@@ -61,8 +59,6 @@
  *
  * @example
  * <form-field-password-confirm v-model="passwordConfirm" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6385%3A28513&mode=dev)
  */
 
 // libraries

@@ -1,16 +1,14 @@
 <template>
-  <q-form class="q-gutter-md text-grey-10" @submit="onSubmit" @reset="onReset">
-    <form-field-email v-model="email" name="form-login-email" required />
-    <form-field-password
-      v-model="password"
-      name="form-login-password"
-      required
-    />
-    <form-field-password-confirm
-      v-model="passwordConfirm"
-      name="form-login-password-confirm"
-      :compare-value="password"
-    />
+  <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
+    <div class="row q-col-gutter-md">
+      <form-field-email v-model="email" required class="col-12" />
+      <form-field-password v-model="password" required class="col-12" />
+      <form-field-password-confirm
+        v-model="passwordConfirm"
+        :compare-value="password"
+        class="col-12"
+      />
+    </div>
 
     <q-btn
       :label="t('register.submitRegister')"
@@ -24,13 +22,18 @@
 </template>
 
 <script setup lang="ts">
+// libraries
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// stores
+import { useRegisterStore } from 'src/stores/register';
+
+// components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
-import { useRegisterStore } from 'src/stores/register';
-import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 

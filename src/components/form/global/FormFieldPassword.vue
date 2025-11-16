@@ -13,16 +13,8 @@
       id="form-password"
       :hint="props.hideHint ? '' : t('form.hintPassword')"
       :type="isHiddenPassword ? 'password' : 'text'"
-      :rules="[
-        (val: string) =>
-          isFilled(val) ||
-          t('form.messageFieldRequired', {
-            fieldName: t('form.labelPassword'),
-          }),
-        (val: string) =>
-          isStrongPassword(val) || t('form.messagePasswordStrong'),
-      ]"
-      lazy-rules
+      :rules="validated ? validationRules : []"
+      :lazy-rules="validated"
       :bg-color="bgColor"
       class="q-mt-sm"
     >
@@ -54,14 +46,13 @@
  * - `bgColor` (string, default: 'transparent'): The background color of the
  *   input.
  * - `hideHint` (boolean, default: false): Whether to show hint or not.
+ * - `validated` (boolean, default: false): Whether the password should be validated.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
  * <form-field-password v-model="password" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6385%3A26514&mode=dev)
  */
 
 // libraries
@@ -81,6 +72,10 @@ const props = defineProps({
     default: 'transparent',
   },
   hideHint: {
+    type: Boolean,
+    default: false,
+  },
+  validated: {
     type: Boolean,
     default: false,
   },
@@ -104,4 +99,13 @@ const password = computed({
 const { isFilled, isStrongPassword } = useValidation();
 
 const isHiddenPassword = ref(true);
+
+const validationRules = computed(() => {
+  return [
+    (val: string) =>
+      isFilled(val) ||
+      t('form.messageFieldRequired', { fieldName: t('form.labelPassword') }),
+    (val: string) => isStrongPassword(val) || t('form.messagePasswordStrong'),
+  ];
+});
 </script>

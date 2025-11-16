@@ -190,15 +190,15 @@ const routes: RouteRecordRaw[] = [
   //     },
   //   ],
   // },
-  // register
+  // signup
   {
-    path: routesConf['register']['path'],
+    path: routesConf['signup']['path'],
     component: () => import('layouts/LoginLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['register']['children']['name'],
-        component: () => import('pages/RegisterPage.vue'),
+        name: routesConf['signup']['children']['name'],
+        component: () => import('pages/SignUpPage.vue'),
       },
     ],
   },

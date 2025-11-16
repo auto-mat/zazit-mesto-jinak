@@ -44,11 +44,11 @@ const routesConf: RoutesConf = {
       name: 'reset-password',
     },
   },
-  register: {
-    path: '/register',
+  signup: {
+    path: '/signup',
     children: {
-      fullPath: '/register',
-      name: 'register',
+      fullPath: '/signup',
+      name: 'signup',
     },
   },
   registration: {

@@ -8,7 +8,7 @@
       <form-login />
       <div class="q-mt-xl">
         {{ t('login.withoutAccount') }}
-        <router-link :to="routesConf['register']['path']">
+        <router-link :to="routesConf['signup']['path']">
           {{ t('login.register') }}
         </router-link>
       </div>

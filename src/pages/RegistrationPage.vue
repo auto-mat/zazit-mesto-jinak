@@ -60,7 +60,7 @@ import { useRegisterStore } from 'src/stores/register';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 defineOptions({
-  name: 'RegistrationPage',
+  name: 'CompleteRegistrationPage',
 });
 
 const step = ref(1);

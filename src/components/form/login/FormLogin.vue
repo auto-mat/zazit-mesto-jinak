@@ -1,19 +1,14 @@
 <template>
   <q-form autofocus class="text-grey-10" @submit="onSubmit" @reset="onReset">
-    <form-field-email v-model="email" name="form-login-email" required />
-    <div>
-      <form-field-password
-        v-model="password"
-        name="form-login-password"
-        required
-      />
-      <div class="text-right">
+    <div class="row q-col-gutter-md">
+      <form-field-email v-model="email" required class="col-12" />
+      <form-field-password v-model="password" required class="col-12" />
+      <div class="text-right col-12">
         <router-link :to="routesConf['login']['path']">
           {{ t('login.forgotPassword') }}
         </router-link>
       </div>
     </div>
-
     <q-btn
       :label="t('login.submitLogin')"
       type="submit"

@@ -1,33 +1,21 @@
 <template>
-  <div class="col-12 col-sm-6" data-cy="form-email">
+  <div>
     <!-- Label -->
-    <label for="form-email" class="text-caption text-bold">
+    <form-label for="form-email" :optional="!required">
       {{ t('form.labelEmail') }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${t('form.labelOptional')})` }}
-      </span>
-    </label>
+    </form-label>
     <!-- Input -->
     <q-input
       dense
       outlined
       v-model="email"
-      :rules="[
-        (val: string) =>
-          !required ||
-          isFilled(val) ||
-          t('form.messageFieldRequired', {
-            fieldName: t('form.labelEmail'),
-          }),
-        (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
-      ]"
-      v-bind="$attrs"
+      :rules="validated ? validationRules : []"
+      :lazy-rules="validated"
       :bg-color="bgColor"
       class="q-mt-sm"
       id="form-email"
       name="email"
       type="email"
-      data-cy="form-email-input"
     />
   </div>
 </template>
@@ -41,16 +29,17 @@
  * @description * Use this component to render email input in forms.
  *
  * @props
- * - `value` (string, required): The object representing user input.
+ * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
+ * - `required` (boolean, default: false): Whether the input is required.
+ * - `bgColor` (string, default: 'transparent'): The background color of the input.
+ * - `validated` (boolean, default: false): Whether the email should be validated.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-email />
- *
- * @see
+ * <form-field-email v-model="value" />
  */
 
 // libraries
@@ -59,6 +48,9 @@ import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+// components
+import FormLabel from './FormLabel.vue';
 
 const props = defineProps({
   modelValue: {
@@ -72,6 +64,10 @@ const props = defineProps({
   bgColor: {
     type: String as () => 'white' | 'transparent',
     default: 'transparent',
+  },
+  validated: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -91,4 +87,13 @@ const email = computed({
 });
 
 const { isEmail, isFilled } = useValidation();
+
+const validationRules = computed(() => {
+  return [
+    (val: string) =>
+      isFilled(val) ||
+      t('form.messageFieldRequired', { fieldName: t('form.labelEmail') }),
+    (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
+  ];
+});
 </script>

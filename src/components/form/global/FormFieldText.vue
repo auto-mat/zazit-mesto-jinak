@@ -1,12 +1,9 @@
 <template>
-  <div :data-cy="`form-${name}`">
+  <div>
     <!-- Label -->
-    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
+    <form-label :for="`form-${name}`" :optional="!required">
       {{ t(label) }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${t('form.labelOptional')})` }}
-      </span>
-    </label>
+    </form-label>
     <!-- Input -->
     <q-input
       dense
@@ -24,7 +21,6 @@
       :id="`form-${name}`"
       :name="name"
       :autocomplete="autocomplete"
-      :data-cy="`form-${name}-input`"
     />
   </div>
 </template>
@@ -49,9 +45,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-text v-model="value" label="" name="" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
+ * <form-field-text v-model="value" label="t('form.labelText')" name="form-text" />
  */
 
 // libraries
@@ -60,6 +54,9 @@ import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+// components
+import FormLabel from './FormLabel.vue';
 
 const props = defineProps({
   modelValue: {

@@ -37,6 +37,7 @@
  * @props
  * - `modelValue` (string, required): The object representing user input.
  * - `required` (boolean, default: false): Whether the input is required.
+ * - `bgColor` (string, default: 'transparent'): The background color of the input.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.

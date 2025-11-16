@@ -23,7 +23,7 @@ import { routesConf } from 'src/router/routes_conf';
 const { t } = useI18n();
 
 defineOptions({
-  name: 'RegistrationPage',
+  name: 'SignUpPage',
 });
 </script>
 

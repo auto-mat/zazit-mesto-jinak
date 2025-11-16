@@ -1,12 +1,9 @@
 <template>
   <div>
     <template v-if="label">
-      <label for="date" class="text-grey-10 text-caption text-bold">
+      <form-label for="date" :optional="!required">
         {{ t(label) }}
-        <span v-if="!required" class="text-grey-6 text-caption">
-          {{ ` (${t('form.labelOptional')})` }}
-        </span>
-      </label>
+      </form-label>
     </template>
     <q-input
       dense
@@ -31,7 +28,12 @@
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
+                <q-btn
+                  v-close-popup
+                  :label="t('form.labelClose')"
+                  color="primary"
+                  flat
+                />
               </div>
             </q-date>
           </q-popup-proxy>
@@ -52,18 +54,14 @@
  * @props
  * - `modelValue` (string, required): The object representing user input.
  * - `bgColor` (string, default: 'transparent'): The background color of the
- * - `name` (string, required): The name used for id and test selectors.
  * - `label` (string, required): The translation key for the label.
  * - `required` (boolean, default: false): Whether the input is required.
- * - `autocomplete` (string): The autocomplete attribute.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-date-input v-model="value" label="" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
+ * <form-field-date-input v-model="value" label="t('form.labelDate')" />
  */
 
 // libraries
@@ -72,6 +70,9 @@ import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+// components
+import FormLabel from './FormLabel.vue';
 
 const props = defineProps({
   modelValue: {
