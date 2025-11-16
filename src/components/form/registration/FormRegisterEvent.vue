@@ -175,13 +175,15 @@
  *
  * @example
  * <form-register-event />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
 // libraries
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// stores
+import { useRegisterStore } from 'src/stores/register';
 
 // components
 import FormFieldText from '../global/FormFieldText.vue';
@@ -192,8 +194,6 @@ import InfoButton from 'src/components/buttons/InfoButton.vue';
 
 // types
 import { FormOption } from 'src/types/Form';
-import { useRegisterStore } from 'src/stores/register';
-import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['submit', 'back']);
 

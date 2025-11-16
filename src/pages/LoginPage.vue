@@ -17,10 +17,15 @@
 </template>
 
 <script setup lang="ts">
-import FormLogin from 'src/components/form/login/FormLogin.vue';
+// libraries
+import { useI18n } from 'vue-i18n';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
-import { useI18n } from 'vue-i18n';
+
+// components
+import FormLogin from 'src/components/form/login/FormLogin.vue';
 
 const { t } = useI18n();
 

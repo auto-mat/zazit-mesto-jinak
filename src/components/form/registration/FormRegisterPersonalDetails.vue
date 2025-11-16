@@ -127,12 +127,15 @@
  *
  * @example
  * <form-register-personal-details />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
 // libraries
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// stores
+import { useRegisterStore } from 'src/stores/register';
+import { useUserStore } from 'src/stores/user';
 
 // components
 import FormFieldText from '../global/FormFieldText.vue';
@@ -141,9 +144,6 @@ import FormFieldCheckbox from '../global/FormFieldCheckbox.vue';
 
 // types
 import { FormOption } from 'src/types/Form';
-import { useRegisterStore } from 'src/stores/register';
-import { storeToRefs } from 'pinia';
-import { useUserStore } from 'src/stores/user';
 
 const emit = defineEmits(['submit']);
 

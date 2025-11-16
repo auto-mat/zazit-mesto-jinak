@@ -50,17 +50,24 @@
 </template>
 
 <script setup lang="ts">
+// libraries
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+// stores
+import { useRegisterStore } from 'src/stores/register';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// components
 import FormRegisterPersonalDetails from 'src/components/form/registration/FormRegisterPersonalDetails.vue';
 import FormRegisterEvent from 'src/components/form/registration/FormRegisterEvent.vue';
 import FormRegisterOrganizers from 'src/components/form/registration/FormRegisterOrganizers.vue';
 import FormRegisterMoreInformation from 'src/components/form/registration/FormRegisterMoreInformation.vue';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRegisterStore } from 'src/stores/register';
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 defineOptions({
-  name: 'CompleteRegistrationPage',
+  name: 'RegistrationPage',
 });
 
 const step = ref(1);

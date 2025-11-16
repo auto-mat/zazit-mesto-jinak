@@ -15,10 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import FormRegister from 'src/components/form/registration/FormRegister.vue';
+// libraries
 import { useI18n } from 'vue-i18n';
+
+// config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
+
+// components
+import FormRegister from 'src/components/form/registration/FormRegister.vue';
 
 const { t } = useI18n();
 
@@ -26,5 +31,3 @@ defineOptions({
   name: 'SignUpPage',
 });
 </script>
-
-<style scoped></style>

@@ -21,12 +21,19 @@
 </template>
 
 <script setup lang="ts">
+// libraries
 import { ref } from 'vue';
-import { routesConf } from 'src/router/routes_conf';
 import { useI18n } from 'vue-i18n';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
+
+// stores
+import { useLoginStore } from 'src/stores/login';
+
+// components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
-import { useLoginStore } from 'src/stores/login';
 
 defineOptions({
   name: 'FormLogin',

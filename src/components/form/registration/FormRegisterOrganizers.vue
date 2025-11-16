@@ -159,12 +159,15 @@
  *
  * @example
  * <form-register-organizers />
- *
  */
 
 // libraries
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// stores
+import { useRegisterStore } from 'src/stores/register';
 
 // components
 import FormFieldText from '../global/FormFieldText.vue';
@@ -174,8 +177,6 @@ import FormFieldPhone from '../global/FormFieldPhone.vue';
 
 // types
 import { FormOption } from 'src/types/Form';
-import { useRegisterStore } from 'src/stores/register';
-import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['submit', 'back']);
 
