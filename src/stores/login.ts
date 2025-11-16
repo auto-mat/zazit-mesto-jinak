@@ -9,13 +9,9 @@ import { useJwt } from '../composables/useJwt';
 import { routesConf } from '../router/routes_conf';
 
 // mock data
-import {
-  mockLoginResponse,
-  mockRefreshTokenResponse,
-} from '../../mock/loginData';
+import { mockRefreshTokenResponse } from '../../mock/loginData';
 
 // types
-import { UserMeta } from 'src/types/User';
 
 interface LoginPayload {
   username: string;
@@ -25,12 +21,13 @@ interface LoginPayload {
 interface LoginResponse {
   access: string;
   refresh: string;
-  user: UserMeta;
 }
 
 // utils
 import { computed, ref } from 'vue';
 import { useUserStore } from './user';
+import { useFetch } from 'src/composables/useFetch';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 interface RefreshTokenResponse {
   access: string;
@@ -41,26 +38,19 @@ interface PasswordResetResponse {
   detail: string;
 }
 
-export const emptyUser: UserMeta = {
-  id: '',
-  email: '',
-};
-
 export const useLoginStore = defineStore('login', () => {
   const router = useRouter();
   const userStore = useUserStore();
-  const { userMeta } = storeToRefs(userStore);
+  const { userDetails } = storeToRefs(userStore);
   const accessToken = ref('');
   const refreshToken = ref(''); // persisted
   const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
   // const refreshTokenTimeout = ref<NodeJS.Timeout | null>(null) // unit: seconds
   const passwordResetEmail = ref('');
 
-  const isUserLoggedIn = computed(() => (userMeta.value.email ? true : false));
-
-  function setUser(newUser: UserMeta): void {
-    userMeta.value = newUser;
-  }
+  const isUserLoggedIn = computed(() =>
+    userDetails.value?.email ? true : false,
+  );
 
   function setAccessToken(token: string): void {
     accessToken.value = token;
@@ -131,29 +121,31 @@ export const useLoginStore = defineStore('login', () => {
     console.log(`Login password <${payload.password}>.`);
     // login
     console.log('Get API access/refresh token.');
-    // const { data } = await useFetch<LoginResponse>(zazitMestoJinakConfig.urlApiLogin, {
-    //   method: 'post',
-    //   payload,
-    // });
+    const { data } = await useFetch<LoginResponse>(
+      zazitMestoJinakConfig.urlApiLogin,
+      {
+        method: 'post',
+        payload,
+      },
+    );
 
-    const data = mockLoginResponse as LoginResponse;
+    // const data = mockLoginResponse as LoginResponse;
 
-    await processLoginData(data);
+    await processLoginData(data.value);
 
-    if (data) {
+    await userStore.loadUserDetails();
+
+    if (data.value) {
       await router.push(routesConf['home']['path']);
     }
 
-    return data;
+    return data.value;
   }
   /**
    * Process data received from login request
    * Save user and tokens to login store, then redirect to home page.
    */
   async function processLoginData(data: LoginResponse | null): Promise<void> {
-    if (data && data.user) {
-      setUser(data.user);
-    }
     if (data && data.access && data.refresh) {
       setTokens(data.access, data.refresh);
     }
@@ -180,11 +172,11 @@ export const useLoginStore = defineStore('login', () => {
    * Sets the access token, refresh token and user to empty values.
    */
   function logout(): void {
-    console.log(`Logout user <${userMeta.value.email}>.`);
+    console.log(`Logout user <${userDetails.value?.email ?? ''}>.`);
     setAccessToken('');
     setRefreshToken('');
     setJwtExpiration(null);
-    setUser(emptyUser);
+    userStore.clearUser();
     clearRefreshTokenTimeout();
     // clear stores
 

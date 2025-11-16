@@ -1,34 +1,22 @@
 import { ref } from 'vue';
 
-import { userAdapter } from 'src/adapters/userAdapter';
-import userService from 'src/services/userService';
-import { UserDetails, UserMeta } from 'src/types/User';
+import { userAdapter, ApiUserDetails } from 'src/adapters/userAdapter';
+import { UserDetails } from 'src/types/User';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { useFetch } from '../useFetch';
 
 export function useApiUser() {
   const error = ref<string | null>(null);
 
-  const getUserMeta = async () => {
-    let user: UserMeta | null = null;
-
-    try {
-      const response = await userService.getUserMeta();
-      if (response) {
-        user = userAdapter.toUserMeta(response);
-      }
-    } catch (err: any) {
-      error.value = err.message;
-    }
-
-    return user;
-  };
-
-  const getUserDetails = async (userId: string) => {
+  const getUserDetails = async () => {
     let userDetails: UserDetails | null = null;
-
+    // TODO if user is not logged in
     try {
-      const response = await userService.getUserDetails(userId);
+      const response = await useFetch<ApiUserDetails>(
+        zazitMestoJinakConfig.urlApiUser,
+      );
       if (response) {
-        userDetails = userAdapter.toUserDetails(response);
+        userDetails = userAdapter.toUserDetails(response.data.value);
       }
     } catch (err: any) {
       error.value = err.message;
@@ -37,7 +25,6 @@ export function useApiUser() {
     return userDetails;
   };
   return {
-    getUserMeta,
     getUserDetails,
     error,
   };

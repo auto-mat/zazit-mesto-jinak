@@ -12,7 +12,7 @@ import { defineConfig } from '#q-app/wrappers';
 import getAppConfig from './src/utils/get_app_conf';
 import getDeployedAppVersion from './src/utils/get_deployed_app_version';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line no-unused-vars
 export default defineConfig((ctx) => {
   return {
     eslint: {
@@ -111,7 +111,6 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      https: true,
       open: true, // opens browser window automatically
     },
 
