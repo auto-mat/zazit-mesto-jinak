@@ -178,18 +178,18 @@ const routes: RouteRecordRaw[] = [
   //     },
   //   ],
   // },
-  // reset password
-  // {
-  //   path: routesConf['reset_password']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['reset_password']['children']['name'],
-  //       component: () => import('pages/ResetPasswordPage.vue'),
-  //     },
-  //   ],
-  // },
+  // email reset password
+  {
+    path: routesConf['email_reset_password']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['email_reset_password']['children']['name'],
+        component: () => import('pages/EmailResetPasswordPage.vue'),
+      },
+    ],
+  },
   // signup
   {
     path: routesConf['signup']['path'],

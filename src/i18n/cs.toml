@@ -61,6 +61,15 @@ register = "Registujte se."
 submitLogin = "Přihlásit se"
 forgotPassword = "Zapomenuté heslo?"
 
+[resetPassword]
+title = "Obnovení hesla"
+description = "Zadejte svůj e-mail a my vám pošleme odkaz na obnovení hesla."
+submitResetPassword = "Odeslat"
+
+[resetPassword.emailSent]
+title = "Odkaz na obnovení hesla byl odeslán"
+description = "Odkaz na obnovení hesla byl odeslán na váš e-mail. Pokud ho neobdržíte, zkontrolujte svůj e-mailový box a zkuste to znovu."
+
 [register]
 title = "Registrace"
 submitRegister = "Registrovat se"

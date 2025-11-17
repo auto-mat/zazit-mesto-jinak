@@ -37,11 +37,11 @@ const routesConf: RoutesConf = {
       name: 'login',
     },
   },
-  reset_password: {
-    path: '/reset-password',
+  email_reset_password: {
+    path: '/email-reset-password',
     children: {
-      fullPath: '/reset-password',
-      name: 'reset-password',
+      fullPath: '/email-reset-password',
+      name: 'email-reset-password',
     },
   },
   signup: {
