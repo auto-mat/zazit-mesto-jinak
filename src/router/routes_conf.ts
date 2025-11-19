@@ -37,18 +37,25 @@ const routesConf: RoutesConf = {
       name: 'login',
     },
   },
-  reset_password: {
-    path: '/reset-password',
+  email_reset_password: {
+    path: '/email-reset-password',
     children: {
-      fullPath: '/reset-password',
-      name: 'reset-password',
+      fullPath: '/email-reset-password',
+      name: 'email-reset-password',
     },
   },
-  register: {
-    path: '/register',
+  signup: {
+    path: '/signup',
     children: {
-      fullPath: '/register',
-      name: 'register',
+      fullPath: '/signup',
+      name: 'signup',
+    },
+  },
+  registration: {
+    path: '/registration',
+    children: {
+      fullPath: '/registration',
+      name: 'registration',
     },
   },
   profile: {

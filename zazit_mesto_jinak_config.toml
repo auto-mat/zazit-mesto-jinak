@@ -1,9 +1,9 @@
 # COLORS
 
-colorPrimary = "#43449C"
+colorPrimary = "#000000"
 colorPrimaryDark = "#110547"
 colorPrimaryOpacity = 0.1
-colorSecondary = "#A0D7C4"
+colorSecondary = "#D9D9D9"
 colorGray = "#D4D4D4"
 colorGrayLight = "#F3F7FF"
 colorGrayMiddle = "#DCE1ED"
@@ -17,8 +17,8 @@ colorWhiteBorderOpacity = 0.5
 
 # STYLING ATTRIBUTES
 
-# container used for registration forms
-containerFormWidth = "752px"
+# container used for register and login forms
+containerFormWidth = "600px"
 
 # container used for main layout
 containerContentWidth = "1024px"
@@ -147,7 +147,7 @@ urlApiTrips = "trips/"
 urlApiChallengeRegistrationUser = "challenge/registration/user/"
 urlApiThisCampaign = "this_campaign/"
 
-checkIsEmailVerifiedInterval = 20 # seconds
+checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
 feedRefreshCachedPostsIntervalHours = 24
 apiFeedMaxOffersNumber = 50

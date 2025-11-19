@@ -20,6 +20,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // login
+  {
+    path: routesConf['login']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['login']['children']['name'],
+        component: () => import('pages/LoginPage.vue'),
+      },
+    ],
+  },
   // profile
   {
     path: routesConf['profile']['path'],
@@ -166,39 +178,39 @@ const routes: RouteRecordRaw[] = [
   //     },
   //   ],
   // },
-  // login
-  // {
-  //   path: routesConf['login']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['login']['children']['name'],
-  //       component: () => import('pages/LoginPage.vue'),
-  //     },
-  //   ],
-  // },
-  // reset password
-  // {
-  //   path: routesConf['reset_password']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['reset_password']['children']['name'],
-  //       component: () => import('pages/ResetPasswordPage.vue'),
-  //     },
-  //   ],
-  // },
-  // register
+  // email reset password
   {
-    path: routesConf['register']['path'],
-    component: () => import('layouts/LoginRegisterLayout.vue'),
+    path: routesConf['email_reset_password']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['register']['children']['name'],
-        component: () => import('pages/RegisterPage.vue'),
+        name: routesConf['email_reset_password']['children']['name'],
+        component: () => import('pages/EmailResetPasswordPage.vue'),
+      },
+    ],
+  },
+  // signup
+  {
+    path: routesConf['signup']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['signup']['children']['name'],
+        component: () => import('pages/SignUpPage.vue'),
+      },
+    ],
+  },
+  // registration details
+  {
+    path: routesConf['registration']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['registration']['children']['name'],
+        component: () => import('pages/RegistrationPage.vue'),
       },
     ],
   },

@@ -1,4 +1,31 @@
-<script lang="ts">
+<template>
+  <div>
+    <!-- Label -->
+    <form-label :for="`form-${name}`" :optional="!required">
+      {{ t(label) }}
+    </form-label>
+    <!-- Input -->
+    <q-input
+      dense
+      outlined
+      v-model="inputValue"
+      lazy-rules
+      :rules="[
+        (val: string) =>
+          !required ||
+          isFilled(val) ||
+          t('form.messageFieldRequired', { fieldName: t(label) }),
+      ]"
+      :bg-color="bgColor"
+      class="q-mt-sm"
+      :id="`form-${name}`"
+      :name="name"
+      :autocomplete="autocomplete"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldText Component
  *
@@ -18,92 +45,59 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-text v-model="value" label="" name="" />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
+ * <form-field-text v-model="value" label="t('form.labelText')" name="form-text" />
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldText',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    bgColor: {
-      type: String as () => 'white' | 'transparent',
-      default: 'transparent',
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    autocomplete: {
-      type: String,
-    },
+// components
+import FormLabel from './FormLabel.vue';
+
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const inputValue = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isFilled } = useValidation();
-
-    return {
-      inputValue,
-      isFilled,
-    };
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  autocomplete: {
+    type: String,
   },
 });
-</script>
 
-<template>
-  <div :data-cy="`form-${name}`">
-    <!-- Label -->
-    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
-      {{ $t(label) }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-    </label>
-    <!-- Input -->
-    <q-input
-      dense
-      outlined
-      v-model="inputValue"
-      lazy-rules
-      :rules="[
-        (val: string) =>
-          !required || 
-          isFilled(val) ||
-          $t('form.messageFieldRequired', { fieldName: $t(label)} ),
-      ]"
-      :bg-color="bgColor"
-      class="q-mt-sm"
-      :id="`form-${name}`"
-      :name="name"
-      :autocomplete="autocomplete"
-      :data-cy="`form-${name}-input`"
-    />
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const inputValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isFilled } = useValidation();
+</script>

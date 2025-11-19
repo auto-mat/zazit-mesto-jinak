@@ -8,7 +8,7 @@ import globals from 'globals';
 
 export default [
   js.configs.recommended,
-  ...vuePlugin.configs['flat/recommended'], // Vue recommended rules
+  ...vuePlugin.configs['flat/essential'], // Vue recommended rules
   {
     files: ['**/*.vue', '**/*.ts'],
     ignores: [

@@ -1,7 +1,7 @@
 <template>
   <div class="row items-center fit q-my-sm">
     <div class="col-3">
-       {{ label }}
+      {{ label }}
     </div>
     <div class="col">
       <slot />
@@ -15,7 +15,7 @@
           outline
           color="primary"
           icon="edit"
-          :label="$t('profile.buttonEdit')"
+          :label="t('profile.buttonEdit')"
           @click="$emit('edit')"
         />
       </slot>
@@ -24,17 +24,20 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
 defineProps({
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   noButton: {
     type: Boolean,
-    defaul: false
-  }
-})
+    default: false,
+  },
+});
 
-defineEmits(['edit'])
+defineEmits(['edit']);
 
+const { t } = useI18n();
 </script>

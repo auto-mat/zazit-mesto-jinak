@@ -1,4 +1,26 @@
-<script lang="ts">
+<template>
+  <div>
+    <!-- Label -->
+    <form-label for="form-email" :optional="!required">
+      {{ t('form.labelEmail') }}
+    </form-label>
+    <!-- Input -->
+    <q-input
+      dense
+      outlined
+      v-model="email"
+      :rules="validated ? validationRules : []"
+      :lazy-rules="validated"
+      :bg-color="bgColor"
+      class="q-mt-sm"
+      id="form-email"
+      name="email"
+      type="email"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormFieldEmail Component
  *
@@ -7,87 +29,71 @@
  * @description * Use this component to render email input in forms.
  *
  * @props
- * - `value` (string, required): The object representing user input.
+ * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
+ * - `required` (boolean, default: false): Whether the input is required.
+ * - `bgColor` (string, default: 'transparent'): The background color of the input.
+ * - `validated` (boolean, default: false): Whether the email should be validated.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-email />
- *
- * @see 
+ * <form-field-email v-model="value" />
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
-export default defineComponent({
-  name: 'FormFieldEmail',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    }
+// components
+import FormLabel from './FormLabel.vue';
+
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const email = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: string) {
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isEmail, isFilled } = useValidation();
-
-    return {
-      email,
-      isFilled,
-      isEmail,
-    };
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  bgColor: {
+    type: String as () => 'white' | 'transparent',
+    default: 'transparent',
+  },
+  validated: {
+    type: Boolean,
+    default: false,
   },
 });
-</script>
 
-<template>
-  <div class="col-12 col-sm-6" data-cy="form-email">
-    <!-- Label -->
-    <label for="form-email" class="text-caption text-bold">
-      {{ $t('form.labelEmail') }}
-      <span v-if="!required" class="text-grey-6 text-caption">
-        {{ ` (${$t('form.labelOptional')})` }}
-      </span>
-    </label>
-    <!-- Input -->
-    <q-input
-      dense
-      outlined
-      v-model="email"
-      :rules="[
-        (val: string) =>
-          !required ||
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelEmail'),
-          }),
-        (val: string) => isEmail(val) || $t('form.messageEmailInvalid'),
-      ]"
-      v-bind="$attrs"
-      class="q-mt-sm"
-      id="form-email"
-      name="email"
-      type="email"
-      data-cy="form-email-input"
-    />
-  </div>
-</template>
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+}>();
+
+const { t } = useI18n();
+
+const email = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: string) {
+    emit('update:modelValue', value);
+  },
+});
+
+const { isEmail, isFilled } = useValidation();
+
+const validationRules = computed(() => {
+  return [
+    (val: string) =>
+      isFilled(val) ||
+      t('form.messageFieldRequired', { fieldName: t('form.labelEmail') }),
+    (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
+  ];
+});
+</script>
