@@ -11,23 +11,30 @@
     </div>
 
     <div v-if="userDetails">
-      <profile-form />
+      <profile-form @submit="onSubmit" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+// libraries
 import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 
+// stores
+import { useUserStore } from 'src/stores/user';
+
+// components
 import BackButton from 'src/components/buttons/BackButton.vue';
 import ProfileForm from 'src/components/profile/ProfileForm.vue';
 
-import { useUserStore } from 'src/stores/user';
-
 const { t } = useI18n();
 const userStore = useUserStore();
+const router = useRouter();
 
 onMounted(() => {
   userStore.loadUserDetails();
@@ -35,4 +42,8 @@ onMounted(() => {
 
 const isLoading = computed(() => userStore.loading);
 const userDetails = computed(() => userStore.userDetails);
+
+const onSubmit = () => {
+  router.push({ name: routesConf['profile']['children']['name'] });
+};
 </script>

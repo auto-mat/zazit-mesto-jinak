@@ -42,6 +42,16 @@
         />
       </div>
     </div>
+    <!-- Button: submit -->
+    <div class="flex justify-end q-mt-lg">
+      <q-btn
+        rounded
+        unelevated
+        type="submit"
+        color="primary"
+        :label="t('profile.buttonUpdate')"
+      />
+    </div>
   </q-form>
 </template>
 
@@ -52,6 +62,8 @@ import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/user';
 import { storeToRefs } from 'pinia';
 import { FormOption } from 'src/types/Form';
+
+const emit = defineEmits(['submit']);
 
 const { t } = useI18n();
 
@@ -78,7 +90,7 @@ const optionsGender: FormOption[] = [
 ];
 
 const onSubmit = () => {
-  // noop
+  emit('submit');
 };
 
 const onReset = () => {
