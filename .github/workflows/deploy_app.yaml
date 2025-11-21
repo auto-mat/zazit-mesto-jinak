@@ -74,7 +74,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           echo "DOCKERHUB_IMAGE_VERSION: ${DOCKERHUB_IMAGE_VERSION}"
-          file ./manifests/ytt/city-experience-differently-frontend.yaml
-          sed -i -e "2s/.*/#@ image = \"${{ secrets.DOCKERHUB_REPO_OWNER }}\/${{ secrets.DOCKERHUB_REPO_NAME }}:${DOCKERHUB_IMAGE_VERSION}\"/" ./manifests/ytt/city-experience-differently-frontend.yaml
-          git commit -am "manifests/ytt: bump city-experience-differently-frontend app build image to version ${DOCKERHUB_IMAGE_VERSION}"
+          file ./manifests/ytt/city-experience-differently-frontend-test.yaml
+          sed -i -e "2s/.*/#@ image = \"${{ secrets.DOCKERHUB_REPO_OWNER }}\/${{ secrets.DOCKERHUB_REPO_NAME }}:${DOCKERHUB_IMAGE_VERSION}\"/" ./manifests/ytt/city-experience-differently-frontend-test.yaml
+          git commit -am "manifests/ytt: bump city-experience-differently-frontend-test app build image to version ${DOCKERHUB_IMAGE_VERSION}"
           git push
