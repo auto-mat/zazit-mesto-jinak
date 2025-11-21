@@ -1,0 +1,82 @@
+name: Run tests
+
+# Run tests
+
+on:
+  push:
+    branches:
+      - zmj
+  pull_request_target:
+    branches:
+      - zmj
+
+jobs:
+  push-docker-img:
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/zmj'
+    runs-on: ubuntu-latest
+
+    outputs:
+      dockerhub_image_version: ${{ steps.set_output.outputs.dockerhub_image_version }}
+
+    steps:
+      - name: Checkout app repository code
+        uses: actions/checkout@v5
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Get Docker image version
+        run: |
+          .github/workflows/get_docker_image_tag_number.sh \
+          ${{ secrets.DOCKERHUB_REPO_OWNER }} ${{ secrets.DOCKERHUB_REPO_NAME }}
+
+      - name: Create deployed_app_version.toml file with deployed app Docker image version
+        run: |
+          echo "version = ${{ env.DOCKERHUB_IMAGE_VERSION }}" > deployed_app_version.toml
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_REPO_OWNER }}/${{ secrets.DOCKERHUB_REPO_NAME }}:${{ env.DOCKERHUB_IMAGE_VERSION }}
+
+      - id: set_output
+        run: |
+          echo "dockerhub_image_version=${{ env.DOCKERHUB_IMAGE_VERSION }}" >> "$GITHUB_OUTPUT"
+
+  deploy-app-to-k8:
+    if: github.event_name == 'push' && github.event.ref == 'refs/heads/zmj'
+    runs-on: ubuntu-latest
+    needs: [push-docker-img]
+
+    steps:
+      - name: Checkout k8 repository
+        uses: actions/checkout@v5
+        with:
+          repository: auto-mat/k8s
+          token: ${{ secrets.GH_PAT }}
+          path: k8s
+
+      - env:
+          DOCKERHUB_IMAGE_VERSION: ${{ needs.push-docker-img.outputs.dockerhub_image_version }}
+
+        run: |
+          cd ./k8s
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          echo "DOCKERHUB_IMAGE_VERSION: ${DOCKERHUB_IMAGE_VERSION}"
+          file ./manifests/ytt/city-experience-differently-frontend.yaml
+          sed -i -e "2s/.*/#@ image = \"${{ secrets.DOCKERHUB_REPO_OWNER }}\/${{ secrets.DOCKERHUB_REPO_NAME }}:${DOCKERHUB_IMAGE_VERSION}\"/" ./manifests/ytt/city-experience-differently-frontend.yaml
+          git commit -am "manifests/ytt: bump city-experience-differently-frontend app build image to version ${DOCKERHUB_IMAGE_VERSION}"
+          git push
