@@ -1,6 +1,4 @@
-name: Run tests
-
-# Run tests
+name: Deploy app to k8
 
 on:
   push:
