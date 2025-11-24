@@ -1,8 +1,13 @@
 <template>
   <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
     <div class="row q-col-gutter-md">
-      <form-field-email v-model="email" required class="col-12" />
-      <form-field-password v-model="password" required class="col-12" />
+      <form-field-email v-model="email" required validated class="col-12" />
+      <form-field-password
+        v-model="password"
+        required
+        validated
+        class="col-12"
+      />
       <form-field-password-confirm
         v-model="passwordConfirm"
         :compare-value="password"

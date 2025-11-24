@@ -1,17 +1,15 @@
 <template>
   <ul class="language-list flex">
     <!-- Language switcher items -->
-    <li
-      v-for="item in localeOptions"
-      :key="item.value"
-      class="text-uppercase"
-      :data-cy="'switcher-' + item.value"
-    >
+    <li v-for="item in localeOptions" :key="item.value" class="text-uppercase">
       <q-btn
         unelevated
         rounded
         @click.prevent="setLocale(item.value)"
-        :class="{ 'bg-dark text-white': isActive(item.value) }"
+        :class="{
+          'bg-dark text-white': isActive(item.value),
+          'btn--no-hover': readonly,
+        }"
         size="13px"
       >
         {{ shortVersion ? item.value : item.label }}
@@ -41,20 +39,39 @@
 
 // libraries
 import { useI18n } from 'vue-i18n';
+import { watch } from 'vue';
 
-defineProps<{
+// enums
+import { UserLanguage } from 'src/enums/userEnums';
+
+const props = defineProps<{
+  value: string;
   shortVersion?: boolean;
+  readonly?: boolean;
 }>();
+
+const emit = defineEmits(['updateLocale']);
 
 const { locale, t } = useI18n({ useScope: 'global' });
 
 const localeOptions = [
-  { value: 'en', label: t('locale.en') },
-  { value: 'cs', label: t('locale.cz') },
+  { value: UserLanguage.EN, label: t('locale.en') },
+  { value: UserLanguage.CS, label: t('locale.cz') },
 ];
 
+watch(
+  () => props.value,
+  (newVal) => {
+    setLocale(newVal);
+  },
+);
+
 const setLocale = (item: string) => {
+  if (props.readonly) {
+    return;
+  }
   locale.value = item;
+  emit('updateLocale', item);
 };
 
 const isActive = (item: string): boolean => {
@@ -69,5 +86,13 @@ const isActive = (item: string): boolean => {
   border-radius: 999px;
   width: fit-content;
   padding: 1px;
+}
+
+.btn--no-hover {
+  pointer-events: none;
+}
+
+:deep(.q-btn.btn--no-hover .q-focus-helper) {
+  display: none;
 }
 </style>

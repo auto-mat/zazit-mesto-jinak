@@ -27,7 +27,7 @@ interface RefreshTokenResponse {
 // utils
 import { computed, ref } from 'vue';
 import { useUserStore } from './user';
-import { useFetch } from 'src/composables/useFetch';
+import { postApi } from 'src/api/apiFetch';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 interface PasswordResetResponse {
@@ -119,25 +119,21 @@ export const useLoginStore = defineStore(
       console.log(`Login password <${payload.password}>.`);
       // login
       console.log('Get API access/refresh token.');
-      const { data } = await useFetch<LoginResponse>(
+      const response = await postApi(
         zazitMestoJinakConfig.urlApiLogin,
-        {
-          method: 'post',
-          payload,
-        },
+        payload,
       );
+      const data: LoginResponse = await response.json();
 
-      // const data = mockLoginResponse as LoginResponse;
+      await processLoginData(data);
 
-      await processLoginData(data.value);
-
-      await userStore.loadUserDetails();
-
-      if (data.value) {
+      if (data) {
+        // load user details after successful login
+        await userStore.loadUserDetails();
         await router.push(routesConf['home']['path']);
       }
 
-      return data.value;
+      return data;
     }
     /**
      * Process data received from login request
@@ -271,25 +267,23 @@ export const useLoginStore = defineStore(
       const payload = { refresh: refreshToken.value };
       console.log('Obtain new API access token.', payload);
       // TODO: fetch new access token
-      const { data } = await useFetch<RefreshTokenResponse>(
+      const response = await postApi(
         zazitMestoJinakConfig.urlApiRefreshToken,
-        {
-          method: 'post',
-          payload,
-        },
+        payload,
       );
+      const data: RefreshTokenResponse = await response.json();
 
       // set new access token
-      if (data.value && data.value.access) {
+      if (data && data.access) {
         console.log('Save newly obtained access token into store.');
-        setAccessToken(data.value.access);
+        setAccessToken(data.access);
         console.log(
           `Login store saved newly obtained access token <${accessToken.value}>.`,
         );
 
         // set JWT expiration
         const { readJwtExpiration } = useJwt();
-        const expiration = readJwtExpiration(data.value.access);
+        const expiration = readJwtExpiration(data.access);
         if (expiration) {
           setJwtExpiration(expiration);
           console.log(

@@ -145,6 +145,9 @@ import FormFieldCheckbox from '../global/FormFieldCheckbox.vue';
 // types
 import { FormOption } from 'src/types/Form';
 
+// enums
+import { UserGender } from 'src/enums/userEnums';
+
 const emit = defineEmits(['submit']);
 
 const { t } = useI18n();
@@ -158,15 +161,19 @@ const { registerFormState } = storeToRefs(registerStore);
 const optionsGender: FormOption[] = [
   {
     label: t('gender.male'),
-    value: 'male',
+    value: UserGender.MALE,
   },
   {
     label: t('gender.female'),
-    value: 'female',
+    value: UserGender.FEMALE,
+  },
+  {
+    label: t('gender.other'),
+    value: UserGender.OTHER,
   },
   {
     label: t('gender.unknown'),
-    value: 'unknown',
+    value: UserGender.UNKNOWN,
   },
 ];
 

@@ -32,7 +32,7 @@
         {{ t(`gender.${userDetails.gender}`) }}
       </profile-row>
       <profile-row :label="t('profile.languagePrefer')">
-        <language-switcher />
+        <language-switcher :value="userDetails.languagePreference" readonly />
       </profile-row>
     </div>
   </q-page>
@@ -54,7 +54,9 @@ const { t } = useI18n();
 const userStore = useUserStore();
 
 onMounted(() => {
-  userStore.loadUserDetails();
+  if (!userStore.userDetails) {
+    userStore.loadUserDetails();
+  }
 });
 
 const isLoading = computed(() => userStore.loading);

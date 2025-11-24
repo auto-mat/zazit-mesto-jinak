@@ -11,7 +11,7 @@
     </div>
 
     <div v-if="userDetails">
-      <profile-form @submit="onSubmit" />
+      <form-profile @submit="onSubmit" />
     </div>
   </q-page>
 </template>
@@ -30,14 +30,16 @@ import { useUserStore } from 'src/stores/user';
 
 // components
 import BackButton from 'src/components/buttons/BackButton.vue';
-import ProfileForm from 'src/components/profile/ProfileForm.vue';
+import FormProfile from 'src/components/form/profile/FormProfile.vue';
 
 const { t } = useI18n();
 const userStore = useUserStore();
 const router = useRouter();
 
 onMounted(() => {
-  userStore.loadUserDetails();
+  if (!userStore.userDetails) {
+    userStore.loadUserDetails();
+  }
 });
 
 const isLoading = computed(() => userStore.loading);
