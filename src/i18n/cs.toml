@@ -70,6 +70,21 @@ submitResetPassword = "Odeslat"
 title = "Odkaz na obnovení hesla byl odeslán"
 description = "Odkaz na obnovení hesla byl odeslán na váš e-mail. Pokud ho neobdržíte, zkontrolujte svůj e-mailový box a zkuste to znovu."
 
+[verifyEmail]
+title = "Pokračujte potvrzením e-mailu"
+description = "Právě jsme vám na e-mail {email} poslali pozvánku do systému Zažít město jinak."
+checkSpamFolder = "Pokud ji nemůžete najít, koukněte i do spamu."
+emailNotReceived = "E-mail neobdržen?"
+emailNotReceivedDescription = "Pokud jste neobdrželi ověřovací e-mail, zkuste to znovu."
+resendEmail = "Odeslat e-mail znovu"
+wrongEmail = "Máte nesprávný e-mail?"
+registerAgain = "Zaregistrujte se znovu."
+
+[confirmEmail]
+title = "Potvrzení e-mailu"
+description = "E-mail {email} byl potvrzen."
+login = "Přejít na přihlášení"
+
 [register]
 title = "Registrace"
 submitRegister = "Registrovat se"
@@ -252,3 +267,8 @@ xl = "více než 5000 m²"
 [event.spaceRent]
 yes = "Ano"
 no = "Ne"
+
+[error]
+clientSideError = "Chyba na straně klienta"
+serverSideError = "Chyba na straně serveru"
+invalidConfirmationLink = "Odkaz na potvrzení e-mailu je neplatný."

@@ -1,61 +1,68 @@
 import { defineStore } from 'pinia';
 import { useApiUser } from 'src/composables/api/useApiUser';
-import { UserDetails, UserMeta } from 'src/types/User';
-import { ref } from 'vue';
+import { UserDetails } from 'src/types/User';
+import { UserLanguage, UserGender } from 'src/enums/userEnums';
+import { ref, watch } from 'vue';
+import { cloneDeep } from 'lodash';
 
 export const useUserStore = defineStore('user', () => {
-  const defaultUserMeta = {
-    id: '',
-    email: '',
-  } as UserMeta;
-
-  const defaultUserDetails = {
+  const defaultUserDetails: UserDetails = {
     name: '',
     surname: '',
     email: '',
-    gender: '',
-    languagePreference: '',
-  } as UserDetails;
-
-  const userMeta = ref<UserMeta>(defaultUserMeta);
-  const userDetails = ref<UserDetails>(defaultUserDetails);
-  const loading = ref(false);
-
-  const setEmail = (email: string) => {
-    userMeta.value.email = email;
+    phone: '',
+    gender: UserGender.UNKNOWN,
+    languagePreference: UserLanguage.CS,
   };
 
-  const loadUserMeta = async () => {
-    const { getUserMeta } = useApiUser();
-    loading.value = true;
-    const newUserMeta = await getUserMeta();
-    if (newUserMeta) {
-      userMeta.value = newUserMeta;
-    }
-    loading.value = false;
+  const userDetails = ref<UserDetails | null>(null);
+  const userDetailsForm = ref<UserDetails>(defaultUserDetails);
+  const loading = ref(false);
+
+  watch(userDetails, (newUserDetails) => {
+    userDetailsForm.value = cloneDeep(newUserDetails);
+  });
+
+  const setEmail = (email: string) => {
+    userDetails.value.email = email;
+  };
+
+  const setUser = (newUserDetails: UserDetails) => {
+    userDetails.value = cloneDeep(newUserDetails);
   };
 
   const loadUserDetails = async () => {
     const { getUserDetails } = useApiUser();
     loading.value = true;
-    // TODO if user is not logged in
-    const newUserDetails = await getUserDetails(userMeta.value.id);
+    const newUserDetails = await getUserDetails();
+    console.log('newUserDetails', newUserDetails);
     if (newUserDetails) {
-      userDetails.value = newUserDetails;
+      setUser(newUserDetails);
     }
     loading.value = false;
   };
-  const clearUserDetails = () => {
-    userDetails.value = defaultUserDetails;
+
+  const updateUserDetails = async () => {
+    const { updateUserDetails } = useApiUser();
+    loading.value = true;
+    await updateUserDetails(userDetailsForm.value);
+    loadUserDetails();
+    console.log('userDetails', userDetails.value);
+    loading.value = false;
+  };
+
+  const clearUser = () => {
+    userDetails.value = cloneDeep(defaultUserDetails);
   };
 
   return {
-    userMeta,
     userDetails,
+    userDetailsForm,
     loading,
     setEmail,
-    loadUserMeta,
     loadUserDetails,
-    clearUserDetails,
+    updateUserDetails,
+    clearUser,
+    setUser,
   };
 });

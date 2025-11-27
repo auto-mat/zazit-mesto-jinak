@@ -1,44 +1,43 @@
-import { ref } from 'vue';
-
-import { userAdapter } from 'src/adapters/userAdapter';
-import userService from 'src/services/userService';
-import { UserDetails, UserMeta } from 'src/types/User';
+import { userAdapter, ApiUserDetails } from 'src/adapters/userAdapter';
+import { UserDetails } from 'src/types/User';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { getApi, putApi } from 'src/api/apiFetch';
+import { useLoginStore } from 'src/stores/login';
 
 export function useApiUser() {
-  const error = ref<string | null>(null);
+  const loginStore = useLoginStore();
 
-  const getUserMeta = async () => {
-    let user: UserMeta | null = null;
-
-    try {
-      const response = await userService.getUserMeta();
-      if (response) {
-        user = userAdapter.toUserMeta(response);
-      }
-    } catch (err: any) {
-      error.value = err.message;
-    }
-
-    return user;
-  };
-
-  const getUserDetails = async (userId: string) => {
+  const getUserDetails = async () => {
     let userDetails: UserDetails | null = null;
 
-    try {
-      const response = await userService.getUserDetails(userId);
-      if (response) {
-        userDetails = userAdapter.toUserDetails(response);
-      }
-    } catch (err: any) {
-      error.value = err.message;
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
+    }
+
+    const data = await getApi<ApiUserDetails>(zazitMestoJinakConfig.urlApiUser);
+
+    if (data) {
+      userDetails = userAdapter.toUserDetails(data);
     }
 
     return userDetails;
   };
+
+  const updateUserDetails = async (newUserDetails: UserDetails) => {
+    const payload = {
+      first_name: newUserDetails.name,
+      last_name: newUserDetails.surname,
+      email: newUserDetails.email,
+      telephone: newUserDetails.phone,
+      sex: newUserDetails.gender,
+      language: newUserDetails.languagePreference,
+    };
+
+    await putApi(zazitMestoJinakConfig.urlApiUser, payload);
+  };
+
   return {
-    getUserMeta,
     getUserDetails,
-    error,
+    updateUserDetails,
   };
 }

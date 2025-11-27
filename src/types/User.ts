@@ -1,8 +1,3 @@
-export interface UserMeta {
-  id: string;
-  email: string;
-}
-
 export interface UserDetails {
   name: string;
   surname: string;

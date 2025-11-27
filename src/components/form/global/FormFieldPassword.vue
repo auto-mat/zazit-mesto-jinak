@@ -13,8 +13,8 @@
       id="form-password"
       :hint="props.hideHint ? '' : t('form.hintPassword')"
       :type="isHiddenPassword ? 'password' : 'text'"
-      :rules="validated ? validationRules : []"
-      :lazy-rules="validated"
+      :rules="validationRules"
+      lazy-rules
       :bg-color="bgColor"
       class="q-mt-sm"
     >
@@ -67,6 +67,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
   bgColor: {
     type: String as () => 'white' | 'transparent',
     default: 'transparent',
@@ -103,9 +107,13 @@ const isHiddenPassword = ref(true);
 const validationRules = computed(() => {
   return [
     (val: string) =>
+      !props.required ||
       isFilled(val) ||
       t('form.messageFieldRequired', { fieldName: t('form.labelPassword') }),
-    (val: string) => isStrongPassword(val) || t('form.messagePasswordStrong'),
+    (val: string) =>
+      !props.validated ||
+      isStrongPassword(val) ||
+      t('form.messagePasswordStrong'),
   ];
 });
 </script>

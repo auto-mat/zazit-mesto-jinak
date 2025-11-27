@@ -1,8 +1,13 @@
 <template>
   <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
     <div class="row q-col-gutter-md">
-      <form-field-email v-model="email" required class="col-12" />
-      <form-field-password v-model="password" required class="col-12" />
+      <form-field-email v-model="email" required validated class="col-12" />
+      <form-field-password
+        v-model="password"
+        required
+        validated
+        class="col-12"
+      />
       <form-field-password-confirm
         v-model="passwordConfirm"
         :compare-value="password"
@@ -23,7 +28,6 @@
 
 <script setup lang="ts">
 // libraries
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
@@ -38,8 +42,7 @@ import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 const { t } = useI18n();
 
 const registerStore = useRegisterStore();
-const { email, password } = storeToRefs(registerStore);
-const passwordConfirm = ref('');
+const { email, password, passwordConfirm } = storeToRefs(registerStore);
 
 const onSubmit = async () => {
   console.log('submit');
