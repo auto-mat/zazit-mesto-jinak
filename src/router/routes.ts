@@ -167,29 +167,29 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   // verify email
-  // {
-  //   path: routesConf['verify_email']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['verify_email']['children']['name'],
-  //       component: () => import('pages/VerifyEmailPage.vue'),
-  //     },
-  //   ],
-  // },
+  {
+    path: routesConf['verify_email']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['verify_email']['children']['name'],
+        component: () => import('pages/registration/VerifyEmailPage.vue'),
+      },
+    ],
+  },
   // confirm email
-  // {
-  //   path: routesConf['confirm_email']['path'],
-  //   component: () => import('layouts/LoginRegisterLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: routesConf['confirm_email']['children']['name'],
-  //       component: () => import('pages/ConfirmEmailPage.vue'),
-  //     },
-  //   ],
-  // },
+  {
+    path: routesConf['confirm_email']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['confirm_email']['children']['name'],
+        component: () => import('pages/registration/ConfirmEmailPage.vue'),
+      },
+    ],
+  },
   // email reset password
   {
     path: routesConf['email_reset_password']['path'],

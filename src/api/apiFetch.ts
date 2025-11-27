@@ -2,6 +2,7 @@ import { storeToRefs } from 'pinia';
 import { Notify } from 'quasar';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { useLoginStore } from 'src/stores/login';
+import { useI18n } from 'vue-i18n';
 
 export class ClientSideError extends Error {}
 interface Options {
@@ -11,6 +12,7 @@ interface Options {
 }
 
 export async function apiFetch(endpoint: string, options?: Options) {
+  const { t } = useI18n();
   const loginStore = useLoginStore();
   const { accessToken } = storeToRefs(loginStore);
 
@@ -33,10 +35,10 @@ export async function apiFetch(endpoint: string, options?: Options) {
         if (error && error.detail) {
           throw new ClientSideError(error.detail);
         } else {
-          throw new Error('Client side error');
+          throw new Error(t('error.clientSideError'));
         }
       } else {
-        throw new Error('Server side error');
+        throw new Error(t('error.serverSideError'));
       }
     }
 
@@ -49,7 +51,7 @@ export async function apiFetch(endpoint: string, options?: Options) {
       });
     } else {
       Notify.create({
-        message: 'Something went wrong',
+        message: error.message,
         color: 'negative',
       });
     }

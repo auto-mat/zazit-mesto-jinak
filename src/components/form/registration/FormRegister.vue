@@ -28,7 +28,6 @@
 
 <script setup lang="ts">
 // libraries
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
@@ -43,8 +42,7 @@ import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 const { t } = useI18n();
 
 const registerStore = useRegisterStore();
-const { email, password } = storeToRefs(registerStore);
-const passwordConfirm = ref('');
+const { email, password, passwordConfirm } = storeToRefs(registerStore);
 
 const onSubmit = async () => {
   console.log('submit');

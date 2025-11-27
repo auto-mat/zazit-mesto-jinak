@@ -2,14 +2,15 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { routesConf } from 'src/router/routes_conf';
-import { useLoginStore } from './login';
+// import { useLoginStore } from './login';
 
 export const useRegisterStore = defineStore('register', () => {
-  const loginStore = useLoginStore();
+  // const loginStore = useLoginStore();
   const router = useRouter();
 
   const email = ref('');
   const password = ref('');
+  const passwordConfirm = ref('');
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -62,8 +63,14 @@ export const useRegisterStore = defineStore('register', () => {
   const register = async () => {
     console.log('register');
     // TODO: send register request to API
-    await loginStore.login({ username: email.value, password: password.value });
-    await router.push(routesConf['registration']['path']);
+    // register
+    // login
+    // await loginStore.login({ username: email.value, password: password.value });
+    await router.push(routesConf['verify_email']['path']);
+  };
+
+  const confirmVerification = async () => {
+    // todo
   };
 
   const registerDone = async () => {
@@ -74,8 +81,10 @@ export const useRegisterStore = defineStore('register', () => {
   return {
     email,
     password,
+    passwordConfirm,
     register,
     registerDone,
     registerFormState,
+    confirmVerification,
   };
 });
