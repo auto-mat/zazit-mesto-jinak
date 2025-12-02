@@ -3,32 +3,19 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
 // composables
+import {
+  useApiLogin,
+  type LoginPayload,
+  type LoginResponse,
+} from 'src/composables/api/useApiLogin';
 import { useJwt } from '../composables/useJwt';
 
 // config
 import { routesConf } from '../router/routes_conf';
 
-// types
-
-interface LoginPayload {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  access: string;
-  refresh: string;
-}
-
-interface RefreshTokenResponse {
-  access: string;
-}
-
 // utils
 import { computed, ref } from 'vue';
 import { useUserStore } from './user';
-import { postApi } from 'src/api/apiFetch';
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 interface PasswordResetResponse {
   detail: string;
@@ -37,14 +24,17 @@ interface PasswordResetResponse {
 export const useLoginStore = defineStore(
   'login',
   () => {
+    const { loginApi, refreshTokenApi, isUserVerifiedApi } = useApiLogin();
     const router = useRouter();
     const userStore = useUserStore();
+    const { readJwtExpiration } = useJwt();
     const { userDetails } = storeToRefs(userStore);
     const accessToken = ref('');
     const refreshToken = ref(''); // persisted
     const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
     // const refreshTokenTimeout = ref<NodeJS.Timeout | null>(null) // unit: seconds
     const passwordResetEmail = ref('');
+    const isUserVerified = ref(false);
 
     const isUserLoggedIn = computed(() =>
       userDetails.value?.email ? true : false,
@@ -119,18 +109,19 @@ export const useLoginStore = defineStore(
       console.log(`Login password <${payload.password}>.`);
       // login
       console.log('Get API access/refresh token.');
-      const response = await postApi(
-        zazitMestoJinakConfig.urlApiLogin,
-        payload,
-      );
-      const data: LoginResponse = await response.json();
+      const data = await loginApi(payload);
 
       await processLoginData(data);
 
       if (data) {
-        // load user details after successful login
-        await userStore.loadUserDetails();
-        await router.push(routesConf['home']['path']);
+        await checkUserVerification();
+        if (isUserVerified.value) {
+          // load user details after successful login
+          await userStore.loadUserDetails();
+          await router.push(routesConf['home']['path']);
+        } else {
+          await router.push(routesConf['verify_email']['path']);
+        }
       }
 
       return data;
@@ -150,7 +141,6 @@ export const useLoginStore = defineStore(
       setRefreshToken(refresh);
 
       // set JWT expiration
-      const { readJwtExpiration } = useJwt();
       const expiration = readJwtExpiration(access);
 
       if (expiration) {
@@ -267,11 +257,7 @@ export const useLoginStore = defineStore(
       const payload = { refresh: refreshToken.value };
       console.log('Obtain new API access token.', payload);
       // TODO: fetch new access token
-      const response = await postApi(
-        zazitMestoJinakConfig.urlApiRefreshToken,
-        payload,
-      );
-      const data: RefreshTokenResponse = await response.json();
+      const data = await refreshTokenApi(payload);
 
       // set new access token
       if (data && data.access) {
@@ -282,7 +268,6 @@ export const useLoginStore = defineStore(
         );
 
         // set JWT expiration
-        const { readJwtExpiration } = useJwt();
         const expiration = readJwtExpiration(data.access);
         if (expiration) {
           setJwtExpiration(expiration);
@@ -358,6 +343,15 @@ export const useLoginStore = defineStore(
       return data;
     }
 
+    async function checkUserVerification(): Promise<void> {
+      console.log('Check user verification.');
+      if (await isUserVerifiedApi()) {
+        isUserVerified.value = true;
+      } else {
+        isUserVerified.value = false;
+      }
+    }
+
     return {
       accessToken,
       refreshToken,
@@ -367,7 +361,10 @@ export const useLoginStore = defineStore(
       login,
       logout,
       resetPassword,
+      processLoginData,
       validateAccessToken,
+      checkUserVerification,
+      isUserVerified,
     };
   },
   {

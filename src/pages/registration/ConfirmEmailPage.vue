@@ -13,7 +13,7 @@
       rounded
       color="primary"
       class="full-width q-mt-lg"
-      @click="registerStore.confirmVerification"
+      @click="registerStore.confirmVerification(key)"
     />
   </div>
 </template>
@@ -21,7 +21,6 @@
 <script setup lang="ts">
 // libraries
 import { useRoute } from 'vue-router';
-import { Notify } from 'quasar';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -32,9 +31,6 @@ import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 //stores
 import { useRegisterStore } from 'src/stores/register';
 
-// api
-import { postApi } from 'src/api/apiFetch';
-
 defineOptions({
   name: 'ConfirmEmailPage',
 });
@@ -44,24 +40,10 @@ const { t } = useI18n();
 const registerStore = useRegisterStore();
 
 const email = ref('');
-const isLoading = ref(false);
+const key = ref('');
 
 onMounted(async () => {
-  const key = route.query.key as string;
+  key.value = route.query.key as string;
   email.value = route.query.email as string;
-
-  if (!key) {
-    Notify.create({
-      message: t('error.invalidConfirmationLink'),
-      color: 'negative',
-    });
-    return;
-  }
-
-  isLoading.value = true;
-
-  await postApi(zazitMestoJinakConfig.urlApiConfirmEmail + `${key}/`, {});
-
-  isLoading.value = false;
 });
 </script>

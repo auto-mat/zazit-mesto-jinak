@@ -2,11 +2,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { routesConf } from 'src/router/routes_conf';
-// import { useLoginStore } from './login';
+import { useLoginStore } from './login';
+import { Notify } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import { useApiRegister } from 'src/composables/api/useApiRegister';
 
 export const useRegisterStore = defineStore('register', () => {
-  // const loginStore = useLoginStore();
+  const { t } = useI18n();
   const router = useRouter();
+  const loginStore = useLoginStore();
+  const { registerApi, confirmVerificationApi, resendEmailApi } =
+    useApiRegister();
 
   const email = ref('');
   const password = ref('');
@@ -62,15 +68,49 @@ export const useRegisterStore = defineStore('register', () => {
 
   const register = async () => {
     console.log('register');
-    // TODO: send register request to API
-    // register
-    // login
-    // await loginStore.login({ username: email.value, password: password.value });
-    await router.push(routesConf['verify_email']['path']);
+    const data = await registerApi({
+      email: email.value,
+      password1: password.value,
+      password2: passwordConfirm.value,
+    });
+
+    if (data) {
+      await loginStore.processLoginData({
+        access: data.access,
+        refresh: data.refresh,
+      });
+      await loginStore.checkUserVerification();
+      if (loginStore.isUserVerified) {
+        await router.push(routesConf['home']['path']);
+      } else {
+        await router.push(routesConf['verify_email']['path']);
+      }
+    }
   };
 
-  const confirmVerification = async () => {
-    // todo
+  const confirmVerification = async (key: string) => {
+    console.log('confirm verification');
+    if (await confirmVerificationApi(key)) {
+      await router.push(routesConf['home']['path']);
+    }
+  };
+
+  const resendEmail = async () => {
+    console.log('resend email');
+    const data = await resendEmailApi();
+
+    if (data && data.send_registration_confirmation_email) {
+      Notify.create({
+        message: t('verifyEmail.emailSent'),
+        color: 'positive',
+      });
+    } else {
+      console.log('Email sending failed');
+      Notify.create({
+        message: t('verifyEmail.emailNotSent'),
+        color: 'negative',
+      });
+    }
   };
 
   const registerDone = async () => {
@@ -86,5 +126,6 @@ export const useRegisterStore = defineStore('register', () => {
     registerDone,
     registerFormState,
     confirmVerification,
+    resendEmail,
   };
 });

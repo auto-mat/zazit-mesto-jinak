@@ -1,8 +1,9 @@
 import { userAdapter, ApiUserDetails } from 'src/adapters/userAdapter';
 import { UserDetails } from 'src/types/User';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
-import { getApi, putApi } from 'src/api/apiFetch';
 import { useLoginStore } from 'src/stores/login';
+import apiFetch from 'src/api/apiFetch';
+import { Notify } from 'quasar';
 
 export function useApiUser() {
   const loginStore = useLoginStore();
@@ -14,13 +15,21 @@ export function useApiUser() {
       return null;
     }
 
-    const data = await getApi<ApiUserDetails>(zazitMestoJinakConfig.urlApiUser);
-
-    if (data) {
-      userDetails = userAdapter.toUserDetails(data);
+    try {
+      const { data } = await apiFetch.get<ApiUserDetails>(
+        zazitMestoJinakConfig.urlApiUser,
+      );
+      if (data) {
+        userDetails = userAdapter.toUserDetails(data);
+      }
+      return userDetails;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return null;
     }
-
-    return userDetails;
   };
 
   const updateUserDetails = async (newUserDetails: UserDetails) => {
@@ -33,7 +42,15 @@ export function useApiUser() {
       language: newUserDetails.languagePreference,
     };
 
-    await putApi(zazitMestoJinakConfig.urlApiUser, payload);
+    try {
+      await apiFetch.put<void>(zazitMestoJinakConfig.urlApiUser, payload);
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return null;
+    }
   };
 
   return {

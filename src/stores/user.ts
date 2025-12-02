@@ -6,6 +6,9 @@ import { ref, watch } from 'vue';
 import { cloneDeep } from 'lodash';
 
 export const useUserStore = defineStore('user', () => {
+  const { getUserDetails, updateUserDetails: updateUserDetailsApi } =
+    useApiUser();
+
   const defaultUserDetails: UserDetails = {
     name: '',
     surname: '',
@@ -32,7 +35,6 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const loadUserDetails = async () => {
-    const { getUserDetails } = useApiUser();
     loading.value = true;
     const newUserDetails = await getUserDetails();
     console.log('newUserDetails', newUserDetails);
@@ -43,9 +45,8 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const updateUserDetails = async () => {
-    const { updateUserDetails } = useApiUser();
     loading.value = true;
-    await updateUserDetails(userDetailsForm.value);
+    await updateUserDetailsApi(userDetailsForm.value);
     loadUserDetails();
     console.log('userDetails', userDetails.value);
     loading.value = false;

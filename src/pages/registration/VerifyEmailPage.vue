@@ -6,10 +6,7 @@
     <h1>{{ t('verifyEmail.title') }}</h1>
     <p>{{ t('verifyEmail.description', { email: email ?? '' }) }}</p>
     <p>{{ t('verifyEmail.checkSpamFolder') }}</p>
-    <!-- <div class="q-mt-lg">
-      <h2>{{ t('verifyEmail.emailNotReceived') }}</h2>
-      <p>{{ t('verifyEmail.emailNotReceivedDescription') }}</p>
-      <q-btn
+    <q-btn
       :label="t('verifyEmail.resendEmail')"
       type="button"
       unelevated
@@ -18,7 +15,6 @@
       class="full-width q-mt-lg"
       @click="registerStore.resendEmail"
     />
-    </div> -->
     <div class="q-mt-lg">
       <span>{{ t('verifyEmail.wrongEmail') }}</span>
       <router-link :to="routesConf['signup']['path']">{{

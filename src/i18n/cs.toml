@@ -74,16 +74,17 @@ description = "Odkaz na obnovení hesla byl odeslán na váš e-mail. Pokud ho n
 title = "Pokračujte potvrzením e-mailu"
 description = "Právě jsme vám na e-mail {email} poslali pozvánku do systému Zažít město jinak."
 checkSpamFolder = "Pokud ji nemůžete najít, koukněte i do spamu."
-emailNotReceived = "E-mail neobdržen?"
-emailNotReceivedDescription = "Pokud jste neobdrželi ověřovací e-mail, zkuste to znovu."
-resendEmail = "Odeslat e-mail znovu"
-wrongEmail = "Máte nesprávný e-mail?"
+resendEmail = "Znovu poslat e-mail"
+wrongEmail = "Zadali jste nesprávný e-mail?"
 registerAgain = "Zaregistrujte se znovu."
+emailSent = "E-mail byl znovu odeslán."
+emailNotSent = "E-mail se nepodařilo znovu odeslat."
 
 [confirmEmail]
 title = "Potvrzení e-mailu"
-description = "E-mail {email} byl potvrzen."
-login = "Přejít na přihlášení"
+description = "Prosím potvrďte svojí e-mailovou adresu: {email}."
+confirm = "Potvrdit"
+emailConfirmed = "E-mail byl potvrzen."
 
 [register]
 title = "Registrace"
