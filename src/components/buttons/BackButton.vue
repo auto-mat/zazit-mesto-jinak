@@ -17,12 +17,16 @@
       color="primary"
       icon="chevron_left"
       v-bind="$attrs"
-      :label="$t('button.back')"
+      :label="t('button.back')"
       @click="$emit('back')"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-defineEmits(['back'])
+import { useI18n } from 'vue-i18n';
+
+defineEmits(['back']);
+
+const { t } = useI18n();
 </script>

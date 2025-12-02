@@ -1,35 +1,24 @@
-import { UserDetailsType, UserMetaType } from 'src/types/User'
+import { UserDetails } from 'src/types/User';
+import { UserLanguage } from 'src/enums/userEnums';
 
-type ApiUserMeta = {
-  id: string,
-  email: string,
-}
-
-type ApiUserDetails = {
-  name: string,
-  surname: string,
-  email: string,
-  phone: string,
-  gender: string,
-  language_preference: string,
-}
+export type ApiUserDetails = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  telephone: string;
+  sex: string;
+  language: string;
+};
 
 export const userAdapter = {
-  toUserMeta(userData: ApiUserMeta): UserMetaType {
+  toUserDetails(userData: ApiUserDetails): UserDetails {
     return {
-      id: userData.id,
+      name: userData.firstname,
+      surname: userData.lastname,
       email: userData.email,
-    }
+      phone: userData.telephone,
+      gender: userData.sex,
+      languagePreference: userData.language as UserLanguage,
+    };
   },
-
-  toUserDetails(userData: ApiUserDetails): UserDetailsType {
-    return {
-      name: userData.name,
-      surname: userData.surname,
-      email: userData.email,
-      phone: userData.phone,
-      gender: userData.gender,
-      languagePreference: userData.language_preference,
-    }
-  },
-}
+};

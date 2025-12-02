@@ -1,44 +1,65 @@
-import { ref } from 'vue';
-
-import { userAdapter } from 'src/adapters/userAdapter';
-import userService from 'src/services/userService';
-import { UserDetails, UserMeta } from 'src/types/User';
+import { userAdapter, ApiUserDetails } from 'src/adapters/userAdapter';
+import { UserDetails } from 'src/types/User';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { useLoginStore } from 'src/stores/login';
+import apiFetch from 'src/api/apiFetch';
+import { Notify } from 'quasar';
 
 export function useApiUser() {
-  const error = ref<string | null>(null);
+  const loginStore = useLoginStore();
 
-  const getUserMeta = async () => {
-    let user: UserMeta | null = null;
-
-    try {
-      const response = await userService.getUserMeta();
-      if (response) {
-        user = userAdapter.toUserMeta(response);
-      }
-    } catch (err: any) {
-      error.value = err.message;
+  const getUserDetails = async (): Promise<UserDetails | null> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
     }
 
-    return user;
-  };
-
-  const getUserDetails = async (userId: string) => {
     let userDetails: UserDetails | null = null;
 
     try {
-      const response = await userService.getUserDetails(userId);
-      if (response) {
-        userDetails = userAdapter.toUserDetails(response);
+      const { data } = await apiFetch.get<ApiUserDetails>(
+        zazitMestoJinakConfig.urlApiUser,
+      );
+      if (data) {
+        userDetails = userAdapter.toUserDetails(data);
       }
-    } catch (err: any) {
-      error.value = err.message;
+      return userDetails;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return null;
+    }
+  };
+
+  const updateUserDetails = async (
+    newUserDetails: UserDetails,
+  ): Promise<void> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return;
     }
 
-    return userDetails;
+    const payload = {
+      first_name: newUserDetails.name,
+      last_name: newUserDetails.surname,
+      email: newUserDetails.email,
+      telephone: newUserDetails.phone,
+      sex: newUserDetails.gender,
+      language: newUserDetails.languagePreference,
+    };
+
+    try {
+      await apiFetch.put<void>(zazitMestoJinakConfig.urlApiUser, payload);
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+    }
   };
+
   return {
-    getUserMeta,
     getUserDetails,
-    error,
+    updateUserDetails,
   };
 }

@@ -16,6 +16,7 @@ const numberFormats = getNumberFormats(Object.keys(messages));
 
 // Create I18n instance
 export const i18n = createI18n({
+  legacy: false,
   locale: defaultLocale,
   fallbackLocale: fallbackLocale,
   globalInjection: true,

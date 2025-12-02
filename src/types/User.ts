@@ -1,7 +1,4 @@
-export interface UserMeta {
-  id: string;
-  email: string;
-}
+import { UserLanguage } from 'src/enums/userEnums';
 
 export interface UserDetails {
   name: string;
@@ -9,5 +6,5 @@ export interface UserDetails {
   email: string;
   phone: string;
   gender: string;
-  languagePreference: string;
+  languagePreference: UserLanguage;
 }

@@ -65,6 +65,13 @@ const routesConf: RoutesConf = {
       name: 'profile',
     },
   },
+  profile_edit: {
+    path: '/profile/edit',
+    children: {
+      fullPath: '/profile/edit',
+      name: 'profile-edit',
+    },
+  },
   event: {
     path: '/event/:slug',
     children: {
