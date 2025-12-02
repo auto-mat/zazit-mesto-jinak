@@ -1,5 +1,5 @@
 // libraries
-import { defineStore, storeToRefs } from 'pinia';
+import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 
 // composables
@@ -28,7 +28,6 @@ export const useLoginStore = defineStore(
     const router = useRouter();
     const userStore = useUserStore();
     const { readJwtExpiration } = useJwt();
-    const { userDetails } = storeToRefs(userStore);
     const accessToken = ref('');
     const refreshToken = ref(''); // persisted
     const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
@@ -92,27 +91,22 @@ export const useLoginStore = defineStore(
      * @returns {Promise<LoginResponse | null>} - Response
      */
     async function login(payload: LoginPayload): Promise<LoginResponse | null> {
-      console.log(`Login payload <${JSON.stringify(payload, null, 2)}>.`);
       // check that email is set
       if (!payload.username) {
-        console.log('Email is required.');
         return null;
       }
       // check that password is set
       if (!payload.password) {
-        console.log('Password is required.');
         return null;
       }
-      console.log(`Login username <${payload.username}>.`);
-      console.log(`Login password <${payload.password}>.`);
       // login
-      console.log('Get API access/refresh token.');
       const data = await loginApi(payload);
 
       await processLoginData(data);
 
       if (data) {
         await checkUserVerification();
+        // check if user is verified
         if (isUserVerified.value) {
           // load user details after successful login
           await userStore.loadUserDetails();
@@ -154,7 +148,6 @@ export const useLoginStore = defineStore(
      * Sets the access token, refresh token and user to empty values.
      */
     function logout(): void {
-      console.log(`Logout user <${userDetails.value?.email ?? ''}>.`);
       setAccessToken('');
       setRefreshToken('');
       setJwtExpiration(null);
@@ -204,37 +197,27 @@ export const useLoginStore = defineStore(
      * @returns {Promise<boolean>} - Token is valid
      */
     async function validateAccessToken(): Promise<boolean> {
-      console.log('Validate access token.', accessToken.value);
       if (!jwtExpiration.value) {
         // no expiration set - user is not logged in
-        console.log('No access token expiration set, user is not logged in.');
         return false;
       }
 
       // Check if access token is missing (e.g., after page reload)
       // or if it's expired
       if (!accessToken.value || isJwtExpired()) {
-        if (!accessToken.value) {
-          console.log('Access token is missing, attempting to refresh.');
-        } else {
-          console.log('Access token is expired.');
-        }
         // try to refresh tokens
         await refreshTokens();
         // check if refresh was successful
         if (!accessToken.value || isJwtExpired()) {
           // refresh failed - logout
-          console.log('Refresh access token failed, logout user.');
           logout();
           return false;
         } else {
           // refresh successful
-          console.log('Refresh access token was successfull.');
           return true;
         }
       } else {
         // token exists and is not expired
-        console.log('Access token is valid.');
         return true;
       }
     }
@@ -246,32 +229,21 @@ export const useLoginStore = defineStore(
      */
     async function refreshTokens(): Promise<void> {
       // check that refresh token is set
-      console.log('Call refresh token.');
       if (!refreshToken.value) {
-        console.log(`No refresh token <${refreshToken.value}>.`);
         return;
       }
       // refresh tokens
       const payload = { refresh: refreshToken.value };
-      console.log('Obtain new API access token.', payload);
-      // TODO: fetch new access token
       const data = await refreshTokenApi(payload);
 
       // set new access token
       if (data && data.access) {
-        console.log('Save newly obtained access token into store.');
         setAccessToken(data.access);
-        console.log(
-          `Login store saved newly obtained access token <${accessToken.value}>.`,
-        );
 
         // set JWT expiration
         const expiration = readJwtExpiration(data.access);
         if (expiration) {
           setJwtExpiration(expiration);
-          console.log(
-            `Access token expiration time <${new Date(expiration * 1000).toLocaleString()}>.`,
-          );
         }
 
         // token refresh (if no page reload before expiration)
@@ -301,12 +273,6 @@ export const useLoginStore = defineStore(
     function isJwtExpired(): boolean {
       const expiration = jwtExpiration.value;
       const currentTimeSeconds = Math.floor(Date.now() / 1000); // seconds
-      console.log(
-        `Is access token expired <${!expiration || currentTimeSeconds > expiration}>.`,
-      );
-      console.log(
-        `Current date time <${new Date(currentTimeSeconds * 1000).toLocaleString()}, JWT expiration date time <${expiration ? new Date(expiration * 1000).toLocaleString() : null}>.`,
-      );
       return !expiration || currentTimeSeconds > expiration;
     }
     /**
@@ -319,7 +285,6 @@ export const useLoginStore = defineStore(
       email: string,
     ): Promise<PasswordResetResponse | null> {
       const payload = { email };
-      console.log(`Reset password email <${payload.email}>.`);
       // const { data } = await useFetch<PasswordResetResponse>({
       //   endpoint: zazitMestoJinakConfig.urlApiResetPassword,
       //   method: 'post',
@@ -329,20 +294,14 @@ export const useLoginStore = defineStore(
       const data = { detail: 'Password reset e-mail has been sent.' };
 
       if (data) {
-        console.log(`Reset password response <${data.detail}>.`);
         // set password reset email
-        console.log(`Set password reset email to <${payload.email}>.`);
         setPasswordResetEmail(payload.email);
-        console.log(
-          `Login store password reset email <${passwordResetEmail.value}>.`,
-        );
       }
 
       return data;
     }
 
     async function checkUserVerification(): Promise<void> {
-      console.log('Check user verification.');
       if (await isUserVerifiedApi()) {
         isUserVerified.value = true;
       } else {

@@ -18,7 +18,8 @@ export const useRegisterStore = defineStore('register', () => {
   const password = ref('');
   const passwordConfirm = ref('');
 
-  const isRegistratonComplete = ref(false);
+  // TODO temporary flag
+  const isRegistratonComplete = ref(true);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -68,14 +69,13 @@ export const useRegisterStore = defineStore('register', () => {
 
   const registerFormState = ref(cloneDeep(registerDefaultFormState));
 
-  const clearRegisterData = () => {
+  const clearRegisterData = (): void => {
     email.value = '';
     password.value = '';
     passwordConfirm.value = '';
   };
 
-  const register = async () => {
-    console.log('register');
+  const register = async (): Promise<void> => {
     const data = await registerApi({
       email: email.value,
       password1: password.value,
@@ -97,8 +97,7 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
-  const confirmVerification = async (key: string) => {
-    console.log('confirm verification');
+  const confirmVerification = async (key: string): Promise<void> => {
     if (await confirmVerificationApi(key)) {
       if (loginStore.isUserLoggedIn) {
         await loginStore.checkUserVerification();
@@ -107,8 +106,7 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
-  const resendEmail = async () => {
-    console.log('resend email');
+  const resendEmail = async (): Promise<void> => {
     const data = await resendEmailApi();
 
     if (data && data.send_registration_confirmation_email) {
@@ -117,7 +115,6 @@ export const useRegisterStore = defineStore('register', () => {
         color: 'positive',
       });
     } else {
-      console.log('Email sending failed');
       Notify.create({
         message: i18n.global.t('verifyEmail.emailNotSent'),
         color: 'negative',
@@ -125,8 +122,7 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
-  const registerDone = async () => {
-    console.log('register done');
+  const registerDone = async (): Promise<void> => {
     await router.push(routesConf['home']['path']);
   };
 

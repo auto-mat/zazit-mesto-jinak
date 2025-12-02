@@ -7,11 +7,11 @@
         <h2>{{ t('profile.subtitle') }}</h2>
       </div>
 
-      <back-button :to="{ name: routesConf['profile']['children']['name'] }" />
+      <back-button @back="onReset" />
     </div>
 
     <div v-if="userDetails">
-      <form-profile @submit="onSubmit" />
+      <form-profile @submit="onSubmit" @reset="onReset" />
     </div>
   </q-page>
 </template>
@@ -45,7 +45,12 @@ onMounted(() => {
 const isLoading = computed(() => userStore.loading);
 const userDetails = computed(() => userStore.userDetails);
 
-const onSubmit = () => {
+const onSubmit = (): void => {
+  router.push({ name: routesConf['profile']['children']['name'] });
+};
+
+const onReset = (): void => {
+  userStore.resetUserDetailsForm();
   router.push({ name: routesConf['profile']['children']['name'] });
 };
 </script>

@@ -1,6 +1,7 @@
 import { Notify } from 'quasar';
 import apiFetch from 'src/api/apiFetch';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { useLoginStore } from 'src/stores/login';
 
 export interface LoginPayload {
   username: string;
@@ -25,7 +26,11 @@ interface IsUserVerifiedResponse {
 }
 
 export function useApiLogin() {
-  const loginApi = async (payload: LoginPayload) => {
+  const loginStore = useLoginStore();
+
+  const loginApi = async (
+    payload: LoginPayload,
+  ): Promise<LoginResponse | null> => {
     try {
       const { data } = await apiFetch.post<LoginResponse>(
         zazitMestoJinakConfig.urlApiLogin,
@@ -48,7 +53,9 @@ export function useApiLogin() {
     }
   };
 
-  const refreshTokenApi = async (payload: RefreshTokenPayload) => {
+  const refreshTokenApi = async (
+    payload: RefreshTokenPayload,
+  ): Promise<RefreshTokenResponse | null> => {
     try {
       const { data } = await apiFetch.post<RefreshTokenResponse>(
         zazitMestoJinakConfig.urlApiRefreshToken,
@@ -64,7 +71,10 @@ export function useApiLogin() {
     }
   };
 
-  const isUserVerifiedApi = async () => {
+  const isUserVerifiedApi = async (): Promise<boolean | null> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
+    }
     try {
       const { data } = await apiFetch.get<IsUserVerifiedResponse>(
         zazitMestoJinakConfig.urlApiHasUserVerifiedEmail,

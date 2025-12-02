@@ -45,7 +45,7 @@ import { watch } from 'vue';
 import { UserLanguage } from 'src/enums/userEnums';
 
 const props = defineProps<{
-  value: string;
+  value: UserLanguage;
   shortVersion?: boolean;
   readonly?: boolean;
 }>();
@@ -66,7 +66,7 @@ watch(
   },
 );
 
-const setLocale = (item: string) => {
+const setLocale = (item: UserLanguage): void => {
   if (props.readonly) {
     return;
   }
@@ -74,7 +74,7 @@ const setLocale = (item: string) => {
   emit('updateLocale', item);
 };
 
-const isActive = (item: string): boolean => {
+const isActive = (item: UserLanguage): boolean => {
   return locale.value === item;
 };
 </script>

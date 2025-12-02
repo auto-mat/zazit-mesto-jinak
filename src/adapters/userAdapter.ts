@@ -1,4 +1,5 @@
 import { UserDetails } from 'src/types/User';
+import { UserLanguage } from 'src/enums/userEnums';
 
 export type ApiUserDetails = {
   firstname: string;
@@ -17,7 +18,7 @@ export const userAdapter = {
       email: userData.email,
       phone: userData.telephone,
       gender: userData.sex,
-      languagePreference: userData.language,
+      languagePreference: userData.language as UserLanguage,
     };
   },
 };

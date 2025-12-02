@@ -8,12 +8,12 @@ import { Notify } from 'quasar';
 export function useApiUser() {
   const loginStore = useLoginStore();
 
-  const getUserDetails = async () => {
-    let userDetails: UserDetails | null = null;
-
+  const getUserDetails = async (): Promise<UserDetails | null> => {
     if (!(await loginStore.validateAccessToken())) {
       return null;
     }
+
+    let userDetails: UserDetails | null = null;
 
     try {
       const { data } = await apiFetch.get<ApiUserDetails>(
@@ -32,7 +32,13 @@ export function useApiUser() {
     }
   };
 
-  const updateUserDetails = async (newUserDetails: UserDetails) => {
+  const updateUserDetails = async (
+    newUserDetails: UserDetails,
+  ): Promise<void> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return;
+    }
+
     const payload = {
       first_name: newUserDetails.name,
       last_name: newUserDetails.surname,
@@ -49,7 +55,6 @@ export function useApiUser() {
         message: error.message,
         color: 'negative',
       });
-      return null;
     }
   };
 

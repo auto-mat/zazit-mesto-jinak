@@ -26,7 +26,9 @@ interface ResendEmailResponse {
 export function useApiRegister() {
   const loginStore = useLoginStore();
 
-  const registerApi = async (payload: RegisterPayload) => {
+  const registerApi = async (
+    payload: RegisterPayload,
+  ): Promise<RegisterResponse | null> => {
     try {
       const { data } = await apiFetch.post<RegisterResponse>(
         zazitMestoJinakConfig.urlApiRegister,
@@ -49,7 +51,7 @@ export function useApiRegister() {
     }
   };
 
-  const confirmVerificationApi = async (key: string) => {
+  const confirmVerificationApi = async (key: string): Promise<boolean> => {
     try {
       await apiFetch.get<void>(
         zazitMestoJinakConfig.urlApiConfirmEmail + `${key}/`,
@@ -68,7 +70,7 @@ export function useApiRegister() {
     }
   };
 
-  const resendEmailApi = async () => {
+  const resendEmailApi = async (): Promise<ResendEmailResponse | null> => {
     if (!(await loginStore.validateAccessToken())) {
       return null;
     }

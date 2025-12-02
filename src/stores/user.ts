@@ -19,41 +19,43 @@ export const useUserStore = defineStore('user', () => {
   };
 
   const userDetails = ref<UserDetails | null>(null);
-  const userDetailsForm = ref<UserDetails>(defaultUserDetails);
+  const userDetailsForm = ref<UserDetails>(cloneDeep(defaultUserDetails));
   const loading = ref(false);
 
   watch(userDetails, (newUserDetails) => {
     userDetailsForm.value = cloneDeep(newUserDetails);
   });
 
-  const setEmail = (email: string) => {
+  const setEmail = (email: string): void => {
     userDetails.value.email = email;
   };
 
-  const setUser = (newUserDetails: UserDetails) => {
+  const setUser = (newUserDetails: UserDetails): void => {
     userDetails.value = cloneDeep(newUserDetails);
   };
 
-  const loadUserDetails = async () => {
+  const resetUserDetailsForm = (): void => {
+    userDetailsForm.value = cloneDeep(userDetails.value);
+  };
+
+  const loadUserDetails = async (): Promise<void> => {
     loading.value = true;
     const newUserDetails = await getUserDetails();
-    console.log('newUserDetails', newUserDetails);
     if (newUserDetails) {
       setUser(newUserDetails);
     }
     loading.value = false;
   };
 
-  const updateUserDetails = async () => {
+  const updateUserDetails = async (): Promise<void> => {
     loading.value = true;
     await updateUserDetailsApi(userDetailsForm.value);
     loadUserDetails();
-    console.log('userDetails', userDetails.value);
     loading.value = false;
   };
 
-  const clearUser = () => {
-    userDetails.value = cloneDeep(defaultUserDetails);
+  const clearUser = (): void => {
+    userDetails.value = null;
   };
 
   return {
@@ -65,5 +67,6 @@ export const useUserStore = defineStore('user', () => {
     updateUserDetails,
     clearUser,
     setUser,
+    resetUserDetailsForm,
   };
 });

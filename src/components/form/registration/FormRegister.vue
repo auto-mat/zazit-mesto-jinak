@@ -1,5 +1,5 @@
 <template>
-  <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
+  <q-form class="text-grey-10" @submit="onSubmit">
     <div class="row q-col-gutter-md">
       <form-field-email v-model="email" required validated class="col-12" />
       <form-field-password
@@ -44,12 +44,7 @@ const { t } = useI18n();
 const registerStore = useRegisterStore();
 const { email, password, passwordConfirm } = storeToRefs(registerStore);
 
-const onSubmit = async () => {
-  console.log('submit');
+const onSubmit = async (): Promise<void> => {
   await registerStore.register();
-};
-
-const onReset = () => {
-  console.log('reset');
 };
 </script>

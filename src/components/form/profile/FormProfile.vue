@@ -55,14 +55,23 @@
         />
       </div>
     </div>
-    <!-- Button: submit -->
+    <!-- Buttos -->
     <div class="flex justify-end q-mt-lg">
+      <q-btn
+        rounded
+        outline
+        unelevated
+        type="reset"
+        color="primary"
+        :label="t('profile.buttonCancel')"
+      />
       <q-btn
         rounded
         unelevated
         type="submit"
         color="primary"
         :label="t('profile.buttonUpdate')"
+        class="q-ml-sm"
       />
     </div>
   </q-form>
@@ -76,9 +85,9 @@ import { useUserStore } from 'src/stores/user';
 import { storeToRefs } from 'pinia';
 import { FormOption } from 'src/types/Form';
 import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
-import { UserGender } from 'src/enums/userEnums';
+import { UserGender, UserLanguage } from 'src/enums/userEnums';
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(['submit', 'reset']);
 
 const { t } = useI18n();
 
@@ -104,16 +113,16 @@ const optionsGender: FormOption[] = [
   },
 ];
 
-const onUpdateLocale = (locale: string) => {
+const onUpdateLocale = (locale: UserLanguage): void => {
   userDetailsForm.value.languagePreference = locale;
 };
 
-const onSubmit = () => {
-  userStore.updateUserDetails();
+const onSubmit = async (): Promise<void> => {
+  await userStore.updateUserDetails();
   emit('submit');
 };
 
-const onReset = () => {
-  // noop
+const onReset = (): void => {
+  emit('reset');
 };
 </script>

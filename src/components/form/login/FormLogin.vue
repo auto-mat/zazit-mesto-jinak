@@ -1,5 +1,5 @@
 <template>
-  <q-form autofocus class="text-grey-10" @submit="onSubmit" @reset="onReset">
+  <q-form autofocus class="text-grey-10" @submit="onSubmit">
     <div class="row q-col-gutter-md">
       <form-field-email v-model="email" required class="col-12" />
       <form-field-password
@@ -51,14 +51,10 @@ const loginStore = useLoginStore();
 const email = ref('');
 const password = ref('');
 
-const onSubmit = async () => {
+const onSubmit = async (): Promise<void> => {
   await loginStore.login({
     username: email.value,
     password: password.value,
   });
-};
-
-const onReset = () => {
-  console.log('reset');
 };
 </script>
