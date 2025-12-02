@@ -17,9 +17,9 @@
     />
     <div class="q-mt-lg">
       <span>{{ t('verifyEmail.wrongEmail') }}</span>
-      <router-link :to="routesConf['signup']['path']">{{
+      <a class="register-again-link" @click="registerAgain">{{
         t('verifyEmail.registerAgain')
-      }}</router-link>
+      }}</a>
     </div>
   </div>
 </template>
@@ -27,7 +27,9 @@
 <script setup lang="ts">
 // libraries
 import { storeToRefs } from 'pinia';
+import { onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 // config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
@@ -35,10 +37,38 @@ import { routesConf } from 'src/router/routes_conf';
 
 // stores
 import { useRegisterStore } from 'src/stores/register';
+import { useLoginStore } from 'src/stores/login';
 
 const { t } = useI18n();
+const router = useRouter();
 
 const registerStore = useRegisterStore();
+const loginStore = useLoginStore();
 
 const { email } = storeToRefs(registerStore);
+const { isUserVerified } = storeToRefs(loginStore);
+
+const registerAgain = () => {
+  loginStore.logout();
+  router.push(routesConf['signup']['path']);
+};
+
+watch(isUserVerified, (newVal) => {
+  if (newVal) {
+    router.push(routesConf['home']['path']);
+  }
+});
+
+onMounted(() => {
+  loginStore.checkUserVerification();
+});
 </script>
+
+<style scoped lang="scss">
+.register-again-link {
+  color: var(--q-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 5px;
+}
+</style>

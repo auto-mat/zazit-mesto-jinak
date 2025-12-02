@@ -210,7 +210,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['signup']['children']['name'],
-        component: () => import('pages/SignUpPage.vue'),
+        component: () => import('src/pages/registration/SignUpPage.vue'),
       },
     ],
   },
@@ -222,7 +222,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['registration']['children']['name'],
-        component: () => import('pages/RegistrationPage.vue'),
+        component: () => import('pages/registration/RegistrationPage.vue'),
       },
     ],
   },

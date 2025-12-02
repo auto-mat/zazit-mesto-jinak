@@ -1,6 +1,6 @@
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { Notify } from 'quasar';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/boot/i18n';
 import { useLoginStore } from 'src/stores/login';
 import apiFetch from 'src/api/apiFetch';
 
@@ -24,7 +24,6 @@ interface ResendEmailResponse {
 }
 
 export function useApiRegister() {
-  const { t } = useI18n();
   const loginStore = useLoginStore();
 
   const registerApi = async (payload: RegisterPayload) => {
@@ -56,7 +55,7 @@ export function useApiRegister() {
         zazitMestoJinakConfig.urlApiConfirmEmail + `${key}/`,
       );
       Notify.create({
-        message: t('confirmEmail.emailConfirmed'),
+        message: i18n.global.t('confirmEmail.emailConfirmed'),
         color: 'positive',
       });
       return true;

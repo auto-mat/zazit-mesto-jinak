@@ -51,11 +51,12 @@
 
 <script setup lang="ts">
 // libraries
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // stores
 import { useRegisterStore } from 'src/stores/register';
+import { useUserStore } from 'src/stores/user';
 
 // config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
@@ -75,6 +76,11 @@ const step = ref(1);
 const { t } = useI18n();
 
 const registerStore = useRegisterStore();
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.loadUserDetails();
+});
 </script>
 
 <style scoped lang="scss">

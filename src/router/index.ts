@@ -8,7 +8,7 @@ import {
 import routes from './routes';
 import { useLoginStore } from 'src/stores/login';
 import { routesConf } from './routes_conf';
-// import { useRegisterStore } from 'src/stores/register';
+import { useRegisterStore } from 'src/stores/register';
 
 /*
  * If not building with SSR mode, you can
@@ -38,9 +38,11 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach(async (to, from, next) => {
     const loginStore = useLoginStore();
+    const registerStore = useRegisterStore();
 
     const isAuthenticated: boolean = await loginStore.validateAccessToken();
     const isUserVerified: boolean = loginStore.isUserVerified;
+    const isRegistratonComplete: boolean = registerStore.isRegistratonComplete;
 
     if (
       !isAuthenticated &&
@@ -74,6 +76,15 @@ export default route(function (/* { store, ssrContext } */) {
         'Router user is authenticated, but not verified, redirect to verify email page.',
       );
       next({ path: routesConf['verify_email']['path'] });
+    } else if (
+      isAuthenticated &&
+      isUserVerified &&
+      !isRegistratonComplete &&
+      !to.matched.some(
+        (record) => record.path === routesConf['registration']['path'],
+      )
+    ) {
+      next({ path: routesConf['registration']['path'] });
     } else {
       // allow navigation to proceed
       next();

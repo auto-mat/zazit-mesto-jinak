@@ -4,11 +4,11 @@ import { useRouter } from 'vue-router';
 import { routesConf } from 'src/router/routes_conf';
 import { useLoginStore } from './login';
 import { Notify } from 'quasar';
-import { useI18n } from 'vue-i18n';
 import { useApiRegister } from 'src/composables/api/useApiRegister';
+import { i18n } from 'src/boot/i18n';
+import { cloneDeep } from 'lodash';
 
 export const useRegisterStore = defineStore('register', () => {
-  const { t } = useI18n();
   const router = useRouter();
   const loginStore = useLoginStore();
   const { registerApi, confirmVerificationApi, resendEmailApi } =
@@ -17,6 +17,8 @@ export const useRegisterStore = defineStore('register', () => {
   const email = ref('');
   const password = ref('');
   const passwordConfirm = ref('');
+
+  const isRegistratonComplete = ref(false);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -64,7 +66,13 @@ export const useRegisterStore = defineStore('register', () => {
     },
   };
 
-  const registerFormState = ref(registerDefaultFormState);
+  const registerFormState = ref(cloneDeep(registerDefaultFormState));
+
+  const clearRegisterData = () => {
+    email.value = '';
+    password.value = '';
+    passwordConfirm.value = '';
+  };
 
   const register = async () => {
     console.log('register');
@@ -85,12 +93,16 @@ export const useRegisterStore = defineStore('register', () => {
       } else {
         await router.push(routesConf['verify_email']['path']);
       }
+      clearRegisterData();
     }
   };
 
   const confirmVerification = async (key: string) => {
     console.log('confirm verification');
     if (await confirmVerificationApi(key)) {
+      if (loginStore.isUserLoggedIn) {
+        await loginStore.checkUserVerification();
+      }
       await router.push(routesConf['home']['path']);
     }
   };
@@ -101,13 +113,13 @@ export const useRegisterStore = defineStore('register', () => {
 
     if (data && data.send_registration_confirmation_email) {
       Notify.create({
-        message: t('verifyEmail.emailSent'),
+        message: i18n.global.t('verifyEmail.emailSent'),
         color: 'positive',
       });
     } else {
       console.log('Email sending failed');
       Notify.create({
-        message: t('verifyEmail.emailNotSent'),
+        message: i18n.global.t('verifyEmail.emailNotSent'),
         color: 'negative',
       });
     }
@@ -127,5 +139,6 @@ export const useRegisterStore = defineStore('register', () => {
     registerFormState,
     confirmVerification,
     resendEmail,
+    isRegistratonComplete,
   };
 });

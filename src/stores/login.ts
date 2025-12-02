@@ -36,9 +36,7 @@ export const useLoginStore = defineStore(
     const passwordResetEmail = ref('');
     const isUserVerified = ref(false);
 
-    const isUserLoggedIn = computed(() =>
-      userDetails.value?.email ? true : false,
-    );
+    const isUserLoggedIn = computed(() => (accessToken.value ? true : false));
 
     function setAccessToken(token: string): void {
       accessToken.value = token;
