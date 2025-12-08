@@ -41,6 +41,7 @@ export default route(function (/* { store, ssrContext } */) {
     const registerStore = useRegisterStore();
 
     const isAuthenticated: boolean = await loginStore.validateAccessToken();
+    await loginStore.checkUserVerification();
     const isUserVerified: boolean = loginStore.isUserVerified;
     const isRegistratonComplete: boolean = registerStore.isRegistratonComplete;
 
