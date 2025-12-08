@@ -7,19 +7,25 @@ import { Notify } from 'quasar';
 import { useApiRegister } from 'src/composables/api/useApiRegister';
 import { i18n } from 'src/boot/i18n';
 import { cloneDeep } from 'lodash';
+import { useUserStore } from './user';
 
 export const useRegisterStore = defineStore('register', () => {
   const router = useRouter();
   const loginStore = useLoginStore();
-  const { registerApi, confirmVerificationApi, resendEmailApi } =
-    useApiRegister();
+  const userStore = useUserStore();
+  const {
+    registerApi,
+    confirmVerificationApi,
+    resendEmailApi,
+    registerCompleteApi,
+  } = useApiRegister();
 
   const email = ref('');
   const password = ref('');
   const passwordConfirm = ref('');
 
   // TODO temporary flag
-  const isRegistratonComplete = ref(true);
+  const isRegistratonComplete = ref(false);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -115,7 +121,11 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
-  const registerDone = async (): Promise<void> => {
+  const registerComplete = async (): Promise<void> => {
+    await registerCompleteApi(registerFormState.value);
+    // TODO temporary flag
+    isRegistratonComplete.value = true;
+    await userStore.loadUserDetails();
     await router.push(routesConf['home']['path']);
   };
 
@@ -124,7 +134,7 @@ export const useRegisterStore = defineStore('register', () => {
     password,
     passwordConfirm,
     register,
-    registerDone,
+    registerComplete,
     registerFormState,
     confirmVerification,
     resendEmail,

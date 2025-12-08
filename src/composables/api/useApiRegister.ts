@@ -3,6 +3,8 @@ import { Notify } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { useLoginStore } from 'src/stores/login';
 import apiFetch from 'src/api/apiFetch';
+import { registerAdapter } from 'src/adapters/registerAdapter';
+import { RegisterForm } from 'src/types/Register';
 
 interface RegisterPayload {
   email: string;
@@ -88,9 +90,27 @@ export function useApiRegister() {
     }
   };
 
+  const registerCompleteApi = async (payload: RegisterForm): Promise<void> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return;
+    }
+    try {
+      await apiFetch.post<void>(
+        zazitMestoJinakConfig.urlApiRegisterComplete,
+        registerAdapter.toRegisterPayload(payload),
+      );
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+    }
+  };
+
   return {
     registerApi,
     confirmVerificationApi,
     resendEmailApi,
+    registerCompleteApi,
   };
 }

@@ -41,7 +41,7 @@
 
       <q-step :name="4" prefix="4" :title="t('register.moreInformation.title')">
         <form-register-more-information
-          @submit="registerStore.registerDone"
+          @submit="registerStore.registerComplete"
           @back="step = 3"
         />
       </q-step>
