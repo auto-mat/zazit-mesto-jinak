@@ -22,12 +22,14 @@
       rounded
       color="primary"
       class="full-width q-mt-lg"
+      :loading="registering"
     />
   </q-form>
 </template>
 
 <script setup lang="ts">
 // libraries
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
@@ -40,11 +42,14 @@ import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 
 const { t } = useI18n();
+const registering = ref(false);
 
 const registerStore = useRegisterStore();
 const { email, password, passwordConfirm } = storeToRefs(registerStore);
 
 const onSubmit = async (): Promise<void> => {
+  registering.value = true;
   await registerStore.register();
+  registering.value = false;
 };
 </script>

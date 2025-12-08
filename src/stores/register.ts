@@ -87,21 +87,13 @@ export const useRegisterStore = defineStore('register', () => {
         access: data.access,
         refresh: data.refresh,
       });
-      await loginStore.checkUserVerification();
-      if (loginStore.isUserVerified) {
-        await router.push(routesConf['home']['path']);
-      } else {
-        await router.push(routesConf['verify_email']['path']);
-      }
+      await router.push(routesConf['home']['path']);
       clearRegisterData();
     }
   };
 
   const confirmVerification = async (key: string): Promise<void> => {
     if (await confirmVerificationApi(key)) {
-      if (loginStore.isUserLoggedIn) {
-        await loginStore.checkUserVerification();
-      }
       await router.push(routesConf['home']['path']);
     }
   };
