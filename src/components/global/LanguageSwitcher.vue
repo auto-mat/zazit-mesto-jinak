@@ -1,5 +1,5 @@
 <template>
-  <ul class="language-list flex">
+  <ul class="language-list flex" :class="{ 'bg-white': shortVersion }">
     <!-- Language switcher items -->
     <li v-for="item in localeOptions" :key="item.value" class="text-uppercase">
       <q-btn

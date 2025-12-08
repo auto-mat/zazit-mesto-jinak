@@ -1,12 +1,45 @@
 <template>
-  <q-layout view="hHh Lpr lff">
+  <q-layout view="lhr lpR fFf">
+    <q-header v-if="isMobile" class="header">
+      <q-avatar square size="80px" class="q-my-sm">
+        <img src="logo-zmj.svg" />
+      </q-avatar>
+      <div class="flex justify-between items-center q-pr-md q-pt-md gap-16">
+        <div class="flex items-center gap-4">
+          <q-btn dense round flat icon="help" color="primary" />
+          <q-btn dense round flat icon="notifications" color="primary">
+            <q-badge color="red" floating rounded />
+          </q-btn>
+        </div>
+        <q-btn
+          dense
+          flat
+          round
+          icon="menu"
+          color="primary"
+          size="large"
+          @click="drawerOpen = !drawerOpen"
+        />
+      </div>
+    </q-header>
+
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      side="left"
+      v-model="drawerOpen"
+      :side="isMobile ? 'right' : 'left'"
       class="bg-secondary text-black"
     >
-      <DrawerHeader />
+      <drawer-header v-if="!isMobile" />
+      <div v-else class="flex justify-end items-center q-pr-md q-pt-md">
+        <q-btn
+          dense
+          flat
+          round
+          icon="close"
+          color="primary"
+          size="large"
+          @click="drawerOpen = false"
+        />
+      </div>
 
       <q-list>
         <q-item-label header class="menu-events-header">
@@ -67,24 +100,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
 import LocationLinks from 'src/components/menu/LocationLinks.vue';
 import { useEventStore } from 'src/stores/event';
 import { useLoginStore } from 'src/stores/login';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 
 defineOptions({
   name: 'MainLayout',
 });
 
 const { t } = useI18n();
-const leftDrawerOpen = ref(true);
+const drawerOpen = ref(true);
 const eventStore = useEventStore();
 const loginStore = useLoginStore();
-// function toggleLeftDrawer () {
-//   leftDrawerOpen.value = !leftDrawerOpen.value;
-// }
+
+const $q = useQuasar();
+const isMobile = computed(() => $q.screen.lt.md);
 
 onMounted(() => {
   if (eventStore.eventList.length === 0) {
@@ -94,6 +128,13 @@ onMounted(() => {
 </script>
 
 <style>
+.header {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
 .menu-events-header {
   font-size: large;
 }
