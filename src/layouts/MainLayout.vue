@@ -1,9 +1,11 @@
 <template>
   <q-layout view="lhr lpR fFf">
     <q-header v-if="isMobile" class="header">
-      <q-avatar square size="80px" class="q-my-sm">
-        <img src="logo-zmj.svg" />
-      </q-avatar>
+      <router-link :to="routesConf['home']['path']">
+        <q-avatar square size="80px" class="q-my-sm">
+          <img src="logo-zmj.svg" />
+        </q-avatar>
+      </router-link>
       <div class="flex justify-between items-center q-pr-md q-pt-md gap-16">
         <div class="flex items-center gap-4">
           <q-btn dense round flat icon="help" color="primary" />
@@ -107,6 +109,7 @@ import { useEventStore } from 'src/stores/event';
 import { useLoginStore } from 'src/stores/login';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
+import { routesConf } from 'src/router/routes_conf';
 
 defineOptions({
   name: 'MainLayout',

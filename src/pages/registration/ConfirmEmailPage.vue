@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bg-white q-pa-md rounded-borders"
-    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
-  >
+  <div>
     <h1>{{ t('confirmEmail.title') }}</h1>
     <p>{{ t('confirmEmail.description', { email: email ?? '' }) }}</p>
 
@@ -23,10 +20,6 @@
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-// config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
-// import { routesConf } from 'src/router/routes_conf';
 
 //stores
 import { useRegisterStore } from 'src/stores/register';

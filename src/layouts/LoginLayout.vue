@@ -1,9 +1,11 @@
 <template>
   <q-layout class="login-layout">
     <div class="header">
-      <q-avatar square size="100px" class="q-my-sm">
-        <img src="logo-zmj.svg" />
-      </q-avatar>
+      <router-link :to="routesConf['home']['path']">
+        <q-avatar square size="100px" class="q-my-sm">
+          <img src="logo-zmj.svg" />
+        </q-avatar>
+      </router-link>
       <div class="buttons-container">
         <q-btn
           v-if="isUserLoggedIn"
@@ -23,7 +25,10 @@
     </div>
 
     <q-page-container class="q-px-xl q-py-xl page-container">
-      <div class="content-wrapper">
+      <div
+        class="content-wrapper"
+        :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
+      >
         <router-view />
       </div>
     </q-page-container>
@@ -35,6 +40,8 @@ import { storeToRefs } from 'pinia';
 import { useLoginStore } from 'src/stores/login';
 import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 import { UserLanguage } from 'src/enums/userEnums';
+import { routesConf } from 'src/router/routes_conf';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const loginStore = useLoginStore();
 const { isUserLoggedIn } = storeToRefs(loginStore);
@@ -69,6 +76,8 @@ defineOptions({
 .content-wrapper {
   width: 100%;
   height: 100%;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .background-image-container {

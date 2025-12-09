@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bg-white q-pa-md rounded-borders"
-    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
-  >
+  <div>
     <h1 class="q-mb-lg">{{ t('register.title') }}</h1>
     <form-register />
     <div class="q-mt-xl">
@@ -19,7 +16,6 @@
 import { useI18n } from 'vue-i18n';
 
 // config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
 
 // components
