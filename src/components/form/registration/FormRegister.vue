@@ -1,8 +1,13 @@
 <template>
-  <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
+  <q-form class="text-grey-10" @submit="onSubmit">
     <div class="row q-col-gutter-md">
-      <form-field-email v-model="email" required class="col-12" />
-      <form-field-password v-model="password" required class="col-12" />
+      <form-field-email v-model="email" required validated class="col-12" />
+      <form-field-password
+        v-model="password"
+        required
+        validated
+        class="col-12"
+      />
       <form-field-password-confirm
         v-model="passwordConfirm"
         :compare-value="password"
@@ -17,6 +22,7 @@
       rounded
       color="primary"
       class="full-width q-mt-lg"
+      :loading="registering"
     />
   </q-form>
 </template>
@@ -36,17 +42,14 @@ import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 
 const { t } = useI18n();
+const registering = ref(false);
 
 const registerStore = useRegisterStore();
-const { email, password } = storeToRefs(registerStore);
-const passwordConfirm = ref('');
+const { email, password, passwordConfirm } = storeToRefs(registerStore);
 
-const onSubmit = async () => {
-  console.log('submit');
+const onSubmit = async (): Promise<void> => {
+  registering.value = true;
   await registerStore.register();
-};
-
-const onReset = () => {
-  console.log('reset');
+  registering.value = false;
 };
 </script>

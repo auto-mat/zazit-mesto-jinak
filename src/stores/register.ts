@@ -3,13 +3,23 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { routesConf } from 'src/router/routes_conf';
 import { useLoginStore } from './login';
+import { Notify } from 'quasar';
+import { useApiRegister } from 'src/composables/api/useApiRegister';
+import { i18n } from 'src/boot/i18n';
+import { cloneDeep } from 'lodash';
 
 export const useRegisterStore = defineStore('register', () => {
-  const loginStore = useLoginStore();
   const router = useRouter();
+  const loginStore = useLoginStore();
+  const { registerApi, confirmVerificationApi, resendEmailApi } =
+    useApiRegister();
 
   const email = ref('');
   const password = ref('');
+  const passwordConfirm = ref('');
+
+  // TODO temporary flag
+  const isRegistratonComplete = ref(true);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -57,25 +67,66 @@ export const useRegisterStore = defineStore('register', () => {
     },
   };
 
-  const registerFormState = ref(registerDefaultFormState);
+  const registerFormState = ref(cloneDeep(registerDefaultFormState));
 
-  const register = async () => {
-    console.log('register');
-    // TODO: send register request to API
-    await loginStore.login({ username: email.value, password: password.value });
-    await router.push(routesConf['registration']['path']);
+  const clearRegisterData = (): void => {
+    email.value = '';
+    password.value = '';
+    passwordConfirm.value = '';
   };
 
-  const registerDone = async () => {
-    console.log('register done');
+  const register = async (): Promise<void> => {
+    const data = await registerApi({
+      email: email.value,
+      password1: password.value,
+      password2: passwordConfirm.value,
+    });
+
+    if (data) {
+      await loginStore.processLoginData({
+        access: data.access,
+        refresh: data.refresh,
+      });
+      await router.push(routesConf['home']['path']);
+      clearRegisterData();
+    }
+  };
+
+  const confirmVerification = async (key: string): Promise<void> => {
+    if (await confirmVerificationApi(key)) {
+      await router.push(routesConf['home']['path']);
+    }
+  };
+
+  const resendEmail = async (): Promise<void> => {
+    const data = await resendEmailApi();
+
+    if (data && data.send_registration_confirmation_email) {
+      Notify.create({
+        message: i18n.global.t('verifyEmail.emailSent'),
+        color: 'positive',
+      });
+    } else {
+      Notify.create({
+        message: i18n.global.t('verifyEmail.emailNotSent'),
+        color: 'negative',
+      });
+    }
+  };
+
+  const registerDone = async (): Promise<void> => {
     await router.push(routesConf['home']['path']);
   };
 
   return {
     email,
     password,
+    passwordConfirm,
     register,
     registerDone,
     registerFormState,
+    confirmVerification,
+    resendEmail,
+    isRegistratonComplete,
   };
 });

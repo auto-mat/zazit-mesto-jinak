@@ -10,6 +10,14 @@ export default [
   js.configs.recommended,
   ...vuePlugin.configs['flat/essential'], // Vue recommended rules
   {
+    files: ['**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ['**/*.vue', '**/*.ts'],
     ignores: [
       '/dist',

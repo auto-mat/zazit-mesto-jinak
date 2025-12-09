@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white q-pa-md rounded-borders"
+    class="bg-white q-pa-md rounded-borders q-mx-auto"
     :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
   >
     <h1>{{ t('login.title') }}</h1>

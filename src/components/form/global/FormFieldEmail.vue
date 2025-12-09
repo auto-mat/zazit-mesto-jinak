@@ -9,8 +9,8 @@
       dense
       outlined
       v-model="email"
-      :rules="validated ? validationRules : []"
-      :lazy-rules="validated"
+      :rules="validationRules"
+      lazy-rules
       :bg-color="bgColor"
       class="q-mt-sm"
       id="form-email"
@@ -91,9 +91,11 @@ const { isEmail, isFilled } = useValidation();
 const validationRules = computed(() => {
   return [
     (val: string) =>
+      !props.required ||
       isFilled(val) ||
       t('form.messageFieldRequired', { fieldName: t('form.labelEmail') }),
-    (val: string) => isEmail(val) || t('form.messageEmailInvalid'),
+    (val: string) =>
+      !props.validated || isEmail(val) || t('form.messageEmailInvalid'),
   ];
 });
 </script>

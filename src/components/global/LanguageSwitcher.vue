@@ -1,4 +1,24 @@
-<script lang="ts">
+<template>
+  <ul class="language-list flex" :class="{ 'bg-white': shortVersion }">
+    <!-- Language switcher items -->
+    <li v-for="item in localeOptions" :key="item.value" class="text-uppercase">
+      <q-btn
+        unelevated
+        rounded
+        @click.prevent="setLocale(item.value)"
+        :class="{
+          'bg-dark text-white': isActive(item.value),
+          'btn--no-hover': readonly,
+        }"
+        size="13px"
+      >
+        {{ shortVersion ? item.value : item.label }}
+      </q-btn>
+    </li>
+  </ul>
+</template>
+
+<script setup lang="ts">
 /**
  * LanguageSwitcher Component
  *
@@ -18,68 +38,46 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
+import { watch } from 'vue';
 
-export default defineComponent({
-  name: 'LanguageSwitcher',
+// enums
+import { UserLanguage } from 'src/enums/userEnums';
 
-  props: {
-    shortVersion: {
-      type: Boolean,
-      default: false
-    }
+const props = defineProps<{
+  value: UserLanguage;
+  shortVersion?: boolean;
+  readonly?: boolean;
+}>();
+
+const emit = defineEmits(['updateLocale']);
+
+const { locale, t } = useI18n({ useScope: 'global' });
+
+const localeOptions = [
+  { value: UserLanguage.EN, label: t('locale.en') },
+  { value: UserLanguage.CS, label: t('locale.cz') },
+];
+
+watch(
+  () => props.value,
+  (newVal) => {
+    setLocale(newVal);
   },
+);
 
-  setup() {
-    const { locale, t } = useI18n({ useScope: 'global' })
+const setLocale = (item: UserLanguage): void => {
+  if (props.readonly) {
+    return;
+  }
+  locale.value = item;
+  emit('updateLocale', item);
+};
 
-    const localeOptions = [
-      { value: 'en', label: t('locale.en') },
-      { value: 'cz', label: t('locale.cz') }
-    ]
-
-    const setLocale = (item: string) => {
-      locale.value = item
-    }
-
-    const isActive = (item: string): boolean => {
-      return locale.value === item;
-    }
-
-    return {
-      locale,
-      localeOptions,
-      setLocale,
-      isActive
-    };
-  },
-});
+const isActive = (item: UserLanguage): boolean => {
+  return locale.value === item;
+};
 </script>
-
-<template>
-  <ul
-    class="language-list flex"
-  >
-    <!-- Language switcher items -->
-    <li
-      v-for="item in localeOptions"
-      :key="item.value"
-      class="text-uppercase"
-      :data-cy="'switcher-' + item.value"
-    >
-      <q-btn
-        unelevated
-        rounded
-        @click.prevent="setLocale(item.value)"
-        :class="{'bg-dark text-white': isActive(item.value) }"
-        size="13px"
-      >
-        {{ shortVersion ? item.value : item.label }}
-      </q-btn>
-    </li>
-  </ul>
-</template>
 
 <style scoped>
 .language-list {
@@ -88,5 +86,13 @@ export default defineComponent({
   border-radius: 999px;
   width: fit-content;
   padding: 1px;
+}
+
+.btn--no-hover {
+  pointer-events: none;
+}
+
+:deep(.q-btn.btn--no-hover .q-focus-helper) {
+  display: none;
 }
 </style>

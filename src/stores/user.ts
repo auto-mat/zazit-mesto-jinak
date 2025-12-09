@@ -1,61 +1,72 @@
 import { defineStore } from 'pinia';
 import { useApiUser } from 'src/composables/api/useApiUser';
-import { UserDetails, UserMeta } from 'src/types/User';
-import { ref } from 'vue';
+import { UserDetails } from 'src/types/User';
+import { UserLanguage, UserGender } from 'src/enums/userEnums';
+import { ref, watch } from 'vue';
+import { cloneDeep } from 'lodash';
 
 export const useUserStore = defineStore('user', () => {
-  const defaultUserMeta = {
-    id: '',
-    email: '',
-  } as UserMeta;
+  const { getUserDetails, updateUserDetails: updateUserDetailsApi } =
+    useApiUser();
 
-  const defaultUserDetails = {
+  const defaultUserDetails: UserDetails = {
     name: '',
     surname: '',
     email: '',
-    gender: '',
-    languagePreference: '',
-  } as UserDetails;
+    phone: '',
+    gender: UserGender.UNKNOWN,
+    languagePreference: UserLanguage.CS,
+  };
 
-  const userMeta = ref<UserMeta>(defaultUserMeta);
-  const userDetails = ref<UserDetails>(defaultUserDetails);
+  const userDetails = ref<UserDetails | null>(null);
+  const userDetailsForm = ref<UserDetails>(cloneDeep(defaultUserDetails));
   const loading = ref(false);
 
-  const setEmail = (email: string) => {
-    userMeta.value.email = email;
+  watch(userDetails, (newUserDetails) => {
+    userDetailsForm.value = cloneDeep(newUserDetails);
+  });
+
+  const setEmail = (email: string): void => {
+    userDetails.value.email = email;
   };
 
-  const loadUserMeta = async () => {
-    const { getUserMeta } = useApiUser();
-    loading.value = true;
-    const newUserMeta = await getUserMeta();
-    if (newUserMeta) {
-      userMeta.value = newUserMeta;
-    }
-    loading.value = false;
+  const setUser = (newUserDetails: UserDetails): void => {
+    userDetails.value = cloneDeep(newUserDetails);
   };
 
-  const loadUserDetails = async () => {
-    const { getUserDetails } = useApiUser();
+  const resetUserDetailsForm = (): void => {
+    userDetailsForm.value = cloneDeep(userDetails.value);
+  };
+
+  const loadUserDetails = async (): Promise<void> => {
     loading.value = true;
-    // TODO if user is not logged in
-    const newUserDetails = await getUserDetails(userMeta.value.id);
+    const newUserDetails = await getUserDetails();
     if (newUserDetails) {
-      userDetails.value = newUserDetails;
+      setUser(newUserDetails);
     }
     loading.value = false;
   };
-  const clearUserDetails = () => {
-    userDetails.value = defaultUserDetails;
+
+  const updateUserDetails = async (): Promise<void> => {
+    loading.value = true;
+    await updateUserDetailsApi(userDetailsForm.value);
+    loadUserDetails();
+    loading.value = false;
+  };
+
+  const clearUser = (): void => {
+    userDetails.value = null;
   };
 
   return {
-    userMeta,
     userDetails,
+    userDetailsForm,
     loading,
     setEmail,
-    loadUserMeta,
     loadUserDetails,
-    clearUserDetails,
+    updateUserDetails,
+    clearUser,
+    setUser,
+    resetUserDetailsForm,
   };
 });
