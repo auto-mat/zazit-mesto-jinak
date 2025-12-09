@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bg-white q-pa-md rounded-borders q-mx-auto"
-    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
-  >
+  <div>
     <h1>{{ t('login.title') }}</h1>
     <div class="q-mt-lg">
       <form-login />
@@ -22,7 +19,6 @@ import { useI18n } from 'vue-i18n';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 // components
 import FormLogin from 'src/components/form/login/FormLogin.vue';

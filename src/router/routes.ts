@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['login']['children']['name'],
-        component: () => import('pages/LoginPage.vue'),
+        component: () => import('pages/login/LoginPage.vue'),
       },
     ],
   },
@@ -198,7 +198,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['email_reset_password']['children']['name'],
-        component: () => import('pages/EmailResetPasswordPage.vue'),
+        component: () => import('pages/login/EmailResetPasswordPage.vue'),
+      },
+    ],
+  },
+  // reset password
+  {
+    path: routesConf['reset_password']['path'],
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['reset_password']['children']['name'],
+        component: () => import('pages/login/ResetPasswordPage.vue'),
       },
     ],
   },

@@ -10,30 +10,34 @@ import {
 } from 'src/composables/api/useApiLogin';
 import { useJwt } from '../composables/useJwt';
 
+// stores
+import { useUserStore } from './user';
+
 // config
 import { routesConf } from '../router/routes_conf';
 
 // utils
 import { computed, ref } from 'vue';
-import { useUserStore } from './user';
-
-interface PasswordResetResponse {
-  detail: string;
-}
 
 export const useLoginStore = defineStore(
   'login',
   () => {
-    const { loginApi, refreshTokenApi, isUserVerifiedApi } = useApiLogin();
+    const {
+      loginApi,
+      refreshTokenApi,
+      isUserVerifiedApi,
+      resetPasswordApi,
+      resetPasswordConfirmApi,
+    } = useApiLogin();
     const router = useRouter();
-    const userStore = useUserStore();
     const { readJwtExpiration } = useJwt();
+    const userStore = useUserStore();
     const accessToken = ref('');
     const refreshToken = ref(''); // persisted
     const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
     // const refreshTokenTimeout = ref<NodeJS.Timeout | null>(null) // unit: seconds
-    const passwordResetEmail = ref('');
     const isUserVerified = ref(false);
+    const userEmail = ref('');
 
     const isUserLoggedIn = computed(() => (accessToken.value ? true : false));
 
@@ -47,10 +51,6 @@ export const useLoginStore = defineStore(
 
     function setJwtExpiration(expiration: number | null): void {
       jwtExpiration.value = expiration;
-    }
-
-    function setPasswordResetEmail(email: string): void {
-      passwordResetEmail.value = email;
     }
 
     // function setRefreshTokenTimeout(timeout: NodeJS.Timeout | null): void {
@@ -105,6 +105,8 @@ export const useLoginStore = defineStore(
       await processLoginData(data);
 
       if (data) {
+        userEmail.value = payload.username;
+
         await checkUserVerification();
         // check if user is verified
         if (isUserVerified.value) {
@@ -153,6 +155,7 @@ export const useLoginStore = defineStore(
       setJwtExpiration(null);
       userStore.clearUser();
       clearRefreshTokenTimeout();
+      userEmail.value = '';
       // clear stores
 
       // redirect to login page
@@ -281,24 +284,25 @@ export const useLoginStore = defineStore(
      * @param {string} email - Email
      * @return {Promise<void>}
      */
-    async function resetPassword(
-      email: string,
-    ): Promise<PasswordResetResponse | null> {
-      const payload = { email };
-      // const { data } = await useFetch<PasswordResetResponse>({
-      //   endpoint: zazitMestoJinakConfig.urlApiResetPassword,
-      //   method: 'post',
-      //   payload,
-      // });
+    async function resetPassword(email: string): Promise<void> {
+      await resetPasswordApi(email);
+    }
 
-      const data = { detail: 'Password reset e-mail has been sent.' };
-
-      if (data) {
-        // set password reset email
-        setPasswordResetEmail(payload.email);
+    async function resetPasswordConfirm(
+      uid: string,
+      token: string,
+      password: string,
+      passwordConfirm: string,
+    ): Promise<void> {
+      const result = await resetPasswordConfirmApi(
+        uid,
+        token,
+        password,
+        passwordConfirm,
+      );
+      if (result) {
+        await router.push(routesConf['login']['path']);
       }
-
-      return data;
     }
 
     async function checkUserVerification(): Promise<void> {
@@ -313,7 +317,8 @@ export const useLoginStore = defineStore(
       accessToken,
       refreshToken,
       jwtExpiration,
-      passwordResetEmail,
+      userEmail,
+      resetPasswordConfirm,
       isUserLoggedIn,
       login,
       logout,

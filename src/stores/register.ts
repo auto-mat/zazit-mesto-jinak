@@ -83,6 +83,7 @@ export const useRegisterStore = defineStore('register', () => {
     });
 
     if (data) {
+      loginStore.userEmail = email.value;
       await loginStore.processLoginData({
         access: data.access,
         refresh: data.refresh,

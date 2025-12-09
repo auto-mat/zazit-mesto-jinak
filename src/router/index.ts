@@ -57,7 +57,8 @@ export default route(function (/* { store, ssrContext } */) {
           record.path === routesConf['login']['path'] ||
           record.path === routesConf['signup']['path'] ||
           record.path === routesConf['confirm_email']['path'] ||
-          record.path === routesConf['email_reset_password']['path'],
+          record.path === routesConf['email_reset_password']['path'] ||
+          record.path === routesConf['reset_password']['path'],
       )
     ) {
       console.log('Router user is not authenticated, redirect to login page.');

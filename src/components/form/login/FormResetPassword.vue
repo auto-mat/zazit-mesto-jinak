@@ -1,7 +1,12 @@
 <template>
-  <q-form class="text-grey-10" @submit="onSubmit" @reset="onReset">
+  <q-form class="text-grey-10" @submit="onSubmit">
     <div class="row q-col-gutter-md">
-      <form-field-password v-model="password" required class="col-12" />
+      <form-field-password
+        v-model="password"
+        required
+        validated
+        class="col-12"
+      />
       <form-field-password-confirm
         v-model="passwordConfirm"
         :compare-value="password"
@@ -10,7 +15,7 @@
     </div>
 
     <q-btn
-      :label="t('resetPassword.submitResetPassword')"
+      :label="t('resetPassword.confirm.submitResetPassword')"
       type="submit"
       unelevated
       rounded
@@ -29,16 +34,13 @@ import { useI18n } from 'vue-i18n';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 
+const emit = defineEmits(['submit']);
 const { t } = useI18n();
 
 const password = ref('');
 const passwordConfirm = ref('');
 
 const onSubmit = async () => {
-  console.log('submit');
-};
-
-const onReset = () => {
-  console.log('reset');
+  emit('submit', password.value, passwordConfirm.value);
 };
 </script>

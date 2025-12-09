@@ -39,10 +39,10 @@ labelTimeFrom = "Od"
 labelTimeTo = "Do"
 labelClose = "Zavřít"
 labelOptional = "nepovinné"
-hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno"
+hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 číslici"
 messageEmailInvalid = "Vyplňte prosím platný e-mail"
 messageFieldRequired = "Pole {fieldName} je povinné"
-messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 písmeno"
+messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 číslici"
 messagePasswordNotIdentical = "Hesla se neshodují"
 messagePhoneInvalid = "Vyplňte prosím platné telefonní číslo"
 messageDateInvalid = "Vyplňte prosím platné datum"
@@ -62,13 +62,19 @@ submitLogin = "Přihlásit se"
 forgotPassword = "Zapomenuté heslo?"
 
 [resetPassword]
-title = "Obnovení hesla"
+title = "Zapomenuté heslo"
 description = "Zadejte svůj e-mail a my vám pošleme odkaz na obnovení hesla."
 submitResetPassword = "Odeslat"
 
 [resetPassword.emailSent]
 title = "Odkaz na obnovení hesla byl odeslán"
 description = "Odkaz na obnovení hesla byl odeslán na váš e-mail. Pokud ho neobdržíte, zkontrolujte svůj e-mailový box a zkuste to znovu."
+
+[resetPassword.confirm]
+title = "Obnovení hesla"
+description = "Zadejte nové heslo a potvrďte ho."
+submitResetPassword = "Obnovit heslo"
+passwordResetSuccess = "Heslo bylo úspěšně obnoveno."
 
 [verifyEmail]
 title = "Pokračujte potvrzením e-mailu"
