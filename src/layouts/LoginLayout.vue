@@ -36,12 +36,21 @@
 </template>
 
 <script setup lang="ts">
+// libraries
 import { storeToRefs } from 'pinia';
+
+// stores
 import { useLoginStore } from 'src/stores/login';
+
+// components
 import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
-import { UserLanguage } from 'src/enums/userEnums';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// types
+import { UserLanguage } from 'src/enums/userEnums';
 
 const loginStore = useLoginStore();
 const { isUserLoggedIn } = storeToRefs(loginStore);

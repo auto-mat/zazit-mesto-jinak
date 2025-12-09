@@ -102,13 +102,20 @@
 </template>
 
 <script setup lang="ts">
+// libraries
 import { ref, onMounted, computed } from 'vue';
-import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
-import LocationLinks from 'src/components/menu/LocationLinks.vue';
-import { useEventStore } from 'src/stores/event';
-import { useLoginStore } from 'src/stores/login';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
+
+// stores
+import { useEventStore } from 'src/stores/event';
+import { useLoginStore } from 'src/stores/login';
+
+// components
+import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
+import LocationLinks from 'src/components/menu/LocationLinks.vue';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 
 defineOptions({
