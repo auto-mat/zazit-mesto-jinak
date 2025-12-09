@@ -21,6 +21,7 @@
       rounded
       color="primary"
       class="full-width q-mt-lg"
+      :loading="loggingIn"
     />
   </q-form>
 </template>
@@ -50,11 +51,14 @@ const loginStore = useLoginStore();
 
 const email = ref('');
 const password = ref('');
+const loggingIn = ref(false);
 
 const onSubmit = async (): Promise<void> => {
+  loggingIn.value = true;
   await loginStore.login({
     username: email.value,
     password: password.value,
   });
+  loggingIn.value = false;
 };
 </script>
