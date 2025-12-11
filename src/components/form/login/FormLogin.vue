@@ -56,7 +56,7 @@ const loggingIn = ref(false);
 const onSubmit = async (): Promise<void> => {
   loggingIn.value = true;
   await loginStore.login({
-    username: email.value,
+    email: email.value,
     password: password.value,
   });
   loggingIn.value = false;

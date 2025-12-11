@@ -102,7 +102,7 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-apiBase = "http://localhost:8000/api/"
+apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 
@@ -116,7 +116,7 @@ urlApiDiscountCoupon = "discount-coupon/"
 urlApiHasOrganizationAdmin = "has-organization-admin/"
 urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/"
 urlApiIsUserOrganizationAdmin = "is-user-organization-admin/"
-urlApiLogin = "token/"
+urlApiLogin = "auth/login/"
 urlApiRefreshToken = "token/refresh/"
 urlApiUser = "zmj/user/"
 urlApiLoginGoogle = "auth/google/login/"

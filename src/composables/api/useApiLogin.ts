@@ -4,7 +4,7 @@ import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { useLoginStore } from 'src/stores/login';
 
 export interface LoginPayload {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -58,7 +58,7 @@ export function useApiLogin() {
   ): Promise<RefreshTokenResponse | null> => {
     try {
       const { data } = await apiFetch.post<RefreshTokenResponse>(
-        zazitMestoJinakConfig.urlApiRefreshToken,
+        zazitMestoJinakConfig.urlApiRefresh,
         payload,
       );
       return data;

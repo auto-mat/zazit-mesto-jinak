@@ -92,7 +92,7 @@ export const useLoginStore = defineStore(
      */
     async function login(payload: LoginPayload): Promise<LoginResponse | null> {
       // check that email is set
-      if (!payload.username) {
+      if (!payload.email) {
         return null;
       }
       // check that password is set
