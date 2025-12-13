@@ -81,9 +81,9 @@ const registerStore = useRegisterStore();
 const userStore = useUserStore();
 const router = useRouter();
 
-onMounted(() => {
+onMounted(async () => {
   userStore.loadUserDetails();
-  registerStore.checkRegistrationStatus();
+  await registerStore.checkRegistrationStatus();
   if (registerStore.isRegistratonComplete) {
     router.push(routesConf['home']['path']);
   }

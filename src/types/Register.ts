@@ -19,7 +19,7 @@ export interface RegisterForm {
     place: string;
     spaceType: string;
     spaceArea: string;
-    spaceRent: string;
+    spaceRent: boolean;
     activities: string;
   };
 }
