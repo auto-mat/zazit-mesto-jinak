@@ -19,6 +19,7 @@ export const useRegisterStore = defineStore('register', () => {
     registerApi,
     confirmVerificationApi,
     resendEmailApi,
+    checkRegistrationStatusApi,
     registerCompleteApi,
   } = useApiRegister();
 
@@ -135,10 +136,12 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
+  const checkRegistrationStatus = async (): Promise<void> => {
+    isRegistratonComplete.value = await checkRegistrationStatusApi();
+  };
+
   const registerComplete = async (): Promise<void> => {
     await registerCompleteApi(registerFormState.value);
-    // TODO temporary flag
-    isRegistratonComplete.value = true;
     await userStore.loadUserDetails();
     await router.push(routesConf['home']['path']);
   };
@@ -153,6 +156,7 @@ export const useRegisterStore = defineStore('register', () => {
     eventDate,
     confirmVerification,
     resendEmail,
+    checkRegistrationStatus,
     isRegistratonComplete,
   };
 });

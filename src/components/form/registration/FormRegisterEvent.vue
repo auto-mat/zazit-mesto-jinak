@@ -71,14 +71,13 @@
 
       <div class="row q-col-gutter-md q-mb-md">
         <div class="col-12">
-          <label class="text-grey-10 text-caption text-bold">
-            {{ t('register.event.labelLocation') }}
+          <label class="text-grey-10 text-caption">
+            <span class="text-bold">
+              {{ t('register.event.labelLocation') }}
+            </span>
+            {{ ` (${t('register.event.labelLocationInfo')})` }}
           </label>
-          <leaflet-map
-            class="map q-mt-sm q-ml-md"
-            editable
-            @set-coords="setCoords"
-          />
+          <leaflet-map class="map q-mt-sm" editable @set-coords="setCoords" />
         </div>
       </div>
 

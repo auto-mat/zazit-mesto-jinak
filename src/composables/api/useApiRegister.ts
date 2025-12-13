@@ -25,6 +25,10 @@ interface ResendEmailResponse {
   send_registration_confirmation_email: boolean;
 }
 
+interface RegistrationStatusResponse {
+  is_complete: boolean;
+}
+
 export function useApiRegister() {
   const loginStore = useLoginStore();
 
@@ -90,6 +94,24 @@ export function useApiRegister() {
     }
   };
 
+  const checkRegistrationStatusApi = async (): Promise<boolean> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return false;
+    }
+    try {
+      const { data } = await apiFetch.get<RegistrationStatusResponse>(
+        zazitMestoJinakConfig.urlApiCheckRegistrationStatus,
+      );
+      return data.is_complete;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
+    }
+  };
+
   const registerCompleteApi = async (payload: RegisterForm): Promise<void> => {
     if (!(await loginStore.validateAccessToken())) {
       return;
@@ -111,6 +133,7 @@ export function useApiRegister() {
     registerApi,
     confirmVerificationApi,
     resendEmailApi,
+    checkRegistrationStatusApi,
     registerCompleteApi,
   };
 }

@@ -66,6 +66,8 @@ import FormRegisterPersonalDetails from 'src/components/form/registration/FormRe
 import FormRegisterEvent from 'src/components/form/registration/FormRegisterEvent.vue';
 import FormRegisterOrganizers from 'src/components/form/registration/FormRegisterOrganizers.vue';
 import FormRegisterMoreInformation from 'src/components/form/registration/FormRegisterMoreInformation.vue';
+import { routesConf } from 'src/router/routes_conf';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'RegistrationPage',
@@ -77,9 +79,14 @@ const { t } = useI18n();
 
 const registerStore = useRegisterStore();
 const userStore = useUserStore();
+const router = useRouter();
 
 onMounted(() => {
   userStore.loadUserDetails();
+  registerStore.checkRegistrationStatus();
+  if (registerStore.isRegistratonComplete) {
+    router.push(routesConf['home']['path']);
+  }
 });
 </script>
 
@@ -99,6 +106,11 @@ onMounted(() => {
     background-color: #f3f7ff;
     padding: 2rem;
     margin: 1rem 0;
+
+    @media (max-width: 768px) {
+      padding-block: 1rem;
+      padding-inline: 0;
+    }
   }
 
   :deep(.q-stepper__line:before) {
