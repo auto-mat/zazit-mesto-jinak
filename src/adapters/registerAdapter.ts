@@ -1,5 +1,12 @@
 import { RegisterForm } from 'src/types/Register';
 
+export interface OrganizerPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  telephone: string;
+}
+
 export interface RegisterCompletePayload {
   first_name: string;
   last_name: string;
@@ -16,6 +23,11 @@ export interface RegisterCompletePayload {
   space_area: string;
   space_rent: boolean;
   activities: string;
+  company_name: string;
+  company_type_id: number | null;
+  company_crn: string;
+  company_tin: string;
+  organizers: OrganizerPayload[];
 }
 
 export const registerAdapter = {
@@ -39,6 +51,16 @@ export const registerAdapter = {
       space_area: registerData.eventDetails.spaceArea,
       space_rent: registerData.eventDetails.spaceRent,
       activities: registerData.eventDetails.activities,
+      company_name: registerData.organizers.company.title,
+      company_type_id: registerData.organizers.company.businessType ?? null,
+      company_crn: registerData.organizers.company.ico,
+      company_tin: registerData.organizers.company.dic,
+      organizers: registerData.organizers.organizers.map((organizer) => ({
+        first_name: organizer.name,
+        last_name: organizer.surname,
+        email: organizer.email,
+        telephone: organizer.phone,
+      })),
     };
   },
 };

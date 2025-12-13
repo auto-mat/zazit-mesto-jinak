@@ -8,7 +8,7 @@ import { useApiRegister } from 'src/composables/api/useApiRegister';
 import { i18n } from 'src/boot/i18n';
 import { cloneDeep } from 'lodash';
 import { useUserStore } from './user';
-import { RegisterForm } from 'src/types/Register';
+import { CompanyType, RegisterForm } from 'src/types/Register';
 import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
 
 export const useRegisterStore = defineStore('register', () => {
@@ -21,6 +21,7 @@ export const useRegisterStore = defineStore('register', () => {
     resendEmailApi,
     checkRegistrationStatusApi,
     registerCompleteApi,
+    getCompanyTypesApi,
   } = useApiRegister();
 
   const email = ref('');
@@ -32,6 +33,8 @@ export const useRegisterStore = defineStore('register', () => {
 
   // TODO temporary date
   const eventDate = '28.09.2026';
+
+  const companyTypes = ref<CompanyType[]>([]);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -60,7 +63,7 @@ export const useRegisterStore = defineStore('register', () => {
     organizers: {
       company: {
         title: '',
-        businessType: '',
+        businessType: null,
         ico: '',
         dic: '',
       },
@@ -140,9 +143,17 @@ export const useRegisterStore = defineStore('register', () => {
     isRegistratonComplete.value = await checkRegistrationStatusApi();
   };
 
+  const getCompanyTypes = async (): Promise<void> => {
+    companyTypes.value = await getCompanyTypesApi();
+    console.log(companyTypes.value);
+  };
+
   const registerComplete = async (): Promise<void> => {
     await registerCompleteApi(registerFormState.value);
     await userStore.loadUserDetails();
+    registerFormState.value = cloneDeep(
+      registerDefaultFormState,
+    ) as RegisterForm;
     await router.push(routesConf['home']['path']);
   };
 
@@ -158,5 +169,7 @@ export const useRegisterStore = defineStore('register', () => {
     resendEmail,
     checkRegistrationStatus,
     isRegistratonComplete,
+    companyTypes,
+    getCompanyTypes,
   };
 });

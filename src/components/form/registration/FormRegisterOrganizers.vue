@@ -27,15 +27,23 @@
             bg-color="white"
             class="col-12 col-sm-6"
           />
-          <!-- TODO select -->
-          <form-field-text
-            v-model="registerFormState.organizers.company.businessType"
-            name="form-business-type"
-            label="event.organizers.labelBusinessType"
-            required
-            bg-color="white"
-            class="col-12 col-sm-6"
-          />
+          <div class="col-12 col-sm-6">
+            <label
+              for="business-type"
+              class="text-grey-10 text-caption text-bold"
+            >
+              {{ t('event.organizers.labelBusinessType') }}
+            </label>
+            <q-select
+              outlined
+              dense
+              id="business-type"
+              v-model="selectedBusinessType"
+              :options="optionsBusinessType"
+              class="q-mt-sm"
+              bg-color="white"
+            />
+          </div>
           <form-field-text
             v-model="registerFormState.organizers.company.ico"
             name="form-ico"
@@ -86,7 +94,6 @@
               v-model="organizer.name"
               name="form-name"
               label="form.labelFirstName"
-              required
               bg-color="white"
               class="col-12 col-sm-6"
             />
@@ -94,20 +101,17 @@
               v-model="organizer.surname"
               name="form-surname"
               label="form.labelLastName"
-              required
               bg-color="white"
               class="col-12 col-sm-6"
             />
             <form-field-email
               v-model="organizer.email"
-              required
               bg-color="white"
               class="col-12 col-sm-6"
             />
             <form-field-phone
               v-model="organizer.phone"
               label="form.labelPhone"
-              required
               bg-color="white"
               class="col-12 col-sm-6"
             />
@@ -162,7 +166,7 @@
  */
 
 // libraries
-import { ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
@@ -185,7 +189,7 @@ const { t } = useI18n();
 const choice = ref('person');
 
 const registerStore = useRegisterStore();
-const { registerFormState } = storeToRefs(registerStore);
+const { registerFormState, companyTypes } = storeToRefs(registerStore);
 
 const optionsChoiceOrganizers: FormOption[] = [
   {
@@ -197,6 +201,19 @@ const optionsChoiceOrganizers: FormOption[] = [
     value: 'company',
   },
 ];
+
+const optionsBusinessType = computed<FormOption[]>(() =>
+  companyTypes.value.map((companyType) => ({
+    label: companyType.type,
+    value: companyType.id,
+  })),
+);
+
+const selectedBusinessType = ref<FormOption | null>(null);
+
+watch(selectedBusinessType, (newVal: FormOption | null) => {
+  registerFormState.value.organizers.company.businessType = newVal?.value;
+});
 
 const addOrganizer = (): void => {
   const newLink = {
@@ -220,4 +237,8 @@ const onSubmit = (): void => {
 const onReset = (): void => {
   emit('back');
 };
+
+onMounted(async () => {
+  await registerStore.getCompanyTypes();
+});
 </script>

@@ -1,3 +1,15 @@
+export interface CompanyType {
+  id: number;
+  type: string;
+}
+
+export interface Organizer {
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+}
+
 export interface RegisterForm {
   personalDetails: {
     firstName: string;
@@ -21,5 +33,14 @@ export interface RegisterForm {
     spaceArea: string;
     spaceRent: boolean;
     activities: string;
+  };
+  organizers: {
+    company: {
+      title: string;
+      businessType: number | null;
+      ico: string;
+      dic: string;
+    };
+    organizers: Organizer[];
   };
 }

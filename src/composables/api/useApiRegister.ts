@@ -4,7 +4,7 @@ import { i18n } from 'src/boot/i18n';
 import { useLoginStore } from 'src/stores/login';
 import apiFetch from 'src/api/apiFetch';
 import { registerAdapter } from 'src/adapters/registerAdapter';
-import { RegisterForm } from 'src/types/Register';
+import { CompanyType, RegisterForm } from 'src/types/Register';
 
 interface RegisterPayload {
   email: string;
@@ -112,6 +112,20 @@ export function useApiRegister() {
     }
   };
 
+  const getCompanyTypesApi = async (): Promise<CompanyType[]> => {
+    try {
+      const { data } = await apiFetch.get<CompanyType[]>(
+        zazitMestoJinakConfig.urlApiCompanyTypes,
+      );
+      return data;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+    }
+  };
+
   const registerCompleteApi = async (payload: RegisterForm): Promise<void> => {
     if (!(await loginStore.validateAccessToken())) {
       return;
@@ -135,5 +149,6 @@ export function useApiRegister() {
     resendEmailApi,
     checkRegistrationStatusApi,
     registerCompleteApi,
+    getCompanyTypesApi,
   };
 }
