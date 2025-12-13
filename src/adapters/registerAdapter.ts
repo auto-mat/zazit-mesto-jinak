@@ -14,7 +14,7 @@ export interface RegisterCompletePayload {
   place: string;
   space_type: string;
   space_area: string;
-  space_rent: string;
+  space_rent: boolean;
   activities: string;
 }
 
