@@ -11,7 +11,7 @@
       v-model="inputValue"
       name="date"
       class="q-mt-sm"
-      mask="##/##/####"
+      mask="##.##.####"
       :rules="[
         (val: string) =>
           !required ||
@@ -26,7 +26,7 @@
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date minimal v-model="inputValue" mask="DD/MM/YYYY">
+            <q-date minimal v-model="inputValue" mask="DD.MM.YYYY">
               <div class="row items-center justify-end">
                 <q-btn
                   v-close-popup

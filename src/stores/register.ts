@@ -8,6 +8,8 @@ import { useApiRegister } from 'src/composables/api/useApiRegister';
 import { i18n } from 'src/boot/i18n';
 import { cloneDeep } from 'lodash';
 import { useUserStore } from './user';
+import { RegisterForm } from 'src/types/Register';
+import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
 
 export const useRegisterStore = defineStore('register', () => {
   const router = useRouter();
@@ -27,6 +29,9 @@ export const useRegisterStore = defineStore('register', () => {
   // TODO temporary flag
   const isRegistratonComplete = ref(false);
 
+  // TODO temporary date
+  const eventDate = '28.09.2026';
+
   const registerDefaultFormState = {
     personalDetails: {
       firstName: '',
@@ -40,11 +45,15 @@ export const useRegisterStore = defineStore('register', () => {
     },
     eventDetails: {
       eventName: '',
-      date: '06/11/2025',
-      gps: '',
-      spaceType: 'none', //option
-      spaceArea: 'none', //option
-      spaceRent: 'none',
+      date: eventDate,
+      gps: {
+        latitude: 0,
+        longitude: 0,
+      },
+      place: '',
+      spaceType: EventSpaceType.NONE, //option
+      spaceArea: EventSpaceArea.NONE, //option
+      spaceRent: false,
       activities: '',
     },
     organizers: {
@@ -73,7 +82,9 @@ export const useRegisterStore = defineStore('register', () => {
     },
   };
 
-  const registerFormState = ref(cloneDeep(registerDefaultFormState));
+  const registerFormState = ref<RegisterForm>(
+    cloneDeep(registerDefaultFormState) as RegisterForm,
+  );
 
   const clearRegisterData = (): void => {
     email.value = '';
@@ -81,6 +92,9 @@ export const useRegisterStore = defineStore('register', () => {
     passwordConfirm.value = '';
   };
 
+  /**
+   * Sing up function
+   */
   const register = async (): Promise<void> => {
     const data = await registerApi({
       email: email.value,
@@ -136,6 +150,7 @@ export const useRegisterStore = defineStore('register', () => {
     register,
     registerComplete,
     registerFormState,
+    eventDate,
     confirmVerification,
     resendEmail,
     isRegistratonComplete,

@@ -56,7 +56,7 @@
               class="q-ml-sm"
               :content="
                 t('register.event.textInfoDate', {
-                  date: registerFormState.eventDetails.date,
+                  date: registerStore.eventDate,
                 })
               "
             />
@@ -67,6 +67,30 @@
             bg-color="white"
           />
         </div>
+      </div>
+
+      <div class="row q-col-gutter-md q-mb-md">
+        <div class="col-12">
+          <label class="text-grey-10 text-caption text-bold">
+            {{ t('register.event.labelLocation') }}
+          </label>
+          <leaflet-map
+            class="map q-mt-sm q-ml-md"
+            editable
+            @set-coords="setCoords"
+          />
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-md q-mb-md">
+        <form-field-text
+          v-model="registerFormState.eventDetails.place"
+          name="form-place"
+          label="register.event.labelPlace"
+          required
+          class="col-12"
+          bg-color="white"
+        />
       </div>
 
       <div class="row q-col-gutter-md q-mb-xl">
@@ -131,8 +155,6 @@
           />
         </div>
       </div>
-      <!-- TODO inside space -->
-      <!-- TODO sales -->
       <div class="row q-col-gutter-md q-mb-sm">
         <form-field-textarea
           v-model="registerFormState.eventDetails.activities"
@@ -191,9 +213,11 @@ import FormFieldRadioGroup from '../global/FormFieldRadioGroup.vue';
 import FormFieldDateInput from '../global/FormFieldDateInput.vue';
 import FormFieldTextarea from '../global/FormFieldTextarea.vue';
 import InfoButton from 'src/components/buttons/InfoButton.vue';
+import LeafletMap from 'src/components/global/LeafletMap.vue';
 
 // types
 import { FormOption } from 'src/types/Form';
+import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
 
 const emit = defineEmits(['submit', 'back']);
 
@@ -202,7 +226,7 @@ const { t } = useI18n();
 const registerStore = useRegisterStore();
 const { registerFormState } = storeToRefs(registerStore);
 
-const choice = ref('new'); // watch -> get events
+const choice = ref<string>('new'); // watch -> get events
 const eventFromPast = ref('');
 
 const optionsChoiceEvent: FormOption[] = [
@@ -213,68 +237,74 @@ const optionsChoiceEvent: FormOption[] = [
   {
     label: t('register.event.choiceFromPast'),
     value: 'past',
+    disable: true,
   },
 ];
 
 const optionsSpaceType: FormOption[] = [
   {
     label: t('event.spaceType.none'),
-    value: 'none',
+    value: EventSpaceType.NONE,
   },
   {
     label: t('event.spaceType.park'),
-    value: 'park',
+    value: EventSpaceType.PARK,
   },
   {
     label: t('event.spaceType.sidewalk'),
-    value: 'sidewalk',
+    value: EventSpaceType.SIDEWALK,
   },
   {
     label: t('event.spaceType.roadway'),
-    value: 'roadway',
+    value: EventSpaceType.ROAD,
   },
   {
     label: t('event.spaceType.countryard'),
-    value: 'countryard',
+    value: EventSpaceType.YARD,
   },
 ];
 
 const optionsSpaceArea: FormOption[] = [
   {
     label: t('event.spaceArea.xs'),
-    value: 'xs',
+    value: EventSpaceArea.XS,
   },
   {
     label: t('event.spaceArea.sm'),
-    value: 'sm',
+    value: EventSpaceArea.SM,
   },
   {
     label: t('event.spaceArea.md'),
-    value: 'md',
+    value: EventSpaceArea.MD,
   },
   {
     label: t('event.spaceArea.lg'),
-    value: 'lg',
+    value: EventSpaceArea.LG,
   },
   {
     label: t('event.spaceArea.xl'),
-    value: 'countryard',
+    value: EventSpaceArea.XL,
   },
 ];
 
 const optionsSpaceRent: FormOption[] = [
   {
     label: t('event.spaceRent.yes'),
-    value: 'yes',
+    value: true,
   },
   {
     label: t('event.spaceRent.no'),
-    value: 'no',
+    value: false,
   },
 ];
 
-// mock
-const eventsFromPast = ['Husitská', 'Náměstí Míru', 'Park Stromovka'];
+const setCoords = (latitude: number, longitude: number) => {
+  registerFormState.value.eventDetails.gps.latitude = latitude;
+  registerFormState.value.eventDetails.gps.longitude = longitude;
+};
+
+// TODO get events from past
+const eventsFromPast = [];
 
 const onSubmit = (): void => {
   emit('submit');
@@ -284,3 +314,10 @@ const onReset = (): void => {
   emit('back');
 };
 </script>
+
+<style scoped>
+.map {
+  width: 100%;
+  height: 300px;
+}
+</style>

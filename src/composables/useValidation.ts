@@ -83,11 +83,12 @@ export const useValidation = () => {
     return isLong && allNumbers;
   };
 
-  const isDate = (value: string) : boolean => {
+  const isDate = (value: string): boolean => {
     const isLong = value.length === 10;
-    const isDate = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0,1,2])\/(19|20)\d{2}$/.test(value);
+    const isDate =
+      /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0,1,2])\.(19|20)\d{2}$/.test(value);
     return isLong && isDate;
-  }
+  };
 
   const isTimeLaterThan = (t1: string, t2: string): boolean => {
     const [h1, m1] = t1.split(':').map(Number);
@@ -95,7 +96,7 @@ export const useValidation = () => {
     const isLater = h1 > h2 || (h1 === h2 && m1 > m2);
 
     return isLater;
-  }
+  };
 
   const isTimeEqualTo = (t1: string, t2: string): boolean => {
     const [h1, m1] = t1.split(':').map(Number);
@@ -103,7 +104,7 @@ export const useValidation = () => {
     const isSame = h1 === h2 && m1 === m2;
 
     return isSame;
-  }
+  };
 
   const isTimeEarlierThan = (t1: string, t2: string): boolean => {
     const [h1, m1] = t1.split(':').map(Number);
@@ -111,7 +112,7 @@ export const useValidation = () => {
     const isEarlier = h1 < h2 || (h1 === h2 && m1 < m2);
 
     return isEarlier;
-  }
+  };
 
   return {
     isEmail,
@@ -125,6 +126,6 @@ export const useValidation = () => {
     isDate,
     isTimeEarlierThan,
     isTimeEqualTo,
-    isTimeLaterThan
+    isTimeLaterThan,
   };
 };

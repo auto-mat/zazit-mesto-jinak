@@ -102,7 +102,6 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiBase = "http://localhost:8000/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
@@ -119,6 +118,7 @@ urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/
 urlApiIsUserOrganizationAdmin = "is-user-organization-admin/"
 urlApiLogin = "auth/login/"
 urlApiRefreshToken = "token/refresh/"
+urlApiUser = "zmj/user/"
 urlApiLoginGoogle = "auth/google/login/"
 urlApiOrganizations = "organizations/"
 urlApiLoginFacebook = "auth/facebook/login/"
@@ -147,10 +147,6 @@ urlApiTeams = "teams/"
 urlApiTrips = "trips/"
 urlApiChallengeRegistrationUser = "challenge/registration/user/"
 urlApiThisCampaign = "this_campaign/"
-
-urlApiUser = "zmj/user/"
-urlApiRegisterComplete = "zmj/registration/"
-urlApiSpaceOptions = "zmj/space-options/"
 
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
