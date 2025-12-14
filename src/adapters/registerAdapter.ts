@@ -1,4 +1,6 @@
+import { date } from 'quasar';
 import { RegisterForm } from 'src/types/Register';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 export interface OrganizerPayload {
   first_name: string;
@@ -32,9 +34,11 @@ export interface RegisterCompletePayload {
 
 export const registerAdapter = {
   toRegisterPayload(registerData: RegisterForm): RegisterCompletePayload {
-    const eventDate = new Date(
-      registerData.eventDetails.date.split('.').reverse().join('-'),
+    const eventDate = date.extractDate(
+      registerData.eventDetails.date,
+      zazitMestoJinakConfig.dateFormat,
     );
+
     return {
       first_name: registerData.personalDetails.firstName,
       last_name: registerData.personalDetails.lastName,

@@ -166,7 +166,7 @@
  */
 
 // libraries
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
@@ -237,8 +237,4 @@ const onSubmit = (): void => {
 const onReset = (): void => {
   emit('back');
 };
-
-onMounted(async () => {
-  await registerStore.getCompanyTypes();
-});
 </script>

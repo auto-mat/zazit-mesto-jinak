@@ -112,7 +112,10 @@ export function useApiRegister() {
     }
   };
 
-  const getCompanyTypesApi = async (): Promise<CompanyType[]> => {
+  const getCompanyTypesApi = async (): Promise<CompanyType[] | null> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
+    }
     try {
       const { data } = await apiFetch.get<CompanyType[]>(
         zazitMestoJinakConfig.urlApiCompanyTypes,
@@ -123,6 +126,7 @@ export function useApiRegister() {
         message: error.message,
         color: 'negative',
       });
+      return null;
     }
   };
 

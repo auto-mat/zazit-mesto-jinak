@@ -82,7 +82,8 @@ const userStore = useUserStore();
 const router = useRouter();
 
 onMounted(async () => {
-  userStore.loadUserDetails();
+  await userStore.loadUserDetails();
+  await registerStore.getCompanyTypes();
   await registerStore.checkRegistrationStatus();
   if (registerStore.isRegistratonComplete) {
     router.push(routesConf['home']['path']);

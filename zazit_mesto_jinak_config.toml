@@ -163,6 +163,8 @@ apiTripsThirdPartyAppIdNaKolePrahou = "3"
 
 # DATE TIME FORMATS
 
+dateFormat = "DD.MM.YYYY"
+
 dateTimeFormatsAllLocales = '''
 {
   "numeric": {

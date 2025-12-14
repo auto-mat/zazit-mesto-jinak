@@ -1,3 +1,6 @@
+import { date } from 'quasar';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
 export const useValidation = () => {
   const isEmail = (value: string): boolean => {
     /**
@@ -84,10 +87,12 @@ export const useValidation = () => {
   };
 
   const isDate = (value: string): boolean => {
-    const isLong = value.length === 10;
-    const isDate =
-      /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0,1,2])\.(19|20)\d{2}$/.test(value);
-    return isLong && isDate;
+    const isLong = value.length === zazitMestoJinakConfig.dateFormat.length;
+    const extractedDate = date.extractDate(
+      value,
+      zazitMestoJinakConfig.dateFormat,
+    );
+    return isLong && date.isValid(extractedDate.toISOString());
   };
 
   const isTimeLaterThan = (t1: string, t2: string): boolean => {

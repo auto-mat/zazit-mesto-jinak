@@ -14,7 +14,10 @@
         />
       </div>
 
-      <div v-if="choice == 'past'" class="row q-col-gutter-md q-mb-md">
+      <div
+        v-if="choice === ChoiceEvent.PAST"
+        class="row q-col-gutter-md q-mb-md"
+      >
         <div class="col-12">
           <label
             for="event-from-past"
@@ -225,17 +228,23 @@ const { t } = useI18n();
 const registerStore = useRegisterStore();
 const { registerFormState } = storeToRefs(registerStore);
 
-const choice = ref<string>('new'); // watch -> get events
+/* eslint-disable no-unused-vars */
+enum ChoiceEvent {
+  NEW = 'new',
+  PAST = 'past',
+}
+
+const choice = ref(ChoiceEvent.NEW); // watch -> get events
 const eventFromPast = ref('');
 
 const optionsChoiceEvent: FormOption[] = [
   {
     label: t('register.event.choiceNew'),
-    value: 'new',
+    value: ChoiceEvent.NEW,
   },
   {
     label: t('register.event.choiceFromPast'),
-    value: 'past',
+    value: ChoiceEvent.PAST,
     disable: true,
   },
 ];

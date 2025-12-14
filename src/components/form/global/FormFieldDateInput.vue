@@ -11,7 +11,7 @@
       v-model="inputValue"
       name="date"
       class="q-mt-sm"
-      mask="##.##.####"
+      :mask="dateFormatMask"
       :rules="[
         (val: string) =>
           !required ||
@@ -26,7 +26,7 @@
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date minimal v-model="inputValue" mask="DD.MM.YYYY">
+            <q-date minimal v-model="inputValue" :mask="dateFormat">
               <div class="row items-center justify-end">
                 <q-btn
                   v-close-popup
@@ -68,6 +68,9 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
@@ -98,6 +101,10 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const dateFormat = computed(() => zazitMestoJinakConfig.dateFormat);
+const dateFormatMask = computed(() =>
+  dateFormat.value.replace(/[A-Za-z]/g, '#'),
+);
 
 const inputValue = computed({
   get() {
