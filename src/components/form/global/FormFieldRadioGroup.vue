@@ -5,7 +5,7 @@
     hide-bottom-space
     :model-value="radioValue"
     :rules="[
-      (val: string) =>
+      (val: any) =>
         !required || isFilled(val) || t('form.messageOptionRequired'),
     ]"
   >
@@ -35,8 +35,8 @@
  * Used in `FormRegister`, `FormLogin`, `RegisterChallengePayment`.
  *
  * @props
- * - `modelValue` (string, required): The object representing user input.
- *   It should be of type `string`.
+ * - `modelValue` (any, required): The object representing user input.
+ *   It can be of any type.
  * - `options` (object, required): The object representing the options.
  *   Should have props:
  * - `inline` (boolean, default: false): Buttons in row layout
@@ -61,7 +61,6 @@ import type { FormOption } from 'src/types/Form';
 
 const props = defineProps({
   modelValue: {
-    type: String as () => string | null,
     required: true,
   },
   options: {
@@ -79,16 +78,16 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string | null];
+  'update:modelValue': [value: any];
 }>();
 
 const { t } = useI18n();
 
 const radioValue = computed({
-  get(): string | null {
+  get(): any {
     return props.modelValue;
   },
-  set(value: string | null) {
+  set(value: any) {
     emit('update:modelValue', value);
   },
 });

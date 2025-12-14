@@ -1,5 +1,5 @@
 export type FormOption = {
-  label: string,
-  value: string,
-  disabled?: boolean,
+  label: string;
+  value: any;
+  disable?: boolean;
 };

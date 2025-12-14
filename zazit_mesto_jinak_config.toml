@@ -118,7 +118,6 @@ urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/
 urlApiIsUserOrganizationAdmin = "is-user-organization-admin/"
 urlApiLogin = "auth/login/"
 urlApiRefreshToken = "token/refresh/"
-urlApiUser = "zmj/user/"
 urlApiLoginGoogle = "auth/google/login/"
 urlApiOrganizations = "organizations/"
 urlApiLoginFacebook = "auth/facebook/login/"
@@ -148,6 +147,11 @@ urlApiTrips = "trips/"
 urlApiChallengeRegistrationUser = "challenge/registration/user/"
 urlApiThisCampaign = "this_campaign/"
 
+urlApiUser = "zmj/user/"
+urlApiRegisterComplete = "zmj/registration/"
+urlApiCheckRegistrationStatus = "zmj/registration/status/"
+urlApiCompanyTypes = "zmj/company-types/"
+
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
 feedRefreshCachedPostsIntervalHours = 24
@@ -158,6 +162,8 @@ apiTripsThirdPartyAppIdCyclers = "1"
 apiTripsThirdPartyAppIdNaKolePrahou = "3"
 
 # DATE TIME FORMATS
+
+dateFormat = "DD.MM.YYYY"
 
 dateTimeFormatsAllLocales = '''
 {

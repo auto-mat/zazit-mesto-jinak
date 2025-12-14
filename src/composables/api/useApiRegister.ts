@@ -3,6 +3,8 @@ import { Notify } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { useLoginStore } from 'src/stores/login';
 import apiFetch from 'src/api/apiFetch';
+import { registerAdapter } from 'src/adapters/registerAdapter';
+import { CompanyType, RegisterForm } from 'src/types/Register';
 
 interface RegisterPayload {
   email: string;
@@ -21,6 +23,10 @@ interface RegisterResponse {
 
 interface ResendEmailResponse {
   send_registration_confirmation_email: boolean;
+}
+
+interface RegistrationStatusResponse {
+  is_complete: boolean;
 }
 
 export function useApiRegister() {
@@ -88,9 +94,65 @@ export function useApiRegister() {
     }
   };
 
+  const checkRegistrationStatusApi = async (): Promise<boolean> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return false;
+    }
+    try {
+      const { data } = await apiFetch.get<RegistrationStatusResponse>(
+        zazitMestoJinakConfig.urlApiCheckRegistrationStatus,
+      );
+      return data.is_complete;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
+    }
+  };
+
+  const getCompanyTypesApi = async (): Promise<CompanyType[] | null> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
+    }
+    try {
+      const { data } = await apiFetch.get<CompanyType[]>(
+        zazitMestoJinakConfig.urlApiCompanyTypes,
+      );
+      return data;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return null;
+    }
+  };
+
+  const registerCompleteApi = async (payload: RegisterForm): Promise<void> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return;
+    }
+    try {
+      await apiFetch.post<void>(
+        zazitMestoJinakConfig.urlApiRegisterComplete,
+        registerAdapter.toRegisterPayload(payload),
+      );
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+    }
+  };
+
   return {
     registerApi,
     confirmVerificationApi,
     resendEmailApi,
+    checkRegistrationStatusApi,
+    registerCompleteApi,
+    getCompanyTypesApi,
   };
 }

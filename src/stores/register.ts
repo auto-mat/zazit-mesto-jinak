@@ -7,19 +7,34 @@ import { Notify } from 'quasar';
 import { useApiRegister } from 'src/composables/api/useApiRegister';
 import { i18n } from 'src/boot/i18n';
 import { cloneDeep } from 'lodash';
+import { useUserStore } from './user';
+import { CompanyType, RegisterForm } from 'src/types/Register';
+import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
 
 export const useRegisterStore = defineStore('register', () => {
   const router = useRouter();
   const loginStore = useLoginStore();
-  const { registerApi, confirmVerificationApi, resendEmailApi } =
-    useApiRegister();
+  const userStore = useUserStore();
+  const {
+    registerApi,
+    confirmVerificationApi,
+    resendEmailApi,
+    checkRegistrationStatusApi,
+    registerCompleteApi,
+    getCompanyTypesApi,
+  } = useApiRegister();
 
   const email = ref('');
   const password = ref('');
   const passwordConfirm = ref('');
 
   // TODO temporary flag
-  const isRegistratonComplete = ref(true);
+  const isRegistratonComplete = ref(false);
+
+  // TODO temporary date
+  const eventDate = '28.09.2026';
+
+  const companyTypes = ref<CompanyType[]>([]);
 
   const registerDefaultFormState = {
     personalDetails: {
@@ -34,17 +49,21 @@ export const useRegisterStore = defineStore('register', () => {
     },
     eventDetails: {
       eventName: '',
-      date: '06/11/2025',
-      gps: '',
-      spaceType: 'none', //option
-      spaceArea: 'none', //option
-      spaceRent: 'none',
+      date: eventDate,
+      gps: {
+        latitude: 0,
+        longitude: 0,
+      },
+      place: '',
+      spaceType: EventSpaceType.NONE, //option
+      spaceArea: EventSpaceArea.NONE, //option
+      spaceRent: false,
       activities: '',
     },
     organizers: {
       company: {
         title: '',
-        businessType: '',
+        businessType: null,
         ico: '',
         dic: '',
       },
@@ -67,7 +86,9 @@ export const useRegisterStore = defineStore('register', () => {
     },
   };
 
-  const registerFormState = ref(cloneDeep(registerDefaultFormState));
+  const registerFormState = ref<RegisterForm>(
+    cloneDeep(registerDefaultFormState) as RegisterForm,
+  );
 
   const clearRegisterData = (): void => {
     email.value = '';
@@ -75,6 +96,9 @@ export const useRegisterStore = defineStore('register', () => {
     passwordConfirm.value = '';
   };
 
+  /**
+   * Sing up function
+   */
   const register = async (): Promise<void> => {
     const data = await registerApi({
       email: email.value,
@@ -115,7 +139,21 @@ export const useRegisterStore = defineStore('register', () => {
     }
   };
 
-  const registerDone = async (): Promise<void> => {
+  const checkRegistrationStatus = async (): Promise<void> => {
+    isRegistratonComplete.value = await checkRegistrationStatusApi();
+  };
+
+  const getCompanyTypes = async (): Promise<void> => {
+    companyTypes.value = await getCompanyTypesApi();
+    console.log(companyTypes.value);
+  };
+
+  const registerComplete = async (): Promise<void> => {
+    await registerCompleteApi(registerFormState.value);
+    await userStore.loadUserDetails();
+    registerFormState.value = cloneDeep(
+      registerDefaultFormState,
+    ) as RegisterForm;
     await router.push(routesConf['home']['path']);
   };
 
@@ -124,10 +162,14 @@ export const useRegisterStore = defineStore('register', () => {
     password,
     passwordConfirm,
     register,
-    registerDone,
+    registerComplete,
     registerFormState,
+    eventDate,
     confirmVerification,
     resendEmail,
+    checkRegistrationStatus,
     isRegistratonComplete,
+    companyTypes,
+    getCompanyTypes,
   };
 });
