@@ -90,16 +90,18 @@ export function useApiLogin() {
     }
   };
 
-  const resetPasswordApi = async (email: string): Promise<void> => {
+  const resetPasswordApi = async (email: string): Promise<boolean> => {
     try {
       await apiFetch.post<void>(zazitMestoJinakConfig.urlApiResetPassword, {
         email,
       });
+      return true;
     } catch (error) {
       Notify.create({
         message: error.message,
         color: 'negative',
       });
+      return false;
     }
   };
 

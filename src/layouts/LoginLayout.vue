@@ -72,13 +72,15 @@ defineOptions({
 .page-container {
   position: relative;
   width: 50%;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   background-color: white;
   z-index: 1;
   margin-top: 100px;
 
   @media (max-width: 1023px) {
     width: 100%;
+    padding-inline: 10px;
+    padding-block: 30px;
   }
 }
 
@@ -95,6 +97,7 @@ defineOptions({
   right: 0;
   width: 50%;
   height: 100%;
+  max-height: 100vh;
   z-index: 0;
   overflow: hidden;
 

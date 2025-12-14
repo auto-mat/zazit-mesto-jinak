@@ -65,6 +65,7 @@ forgotPassword = "Zapomenuté heslo?"
 title = "Zapomenuté heslo"
 description = "Zadejte svůj e-mail a my vám pošleme odkaz na obnovení hesla."
 submitResetPassword = "Odeslat"
+backToLogin = "Zpět na přihlášení"
 
 [resetPassword.emailSent]
 title = "Odkaz na obnovení hesla byl odeslán"

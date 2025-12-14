@@ -282,10 +282,10 @@ export const useLoginStore = defineStore(
      * Reset password
      * Sends a request to reset the password using the email.
      * @param {string} email - Email
-     * @return {Promise<void>}
+     * @return {Promise<boolean>}
      */
-    async function resetPassword(email: string): Promise<void> {
-      await resetPasswordApi(email);
+    async function resetPassword(email: string): Promise<boolean> {
+      return await resetPasswordApi(email);
     }
 
     async function resetPasswordConfirm(

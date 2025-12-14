@@ -38,7 +38,9 @@ const loginStore = useLoginStore();
 const email = ref('');
 
 const onSubmit = async () => {
-  await loginStore.resetPassword(email.value);
-  emit('submit');
+  const success = await loginStore.resetPassword(email.value);
+  if (success) {
+    emit('submit');
+  }
 };
 </script>

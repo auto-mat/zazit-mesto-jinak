@@ -11,6 +11,11 @@
         <form-email-for-reset-password @submit="onSubmit" />
       </div>
     </template>
+    <div class="q-mt-xl">
+      <router-link :to="routesConf['login']['path']">
+        {{ t('resetPassword.backToLogin') }}
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -18,6 +23,9 @@
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
 
 // components
 import FormEmailForResetPassword from 'src/components/form/login/FormEmailForResetPassword.vue';
