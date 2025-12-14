@@ -234,8 +234,8 @@ enum ChoiceEvent {
   PAST = 'past',
 }
 
-const choice = ref(ChoiceEvent.NEW); // watch -> get events
-const eventFromPast = ref('');
+const choice = ref<ChoiceEvent>(ChoiceEvent.NEW); // watch -> get events
+const eventFromPast = ref<string>('');
 
 const optionsChoiceEvent: FormOption[] = [
   {
