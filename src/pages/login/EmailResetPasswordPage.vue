@@ -1,11 +1,8 @@
 <template>
-  <div
-    class="bg-white q-pa-md rounded-borders"
-    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
-  >
+  <div>
     <template v-if="emailSent">
       <h1>{{ t('resetPassword.emailSent.title') }}</h1>
-      <p>{{ t('resetPassword.emailSent.description') }}</p>
+      <p class="q-mt-md">{{ t('resetPassword.emailSent.description') }}</p>
     </template>
     <template v-else>
       <h1>{{ t('resetPassword.title') }}</h1>
@@ -14,6 +11,11 @@
         <form-email-for-reset-password @submit="onSubmit" />
       </div>
     </template>
+    <div class="q-mt-xl">
+      <router-link :to="routesConf['login']['path']">
+        {{ t('resetPassword.backToLogin') }}
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -23,7 +25,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 // config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
 
 // components
 import FormEmailForResetPassword from 'src/components/form/login/FormEmailForResetPassword.vue';
@@ -37,6 +39,6 @@ const onSubmit = () => {
 };
 
 defineOptions({
-  name: 'LoginPage',
+  name: 'EmailResetPasswordPage',
 });
 </script>

@@ -1,6 +1,7 @@
 import { Notify } from 'quasar';
 import apiFetch from 'src/api/apiFetch';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { i18n } from 'src/boot/i18n';
 import { useLoginStore } from 'src/stores/login';
 
 export interface LoginPayload {
@@ -89,9 +90,57 @@ export function useApiLogin() {
     }
   };
 
+  const resetPasswordApi = async (email: string): Promise<boolean> => {
+    try {
+      await apiFetch.post<void>(zazitMestoJinakConfig.urlApiResetPassword, {
+        email,
+      });
+      return true;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
+    }
+  };
+
+  const resetPasswordConfirmApi = async (
+    uid: string,
+    token: string,
+    password: string,
+    passwordConfirm: string,
+  ): Promise<boolean> => {
+    const payload = {
+      uid,
+      token,
+      new_password1: password,
+      new_password2: passwordConfirm,
+    };
+    try {
+      await apiFetch.post<void>(
+        zazitMestoJinakConfig.urlApiResetPasswordConfirm,
+        payload,
+      );
+      Notify.create({
+        message: i18n.global.t('resetPassword.confirm.passwordResetSuccess'),
+        color: 'positive',
+      });
+      return true;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
+    }
+  };
+
   return {
     loginApi,
     refreshTokenApi,
     isUserVerifiedApi,
+    resetPasswordApi,
+    resetPasswordConfirmApi,
   };
 }

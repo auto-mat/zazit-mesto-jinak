@@ -1,10 +1,9 @@
 <template>
-  <div
-    class="bg-white q-pa-md rounded-borders"
-    :style="{ maxWidth: zazitMestoJinakConfig.containerFormWidth }"
-  >
+  <div>
     <h1>{{ t('verifyEmail.title') }}</h1>
-    <p>{{ t('verifyEmail.description', { email: email ?? '' }) }}</p>
+    <p>
+      {{ t('verifyEmail.description', { email: loginStore.userEmail ?? '' }) }}
+    </p>
     <p>{{ t('verifyEmail.checkSpamFolder') }}</p>
     <q-btn
       :label="t('verifyEmail.resendEmail')"
@@ -32,7 +31,6 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 // config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
 
 // stores
@@ -45,7 +43,6 @@ const router = useRouter();
 const registerStore = useRegisterStore();
 const loginStore = useLoginStore();
 
-const { email } = storeToRefs(registerStore);
 const { isUserVerified } = storeToRefs(loginStore);
 
 const registerAgain = () => {

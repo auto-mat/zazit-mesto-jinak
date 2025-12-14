@@ -25,10 +25,17 @@
 </template>
 
 <script setup lang="ts">
-import { useLoginStore } from 'src/stores/login';
-import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
-import { UserLanguage } from 'src/enums/userEnums';
+// libraries
 import { storeToRefs } from 'pinia';
+
+// components
+import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
+
+// stores
+import { useLoginStore } from 'src/stores/login';
+
+// types
+import { UserLanguage } from 'src/enums/userEnums';
 
 const loginStore = useLoginStore();
 const { isUserLoggedIn } = storeToRefs(loginStore);

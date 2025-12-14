@@ -1,8 +1,10 @@
 <template>
   <div class="full-width flex justify-between q-py-sm">
-    <q-avatar square size="100px" class="q-my-sm">
-      <img src="logo-zmj.svg" />
-    </q-avatar>
+    <router-link :to="routesConf['home']['path']">
+      <q-avatar square size="100px" class="q-my-sm">
+        <img src="logo-zmj.svg" />
+      </q-avatar>
+    </router-link>
 
     <div class="flex column justify-between items-end q-pr-md q-pt-md">
       <div>
@@ -19,6 +21,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useUserStore } from 'src/stores/user';
+import { routesConf } from 'src/router/routes_conf';
 
 const userStore = useUserStore();
 const { userDetails } = storeToRefs(userStore);
