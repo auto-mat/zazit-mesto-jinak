@@ -90,7 +90,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['event_guide']['children']['name'],
-        component: () => import('pages/EventGuidePage.vue'),
+        component: () => import('pages/event/EventGuidePage.vue'),
       },
     ],
   },

@@ -102,7 +102,8 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
+# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
+apiBase = "http://localhost:8000/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 

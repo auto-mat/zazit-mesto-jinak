@@ -188,6 +188,43 @@ titleWebContent = "Obsah pro web ZMJ"
 titleProgram = "Program"
 titleOrganizers = "Organizátoři"
 
+[event.guide.agreement]
+title = "Smlouva"
+step1.title = "Vytváření smlouvy"
+step1.description = "Smlouva je v procesu vytváření. Budete informováni e-mailem, až bude hotová."
+step2.title = "Smlouva vytvořena"
+step3.title = "Čeká na podpis"
+step3.description = "Zde máte smlouvu ke stažení. Prosíme Vás o její podpis a následné nahraní zpět do systému."
+step3.uploadTitle = "Nahrajte podepsanou smlouvu"
+step3.uploadButton = "Nahrát"
+step3.downloadTitle = "Smlouva ke stažení"
+step4.title = "Podepsaná smlouva nahrána"
+step4.description = "Smlouva byla úspěšně nahrána. Nyní se čeká na povrzení a podepsání smlouvy spolkem AutoMat."
+step5.title = "Smlouva dokončena"
+step5.description = "Smlouva byla úspěšně dokončena. Zde máte smlouvu ke stažení."
+
+[event.guide.invoice]
+title = "Faktura"
+step1.title = "Vytváření faktury"
+step1.description = "Faktura je v procesu vytváření. Budete informováni e-mailem, až bude hotová."
+step2.title = "Faktura vytvořena a odeslána na váš e-mail"
+step3.title = "Čeká na zaplacení"
+step3.description = "Zde máte fakturu ke stažení. Prosíme Vás o její zaplacení."
+step3.downloadTitle = "Faktura ke stažení"
+step4.title = "Faktura zaplacena"
+step4.description = "Faktura byla úspěšně zaplacena. Zde se nachází přístup do sdílené složky s materiály pro Vaši lokalitu:"
+
+[event.guide.meeting]
+title = "Setkání organizátorů"
+
+[event.guide.contentWeb]
+title = "Obsah pro web ZMJ"
+step1.title = "Vytváření obsahu na webu ZMJ"
+step1.description = "Vyplňte informace o vaší akci, které budou zobrazeny na webu ZMJ."
+step1.button = "Přejít na obsah pro web ZMJ"
+step2.title = "Obsah zveřejněn"
+step2.description = "Obsah na webu ZMJ byl úspěšně zveřejněn. Můžete ho stále upravovat."
+
 [event.information]
 labelName = "Název"
 labelDate = "Datum akce"
