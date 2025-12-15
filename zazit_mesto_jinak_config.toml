@@ -151,6 +151,8 @@ urlApiUser = "zmj/user/"
 urlApiRegisterComplete = "zmj/registration/"
 urlApiCheckRegistrationStatus = "zmj/registration/status/"
 urlApiCompanyTypes = "zmj/company-types/"
+urlApiEventList = "zmj/events/"
+urlApiEventInformation = "zmj/events/"
 
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds

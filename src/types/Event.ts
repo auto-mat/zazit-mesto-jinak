@@ -5,95 +5,71 @@
  * @version 1.0
  */
 
-export type EventMetaType = {
-  slug: string,
-  name: string,
+import { EventSpaceType, EventSpaceArea } from 'src/enums/eventEnums';
+
+export interface EventMeta {
+  id: number;
+  slug: string;
+  name: string;
 }
 
-export type EventDetailsType = {
-  // guide: any,
-  information?: EventInformationType,
-  organizers?: {
-    company: EventOrganizerCompanyType,
-    people: EventOrganizersType
-  },
-  content?: EventContentType,
-  program?: EventProgramType,
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
 }
 
-type CoordinatesType = {
-  latitude: number,
-  longitude: number
+export interface EventInformation {
+  name: string;
+  date: string;
+  place: string;
+  coordinates: Coordinates;
+  spaceType: EventSpaceType;
+  spaceArea: EventSpaceArea;
+  spaceRent: boolean;
+  activities: string;
 }
 
-export type EventType  = {
-  slug: string,
-  name: string,
-  // homepage: {},
-  // guide: {},
-  information: EventInformationType,
-  organizers: {
-    company: EventOrganizerCompanyType,
-    people: EventOrganizersType
-  },
-  content: EventContentType,
-  program: EventProgramType
+export interface EventInformationForm {
+  name: string;
+  date: string;
+  place: string;
+  coordinates: Coordinates;
 }
 
-export type EventInformationType = {
-  name: string,
-  date: string,
-  address: string,
-  municipalDistrict: string,
-  coordinates: CoordinatesType,
-  spaceType: string,
-  spaceArea: string,
-  eventType: string,
-  eventTypeDescription: string
+export interface Link {
+  title: string;
+  url: string;
 }
 
-export type EventInformationFormType = {
-  name: string,
-  date: string,
-  address: string,
-  municipalDistrict: string,
-  coordinates: CoordinatesType,
+export interface EventContent {
+  image: File | null;
+  mainContent: string;
+  links: Link[];
 }
 
-export type LinkType = {
-  title: string,
-  url: string
+export interface EventProgramItem {
+  title: string;
+  description: string;
+  timeFrom: string;
+  timeTo: string;
+  categories: string[];
 }
 
-export type EventContentType = {
-  image: File | null,
-  mainContent: string,
-  links: LinkType[]
+export type EventProgram = EventProgramItem[];
+
+export interface EventOrganizer {
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+  role: string;
 }
 
-export type EventProgramItemType = {
-  title: string,
-  description: string,
-  timeFrom: string,
-  timeTo: string,
-  categories: string[]
+export interface EventOrganizerCompany {
+  title: string;
+  businessType: string;
+  ico: string;
+  dic: string;
 }
 
-export type EventProgramType = EventProgramItemType[]
-
-export type EventOrganizerType = {
-  name: string,
-  surname: string,
-  email: string,
-  phone: string,
-  role: string
-}
-
-export type EventOrganizerCompanyType = {
-  title: string,
-  businessType: string,
-  ico: string,
-  dic: string
-}
-
-export type EventOrganizersType = EventOrganizerType[]
+export type EventOrganizers = EventOrganizer[];
