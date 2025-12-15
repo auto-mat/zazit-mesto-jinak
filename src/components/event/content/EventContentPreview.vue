@@ -1,57 +1,73 @@
 <template>
   <div>
     <div class="q-mb-xl">
-      <div class="q-mb-sm flex justify-between items-center no-wrap">
-        <div>
-          <h3 class="text-body1 text-bold">{{ $t('event.content.labelImage') }}</h3>
-          <span class="text-caption">{{ $t('event.content.sublabelImage') }}</span>
-        </div>
-
-        <edit-button @edit="$emit('edit')"/>
+      <div class="q-mb-sm">
+        <h3 class="text-body1 text-bold">
+          {{ t('event.content.labelImage') }}
+        </h3>
+        <span class="text-caption">{{ t('event.content.sublabelImage') }}</span>
       </div>
-      
-      <q-img 
+
+      <q-img
         :src="imageSrc"
-        :alt="$t('event.content.altImage')"
+        :alt="t('event.content.altImage')"
         fit="contain"
         class="image"
       />
     </div>
 
     <div class="q-mb-xl">
-      <div class="q-mb-sm flex justify-between items-center no-wrap">
-        <div>
-          <h3 class="text-body1 text-bold">{{ $t('event.content.labelMainText') }}</h3>
-          <span class="text-caption">{{ $t('event.content.sublabelMainText') }}</span>
-        </div>
-
-        <edit-button @edit="$emit('edit')"/>
+      <div class="q-mb-sm">
+        <h3 class="text-body1 text-bold">
+          {{ t('event.content.labelMainText') }}
+        </h3>
+        <span class="text-caption">{{
+          t('event.content.sublabelMainText')
+        }}</span>
       </div>
 
       <!-- TODO sanitaze HTML -->
-      <div 
+      <div
+        v-if="eventContent.mainContent"
         class="content"
         v-html="eventContent.mainContent"
       ></div>
+      <div v-else>
+        <span class="text-caption text-grey-6">{{
+          t('event.content.empty')
+        }}</span>
+      </div>
     </div>
 
     <div class="q-mb-xl">
-      <div class="q-mb-sm flex justify-between items-center">
-        <h3 class="text-body1 text-bold">{{ $t('event.content.labelLinks') }}</h3>
-        <edit-button @edit="$emit('edit')"/>
+      <div class="q-mb-sm">
+        <h3 class="text-body1 text-bold">
+          {{ t('event.content.labelLinks') }}
+        </h3>
       </div>
 
-      <div>
-        <div v-for="(link, index) in eventContent.links" :key="index" class="row wrap q-mb-sm">
+      <div v-if="eventContent.links.length > 0">
+        <div
+          v-for="(link, index) in eventContent.links"
+          :key="index"
+          class="row wrap q-mb-sm"
+        >
           <span class="col-12 col-md-2">{{ link.title }}</span>
-          <a class="link col-12 col-md-10" :href="link.url">{{  link.url }}</a>
+          <a class="link col-12 col-md-10" :href="link.url">{{ link.url }}</a>
         </div>
+      </div>
+      <div v-else>
+        <span class="text-caption text-grey-6">{{
+          t('event.content.empty')
+        }}</span>
       </div>
     </div>
 
     <div class="q-pb-xl">
       <div class="q-mb-sm">
-        <h3 class="text-body1 text-bold">{{ $t('event.content.labelProgram') }}</h3>
+        <h3 class="text-body1 text-bold">
+          {{ t('event.content.labelProgram') }}
+        </h3>
       </div>
 
       <event-program-table :rows="eventProgram" />
@@ -61,32 +77,32 @@
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
-import EditButton from 'src/components/buttons/EditButton.vue';
 import EventProgramTable from '../program/EventProgramTable.vue';
-import { EventContentType, EventProgramType } from 'src/types/Event';
+import { EventContent, EventProgram } from 'src/types/Event';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 
 const props = defineProps({
   eventContent: {
-    type: Object as PropType<EventContentType>,
-    required: true
+    type: Object as PropType<EventContent>,
+    required: true,
   },
   eventProgram: {
-    type: Array as PropType<EventProgramType>,
-    required: true
-  }
-})
+    type: Array as PropType<EventProgram[]>,
+    required: true,
+  },
+});
 
-defineEmits(['edit'])
+defineEmits(['edit']);
 
 const imageSrc = computed(() => {
   if (props.eventContent.image) {
-    return URL.createObjectURL(props.eventContent.image)
+    return URL.createObjectURL(props.eventContent.image);
   } else {
-    return 'image-placeholder.jpg'
+    return 'image-placeholder.jpg';
   }
-})
-
+});
 </script>
 
 <style scoped>

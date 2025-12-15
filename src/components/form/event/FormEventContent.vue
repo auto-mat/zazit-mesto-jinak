@@ -20,46 +20,43 @@ import FormFieldEditor from './FormFieldEditor.vue';
 import FormFieldImage from './FormFieldImage.vue';
 
 // types
-import { EventContentType, LinkType } from 'src/types/Event';
-
-
+import { EventContent, Link } from 'src/types/Event';
+import { useEventStore } from 'src/stores/event';
 
 export default defineComponent({
   name: 'FormEventContent',
   components: {
     FormFieldText,
     FormFieldEditor,
-    FormFieldImage
+    FormFieldImage,
   },
   props: {
     eventContent: {
-      type: Object as PropType<EventContentType>,
-      required: true
-    }
+      type: Object as PropType<EventContent>,
+      required: true,
+    },
   },
-  emits: [
-    'save'
-  ],
+  emits: ['save'],
   setup(props, { emit }) {
-    const formEventContent: EventContentType = reactive({
+    const eventStore = useEventStore();
+    const formEventContent: EventContent = reactive({
       image: props.eventContent.image,
       mainContent: props.eventContent.mainContent,
       links: props.eventContent.links,
     });
 
     const addLink = (): void => {
-      const newLink: LinkType = { title: '', url: '' }
-      formEventContent.links.push(newLink)
-    }
+      const newLink: Link = { title: '', url: '' };
+      formEventContent.links.push(newLink);
+    };
 
     const deleteLink = (index: number): void => {
-      formEventContent.links.splice(index, 1)
-    }
-
+      formEventContent.links.splice(index, 1);
+    };
 
     const onSubmit = (): void => {
-      // noop
-      emit('save')
+      eventStore.updateEventContent(formEventContent);
+      emit('save');
     };
 
     const onReset = (): void => {
@@ -87,9 +84,7 @@ export default defineComponent({
       class="q-gutter-md text-grey-10"
     >
       <!-- Heading -->
-      <h2
-        class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
-      >
+      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
         {{ $t('event.content.titleEditContent') }}
       </h2>
       <div class="q-mt-lg">
@@ -111,11 +106,11 @@ export default defineComponent({
           <h3 class="q-mt- q-mb-sm text-body2 text-weight-bold">
             {{ $t('event.content.labelLinks') }}
           </h3>
-          <div 
-            v-for="(link, index) in formEventContent.links" 
+          <div
+            v-for="(link, index) in formEventContent.links"
             :key="index"
             class="row items-center q-mb-sm"
-            >
+          >
             <div class="col-12 col-sm-5 q-pr-md">
               <form-field-text
                 v-model="link.title"
@@ -152,18 +147,17 @@ export default defineComponent({
             @click="addLink"
           />
         </div>
-        
       </div>
-        <!-- Button: submit -->
-        <div class="flex justify-end q-mt-lg">
-          <q-btn
-            rounded
-            unelevated
-            type="submit"
-            color="primary"
-            :label="$t('event.content.buttonSave')"
-          />
-        </div>
+      <!-- Button: submit -->
+      <div class="flex justify-end q-mt-lg">
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          :label="$t('event.content.buttonSave')"
+        />
+      </div>
     </q-form>
   </div>
 </template>

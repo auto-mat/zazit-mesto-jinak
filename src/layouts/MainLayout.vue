@@ -95,7 +95,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="page-container">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -145,13 +145,19 @@ onMounted(async () => {
   align-items: center;
   padding: 10px;
 }
+
 .menu-events-header {
   font-size: large;
 }
+
 .menu-list {
   :deep(.q-router-link--active, .q-router-link--exact-active) {
     color: var(--q-primary);
     font-weight: bold;
   }
+}
+
+.page-container {
+  overflow-y: auto;
 }
 </style>

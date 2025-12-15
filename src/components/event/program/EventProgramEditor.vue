@@ -3,18 +3,21 @@
     <!-- table: editable -->
     <div class="q-mb-xl">
       <h2 class="q-mt-0 q-mb-md text-body1 text-weight-bold">
-        {{ $t('event.program.titleExistingProgramItems') }}
+        {{ t('event.program.titleExistingProgramItems') }}
       </h2>
 
-      <event-program-table 
-        :rows="eventProgram"
-        editable
-        @edit="editProgramItem"
-      />
+      <div class="table-wrapper">
+        <event-program-table
+          :rows="eventProgram"
+          editable
+          @edit="editProgramItem"
+          @delete="deleteProgramItem"
+        />
+      </div>
     </div>
 
     <!-- form: program item -->
-    <form-event-program-item :event-program-item="programItem"/>
+    <form-event-program-item :event-program-item="programItem" />
   </div>
 </template>
 
@@ -22,24 +25,39 @@
 import { PropType, ref } from 'vue';
 import EventProgramTable from './EventProgramTable.vue';
 import FormEventProgramItem from 'src/components/form/event/FormEventProgramItem.vue';
-import { EventProgramItemType, EventProgramType } from 'src/types/Event';
+import { EventProgramItem, EventProgram } from 'src/types/Event';
+import { useEventStore } from 'src/stores/event';
+import { useI18n } from 'vue-i18n';
 
 defineProps({
   eventProgram: {
-    type: Array as PropType<EventProgramType>,
-    required: true
-  }
-})
+    type: Array as PropType<EventProgram>,
+    required: true,
+  },
+});
 
-const programItem = ref<EventProgramItemType>({
+const eventStore = useEventStore();
+const { t } = useI18n();
+
+const programItem = ref<EventProgramItem>({
   title: '',
   description: '',
   timeFrom: '',
   timeTo: '',
-  categories: []
-})
+  categories: [],
+});
 
-const editProgramItem = (item: EventProgramItemType) => {
-  programItem.value = item
-}
+const editProgramItem = (item: EventProgramItem) => {
+  programItem.value = item;
+};
+
+const deleteProgramItem = (item: EventProgramItem) => {
+  eventStore.deleteProgramItem(item);
+};
 </script>
+
+<style scoped lang="scss">
+.table-wrapper {
+  height: 370px;
+}
+</style>

@@ -16,7 +16,7 @@
  * @example
  * <form-field-email />
  *
- * @see 
+ * @see
  */
 
 // libraries
@@ -31,21 +31,21 @@ export default defineComponent({
     modelValue: {
       type: Object as PropType<File | null>,
       required: true,
-    }
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const imageViewSrc = ref('image-placeholder.jpg') 
+    const imageViewSrc = ref('image-placeholder.jpg');
 
     const image = computed({
       get() {
         return props.modelValue;
       },
       set(value: File | null) {
-        if(value) {
-          imageViewSrc.value = URL.createObjectURL(value)
+        if (value) {
+          imageViewSrc.value = URL.createObjectURL(value);
         } else {
-          imageViewSrc.value = 'image-placeholder.jpg'
+          imageViewSrc.value = 'image-placeholder.jpg';
         }
         emit('update:modelValue', value);
       },
@@ -78,6 +78,7 @@ export default defineComponent({
         :src="imageViewSrc"
         :alt="$t('event.content.altImage')"
         fit="contain"
+        class="image-input"
       />
     </div>
     <!-- Input -->
@@ -96,3 +97,9 @@ export default defineComponent({
     </q-file>
   </div>
 </template>
+
+<style scoped>
+.image-input {
+  max-height: 600px;
+}
+</style>

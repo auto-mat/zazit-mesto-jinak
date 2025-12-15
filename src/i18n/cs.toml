@@ -289,6 +289,7 @@ labelLinkUrl = "URL"
 buttonAddLink = "Přidat nový odkaz"
 buttonSave = "Uložit"
 altImage = "Hlavní obrázek pro web akce"
+empty = "Nevyplněno"
 
 [event.program]
 labelTitle = "Název"
@@ -301,6 +302,7 @@ titleAddProgramItem = "Přidat položku programu"
 titleEditProgramItem = "Upravit položku programu"
 buttonSave = "Uložit"
 buttonReset = "Zrušit"
+noData = "Nejsou k dispozici žádné položky programu"
 
 [event.program.category]
 theater = "Divadlo"
