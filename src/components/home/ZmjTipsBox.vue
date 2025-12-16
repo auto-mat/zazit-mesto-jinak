@@ -25,12 +25,7 @@
         </div>
       </div>
       <div class="col-12 col-md-2 row justify-center items-center">
-        <q-avatar
-          size="100px"
-          font-size="100px"
-          text-color="secondary"
-          icon="self_improvement"
-        />
+        <q-icon size="100px" color="secondary" name="self_improvement" />
       </div>
     </q-card-section>
   </q-card>
