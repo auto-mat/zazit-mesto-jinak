@@ -9,11 +9,14 @@
     <div class="flex column justify-between items-end q-pr-md q-pt-md">
       <div>
         <q-btn dense round flat icon="help" color="primary" />
-        <q-btn dense round flat icon="notifications" color="primary">
-          <q-badge color="red" floating rounded />
-        </q-btn>
+        <q-btn dense round flat icon="notifications" color="primary"> </q-btn>
       </div>
-      <p>{{ userDetails?.email ?? '' }}</p>
+      <div class="flex column items-end">
+        <span class="text-grey-6 login-as-text">Přihlášen jako:</span>
+        <span
+          >{{ userDetails?.name ?? '' }} {{ userDetails?.surname ?? '' }}</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -26,3 +29,9 @@ import { routesConf } from 'src/router/routes_conf';
 const userStore = useUserStore();
 const { userDetails } = storeToRefs(userStore);
 </script>
+
+<style scoped lang="scss">
+.login-as-text {
+  font-size: 11px;
+}
+</style>
