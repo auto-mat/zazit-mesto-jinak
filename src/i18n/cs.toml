@@ -22,9 +22,10 @@ contentOnWebLink = "Obsah na webu"
 organizersLink = "Organizátoři"
 programLink = "Program"
 profileLink = "Profil"
-forumLink = "Fórum"
+manualLink = "Manuál"
 donateLink = "Darovat"
 logoutButton = "Odhlásit se"
+loginAsText = "Přihlášen jako"
 
 [form]
 labelFirstName = "Jméno"

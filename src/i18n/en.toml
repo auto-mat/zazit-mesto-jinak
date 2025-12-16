@@ -2,7 +2,7 @@ failed = "Action failed"
 success = "Action was successful"
 
 [header]
-siteTitle = "Zazit mesto jinak"
+siteTitle = "Experience the City Differently"
 
 [locale]
 en = "English"
@@ -22,9 +22,10 @@ contentOnWebLink = "Content on web"
 organizersLink = "Organizers"
 programLink = "Program"
 profileLink = "Profile"
-forumLink = "Forum"
+manualLink = "Manual"
 donateLink = "Donate"
 logoutButton = "Logout"
+loginAsText = "Logged in as"
 
 [form]
 labelFirstName = "First name"
@@ -54,6 +55,54 @@ messageTimeLater = "Time to has to be later than time from"
 edit = "Edit"
 back = "Back"
 
+[login]
+title = "Login"
+withoutAccount = "Don't have an account yet?"
+register = "Register."
+submitLogin = "Log in"
+forgotPassword = "Forgot password?"
+
+[resetPassword]
+title = "Forgot password"
+description = "Enter your email and we will send you a password reset link."
+submitResetPassword = "Send"
+backToLogin = "Back to login"
+
+[resetPassword.emailSent]
+title = "Password reset link has been sent"
+description = "Password reset link has been sent to your email. If you don't receive it, check your email inbox and try again."
+
+[resetPassword.confirm]
+title = "Reset password"
+description = "Enter your new password and confirm it."
+submitResetPassword = "Reset password"
+passwordResetSuccess = "Password has been successfully reset."
+
+[verifyEmail]
+title = "Continue by confirming your email"
+description = "We have just sent you an invitation to the Experience the City Differently system to {email}."
+checkSpamFolder = "If you can't find it, check your spam folder as well."
+resendEmail = "Resend email"
+wrongEmail = "Did you enter the wrong email?"
+registerAgain = "Register again."
+emailSent = "Email has been resent."
+emailNotSent = "Failed to resend email."
+
+[confirmEmail]
+title = "Email confirmation"
+description = "Please confirm your email address: {email}."
+confirm = "Confirm"
+emailConfirmed = "Email has been confirmed."
+
+[register]
+title = "Registration"
+submitRegister = "Register"
+alreadyHaveAccount = "Already have an account?"
+login = "Log in."
+
+[register.details]
+title = "Registration to the organizer portal"
+
 [register.personalDetails]
 title = "Personal details"
 newsTitle = "What you want to be informed about by email"
@@ -73,14 +122,17 @@ choiceFromPast = "I want restore event from the past"
 labelEventFromPast = "Choose your event from the past"
 labelEventName = "Event name"
 labelPickDate = "Date of the event"
+labelLocation = "Location"
+labelLocationInfo = "select the venue by clicking on the map"
+labelPlace = "Municipal district"
 labelSpaceType = "Space type"
 labelSpaceArea = "Space area"
 labelSpaceRent = "Space rent"
 labelActivities = "Activities"
-textInfoDate = "Hlavní termín slavnosti je {date}, můžete však vybrat jiný termín, kdy uspořádáte vaši slavnost."
-textInfoSpaceType = "Vyberte jen jednu variantu s převažujícím typem záboru. Zábor je nutný i v případě akce pořádané v zeleni (např. v parku). Variantu Zábor není možný vyberte jen v případě, že nebudete mít zábor."
-textInfoSpaceArea = "Vyplňte odhadovanou plochu záboru, kterou pro vás budeme vyjednávat."
-textInfoSpaceRent = "Budete pronajímat prostor záboru dalším subjektům (např. stánkařům) nebo budete mít procenta z tržby."
+textInfoDate = "The main date of the celebration is {date}, but you can choose a different date when you will organize your celebration."
+textInfoSpaceType = "Select only one option with the predominant type of occupation. Occupation is necessary even in the case of an event held in greenery (e.g., in a park). Select the 'Occupation is not possible' option only if you will not have an occupation."
+textInfoSpaceArea = "Fill in the estimated area of occupation that we will negotiate for you."
+textInfoSpaceRent = "Will you rent the occupation space to other entities (e.g., stallholders) or will you have a percentage of the revenue?"
 buttonSubmit = "Continue"
 buttonBack = "Back to personal details"
 
@@ -108,9 +160,28 @@ buttonSubmit = "Finish registration"
 buttonBack = "Back to organizers"
 
 [register.moreInformation.fundingCost]
-low = "0-20 000 Kc"
-mid = "20-50 000 Kc"
-high = "50 000 Kc and more"
+low = "0–20,000 CZK"
+mid = "20–50,000 CZK"
+high = "50,000 CZK and more"
+
+[home]
+title = "Experience the City Differently"
+subtitle = "Welcome to the portal"
+description = "Together we are changing cities for the joy of their inhabitants..."
+titleEvents = "Your locations"
+
+[home.news]
+title = "Follow news"
+description = "Do you want to be informed by email about news and updates on the Experience the City Differently portal?"
+zmjNews = "About what's happening in the Experience the City Differently community"
+allNews = "About all news from the AutoMat organization"
+buttonSubscribe = "Start following"
+buttonAlreadySubscribed = "You are already following"
+
+[home.zmjTips]
+title = "Tips for organizing a location within Experience the City Differently"
+description = "Within several years of practice, we have gathered tips from other organizers that can help with organizing a location. You can find all tips at the following link."
+buttonTips = "Read the manual"
 
 [profile]
 title = "Profile"
@@ -137,6 +208,53 @@ titleWebContent = "Content for website ZMJ"
 titleProgram = "Program"
 titleOrganizers = "Organizers"
 
+[event.guide.agreement]
+title = "Agreement"
+step1.title = "Creating agreement"
+step1.description = "The agreement is being created. You will be informed by email when it is ready."
+step2.title = "Agreement created"
+step3.title = "Waiting for signature"
+step3.description = "Here you have the agreement for download. We ask you to sign it and then upload it back to the system."
+step3.uploadTitle = "Upload signed agreement"
+step3.uploadButton = "Upload"
+step3.downloadTitle = "Agreement for download"
+step4.title = "Signed agreement uploaded"
+step4.description = "The agreement has been successfully uploaded. Now waiting for confirmation and signing of the agreement by the AutoMat association."
+step5.title = "Agreement completed"
+step5.description = "The agreement has been successfully completed. Here you have the agreement for download."
+
+[event.guide.invoice]
+title = "Invoice"
+step1.title = "Creating invoice"
+step1.description = "The invoice is being created. You will be informed by email when it is ready."
+step2.title = "Invoice created and sent to your email"
+step3.title = "Waiting for payment"
+step3.description = "Here you have the invoice for download. We ask you to pay it."
+step3.downloadTitle = "Invoice for download"
+step4.title = "Invoice paid"
+step4.description = "The invoice has been successfully paid. Here is the access to the shared folder with materials for your location:"
+
+[event.guide.meeting]
+title = "Organizers meeting"
+
+[event.guide.contentWeb]
+title = "Content for web ZMJ"
+step1.title = "Creating content on ZMJ website"
+step1.description = "Fill in information about your event that will be displayed on the ZMJ website."
+step1.button = "Go to content for ZMJ website"
+step2.title = "Content published"
+step2.description = "Content on the ZMJ website has been successfully published. You can still edit it."
+
+[event.guide.checklist]
+title = "TO DO list"
+titleRecommendedChecklist = "Recommended"
+titleOwnChecklist = "My TO DO list"
+edit = "Edit"
+addItemPlaceholder = "Add new item"
+cancel = "Cancel"
+save = "Save"
+noItems = "You don't have any items in the checklist. You can add them."
+
 [event.information]
 labelName = "Name"
 labelDate = "Date of event"
@@ -145,12 +263,19 @@ labelMunicipalDistrict = "Municipal district"
 labelLocation = "Location"
 labelSpaceType = "Space type"
 labelSpaceArea = "Space area"
+labelSpaceRent = "Space rent"
+labelActivities = "Activities"
 titleEventLevel = "Your event has been classified as"
 buttonEventLevel = "Disagree with the classification? Write to us."
 titleEditInformation = "Edit event information"
 titleOtherInformation = "Other information"
 subtitleOtherInformation = "This information can be change only by administators"
 buttonAskForChange = "Ask for change"
+successUpdate = "Event information has been successfully updated"
+
+[event.information.eventTier]
+smallTitle = "Small celebration"
+smallDescription = "Small celebration is the lowest category of events."
 
 [event.content]
 labelImage = "Image"
@@ -165,6 +290,7 @@ labelLinkUrl = "URL"
 buttonAddLink = "Add new link"
 buttonSave = "Save"
 altImage = "Main image for event website"
+empty = "Not filled in"
 
 [event.program]
 labelTitle = "Title"
@@ -177,6 +303,7 @@ titleAddProgramItem = "Add program item"
 titleEditProgramItem = "Edit program item"
 buttonSave = "Save"
 buttonReset = "Cancel"
+noData = "No program items available"
 
 [event.program.category]
 theater = "Theater"
@@ -205,25 +332,41 @@ labelBusinessType = "Business type"
 labelIco = "ICO"
 labelDic = "DIC"
 titleEditCompany = "Edit company information"
+titleEditOrganizers = "Edit organizers information"
 buttonAddOrganizer = "Add organizer"
 buttonDeleteOrganizer = "Delete organizer"
 buttonCancel = "Cancel"
 buttonSave = "Save"
+noCompany = "No organizational unit specified"
+noOrganizers = "No other organizers specified"
+successUpdate = "Organizers information has been successfully updated"
 
 [event.spaceType]
 none = "None"
-park = "Park"
+park = "Park / Greenery"
 sidewalk = "Sidewalk / Parking"
-roadway = "Roadway"
-countryard = "Countryard"
+road = "Road"
+yard = "Yard"
 
 [event.spaceArea]
-xs = "less than 500 m2"
-sm = "500-2000 m2"
-md = "2000-3000 m2"
-lg = "3000-5000 m2"
-xl = "more than 5000 m2"
+xs = "less than 500 m²"
+sm = "500–2000 m²"
+md = "2000–3000 m²"
+lg = "3000–5000 m²"
+xl = "more than 5000 m²"
 
 [event.spaceRent]
 yes = "Yes"
 no = "No"
+
+[discardChanges]
+title = "Do you really want to discard changes?"
+description = "The changes you have made will not be saved."
+buttonCancel = "Cancel"
+buttonDiscard = "Discard"
+buttonSave = "Save"
+
+[error]
+clientSideError = "Client-side error"
+serverSideError = "Server-side error"
+invalidConfirmationLink = "Email confirmation link is invalid."

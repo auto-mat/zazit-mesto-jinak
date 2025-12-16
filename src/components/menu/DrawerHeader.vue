@@ -12,7 +12,9 @@
         <q-btn dense round flat icon="notifications" color="primary"> </q-btn>
       </div>
       <div class="flex column items-end">
-        <span class="text-grey-6 login-as-text">Přihlášen jako:</span>
+        <span class="text-grey-6 login-as-text">{{
+          t('menu.loginAsText')
+        }}</span>
         <span
           >{{ userDetails?.name ?? '' }} {{ userDetails?.surname ?? '' }}</span
         >
@@ -25,9 +27,11 @@
 import { storeToRefs } from 'pinia';
 import { useUserStore } from 'src/stores/user';
 import { routesConf } from 'src/router/routes_conf';
+import { useI18n } from 'vue-i18n';
 
 const userStore = useUserStore();
 const { userDetails } = storeToRefs(userStore);
+const { t } = useI18n();
 </script>
 
 <style scoped lang="scss">

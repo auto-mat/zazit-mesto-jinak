@@ -66,16 +66,24 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable>
+        <q-item
+          clickable
+          :href="zazitMestoJinakConfig.urlZMJManual"
+          target="_blank"
+        >
           <q-item-section avatar>
-            <q-icon name="forum" />
+            <q-icon name="book" />
           </q-item-section>
           <q-item-section no-wrap>
-            {{ t('menu.forumLink') }}
+            {{ t('menu.manualLink') }}
           </q-item-section>
         </q-item>
 
-        <q-item clickable>
+        <q-item
+          clickable
+          :href="zazitMestoJinakConfig.urlDonate"
+          target="_blank"
+        >
           <q-item-section avatar>
             <q-icon name="volunteer_activism" />
           </q-item-section>
@@ -118,6 +126,7 @@ import LocationLinks from 'src/components/menu/LocationLinks.vue';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 defineOptions({
   name: 'MainLayout',

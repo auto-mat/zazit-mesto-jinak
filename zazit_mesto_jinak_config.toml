@@ -55,7 +55,6 @@ urlBaseBackend = "https://test.dopracenakole.cz/"
 # EXTERNAL URLS
 
 urlAutoMat = "https://auto-mat.cz"
-urlDonate = "https://auto-mat.cz/daruj-dopracenakole"
 urlFreeSoftwareDefinition = "https://www.gnu.org/philosophy/free-sw.en.html"
 urlInstagram = "https://www.instagram.com/spolekautomat"
 urlAppDataPrivacyPolicy = "https://auto-mat.cz/zasady"
@@ -63,6 +62,7 @@ urlAppDataTermsOfService = "https://dopracenakole.cz/obchodni-podminky"
 urlTwitter = "https://twitter.com/spolekautomat"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
 urlZMJManual = "https://www.manual.zazitmestojinak.cz/"
+urlDonate = "https://auto-mat.cz/nakrmte-automat"
 
 # CHALLENGE DETAILS
 
