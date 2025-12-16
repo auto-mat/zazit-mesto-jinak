@@ -8,7 +8,7 @@
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
-          <h1>{{ $t('event.titleInformation') }}</h1>
+          <h1>{{ t('event.titleInformation') }}</h1>
         </div>
 
         <edit-button
@@ -37,6 +37,9 @@ import { routesConf } from 'src/router/routes_conf';
 import EditButton from 'src/components/buttons/EditButton.vue';
 import EventContentPreview from 'components/event/content/EventContentPreview.vue';
 import { useEventStore } from 'src/stores/event';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);
@@ -44,12 +47,14 @@ const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 
 onMounted(() => {
-  eventStore.loadEventContent(slug.value);
-  eventStore.loadEventProgram(slug.value);
+  if (!eventStore.eventContent) {
+    eventStore.loadEventContent(slug.value);
+    eventStore.loadEventProgram(slug.value);
+  }
 });
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
-const eventContent = computed(() => eventStore.getEventContent(slug.value));
-const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
+const eventContent = computed(() => eventStore.eventContent);
+const eventProgram = computed(() => eventStore.eventProgram);
 </script>

@@ -7,12 +7,12 @@
       <div class="row justify-between items-end q-mb-md">
         <div class="q-mb-md">
           <span>{{ eventName }}</span>
-          <h1>{{ $t('event.titleProgram') }}</h1>
+          <h1>{{ t('event.titleProgram') }}</h1>
         </div>
 
         <edit-button
           :to="{
-            name: routesConf['event_content_edit']['children']['name'],
+            name: routesConf['event_program_edit']['children']['name'],
             params: { slug: slug },
           }"
         />
@@ -32,6 +32,9 @@ import EventProgramTable from 'src/components/event/program/EventProgramTable.vu
 import EditButton from 'src/components/buttons/EditButton.vue';
 
 import { useEventStore } from 'src/stores/event';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);
@@ -39,10 +42,12 @@ const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 
 onMounted(() => {
-  eventStore.loadEventProgram(slug.value);
+  if (eventStore.eventProgram.length === 0) {
+    eventStore.loadEventProgram(slug.value);
+  }
 });
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
-const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
+const eventProgram = computed(() => eventStore.eventProgram);
 </script>

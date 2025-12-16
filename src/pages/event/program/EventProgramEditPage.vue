@@ -7,7 +7,7 @@
       <div class="row justify-between items-end q-mb-md">
         <div class="q-mb-md">
           <span>{{ eventName }}</span>
-          <h1>{{ $t('event.titleProgram') }}</h1>
+          <h1>{{ t('event.titleProgram') }}</h1>
         </div>
 
         <back-button
@@ -32,6 +32,9 @@ import EventProgramEditor from 'src/components/event/program/EventProgramEditor.
 import BackButton from 'src/components/buttons/BackButton.vue';
 
 import { useEventStore } from 'src/stores/event';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);
@@ -44,5 +47,5 @@ onMounted(() => {
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
-const eventProgram = computed(() => eventStore.getEventProgram(slug.value));
+const eventProgram = computed(() => eventStore.eventProgram);
 </script>

@@ -289,6 +289,7 @@ labelLinkUrl = "URL"
 buttonAddLink = "Přidat nový odkaz"
 buttonSave = "Uložit"
 altImage = "Hlavní obrázek pro web akce"
+empty = "Nevyplněno"
 
 [event.program]
 labelTitle = "Název"
@@ -301,6 +302,7 @@ titleAddProgramItem = "Přidat položku programu"
 titleEditProgramItem = "Upravit položku programu"
 buttonSave = "Uložit"
 buttonReset = "Zrušit"
+noData = "Nejsou k dispozici žádné položky programu"
 
 [event.program.category]
 theater = "Divadlo"
@@ -329,10 +331,14 @@ labelBusinessType = "Typ podnikání"
 labelIco = "IČO"
 labelDic = "DIČ"
 titleEditCompany = "Upravit údaje o firmě"
+titleEditOrganizers = "Upravit údaje o organizátorech"
 buttonAddOrganizer = "Přidat organizátora"
 buttonDeleteOrganizer = "Smazat organizátora"
 buttonCancel = "Zrušit"
 buttonSave = "Uložit"
+noCompany = "Není zadána žádná organizační jednotka"
+noOrganizers = "Nejsou zadáni žádní další organizátoři"
+successUpdate = "Údaje o organizátorech byly úspěšně aktualizovány"
 
 [event.spaceType]
 none = "Žádný"
