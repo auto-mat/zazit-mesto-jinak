@@ -73,3 +73,8 @@ export interface EventOrganizerCompany {
 }
 
 export type EventOrganizers = EventOrganizer[];
+
+export interface ChecklistItem {
+  title: string;
+  completed: boolean;
+}
