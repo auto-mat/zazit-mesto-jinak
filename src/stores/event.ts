@@ -5,6 +5,8 @@ import {
   EventInformation,
   EventInformationForm,
   EventMeta,
+  EventOrganizer,
+  EventOrganizerCompany,
   EventProgram,
   EventProgramItem,
 } from 'src/types/Event';
@@ -143,6 +145,84 @@ export const useEventStore = defineStore(
       return false;
     };
 
+    // Event organizers
+    // Event organizers
+    const eventOrganizers = ref<EventOrganizer[]>([]);
+    const eventOrganizerCompany = ref<EventOrganizerCompany | null>(null);
+    const eventOrganizersForm = ref<{
+      organizers: EventOrganizer[];
+      company: EventOrganizerCompany | null;
+    }>({
+      organizers: [],
+      company: null,
+    });
+    const isEventOrganizersFormDirty = ref(false);
+    const isEventOrganizersLoading = ref(false);
+    const isEventOrganizersSaving = ref(false);
+
+    const loadEventOrganizers = async (): Promise<void> => {
+      isEventOrganizersLoading.value = true;
+      // Replace this with actual API call
+      // Example: const response = await fetchEventOrganizers(slug);
+      // if (response) {
+      //   eventOrganizers.value = response.organizers;
+      //   eventOrganizerCompany.value = response.company;
+      // }
+      eventOrganizers.value = [];
+      eventOrganizerCompany.value = null;
+      isEventOrganizersLoading.value = false;
+    };
+
+    const clearEventOrganizersForm = () => {
+      eventOrganizersForm.value = {
+        organizers: cloneDeep(eventOrganizers.value),
+        company: cloneDeep(eventOrganizerCompany.value),
+      };
+      isEventOrganizersFormDirty.value = false;
+    };
+
+    watch(
+      [eventOrganizers, eventOrganizerCompany],
+      ([newOrganizers, newCompany]) => {
+        if (newOrganizers != null && newCompany !== undefined) {
+          eventOrganizersForm.value = {
+            organizers: cloneDeep(newOrganizers),
+            company: cloneDeep(newCompany),
+          };
+          isEventOrganizersFormDirty.value = false;
+        }
+      },
+    );
+
+    const updateEventOrganizers = async (
+      company: EventOrganizerCompany | null,
+      organizers: EventOrganizer[],
+    ): Promise<boolean> => {
+      if (isEventOrganizersSaving.value) {
+        return false;
+      }
+      isEventOrganizersSaving.value = true;
+      if (!slug.value) {
+        return false;
+      }
+      // Replace with actual updateEventOrganizersApi
+      // const success = await updateEventOrganizersApi(slug.value, eventOrganizersForm.value);
+      eventOrganizers.value = cloneDeep(organizers);
+      eventOrganizerCompany.value = company ? cloneDeep(company) : null;
+      const success = true;
+      if (success) {
+        clearEventOrganizersForm();
+        Notify.create({
+          message: i18n.global.t('event.organizers.successUpdate'),
+          color: 'positive',
+        });
+        isEventOrganizersSaving.value = false;
+        return true;
+      }
+      isEventOrganizersSaving.value = false;
+      return false;
+    };
+
     // Event content
     const eventContent = ref<EventContent | null>(null);
 
@@ -224,12 +304,22 @@ export const useEventStore = defineStore(
       clearEventInformationForm,
       resetEventInformationForm,
       updateEventInformation,
+      eventOrganizers,
+      eventOrganizerCompany,
+      loadEventOrganizers,
+      updateEventOrganizers,
+      isEventOrganizersLoading,
     };
   },
   {
     persist: {
       storage: localStorage,
-      pick: ['eventContent', 'eventProgram'],
+      pick: [
+        'eventContent',
+        'eventProgram',
+        'eventOrganizers',
+        'eventOrganizerCompany',
+      ],
     },
   },
 );

@@ -18,39 +18,47 @@ import { defineComponent, PropType, reactive } from 'vue';
 import FormFieldText from 'src/components/form/global/FormFieldText.vue';
 
 // types
-import { EventOrganizerCompanyType } from 'src/types/Event';
-
-
+import { EventOrganizerCompany } from 'src/types/Event';
+import { useEventStore } from 'src/stores/event';
+import { useRouter, useRoute } from 'vue-router';
+import { routesConf } from 'src/router/routes_conf';
 
 export default defineComponent({
   name: 'FormEventOrganizerCompany',
   components: {
-    FormFieldText
+    FormFieldText,
   },
   props: {
     company: {
-      type: Object as PropType<EventOrganizerCompanyType>,
-      required: true
-    }
+      type: Object as PropType<EventOrganizerCompany>,
+      required: true,
+    },
   },
-  emits: [
-    'save'
-  ],
+  emits: ['save'],
   setup(props, { emit }) {
-    const formEventOrganizerCompany: EventOrganizerCompanyType = reactive({
-      title: props.company.title,
-      businessType: props.company.businessType,
-      ico: props.company.ico,
-      dic: props.company.dic
+    const eventStore = useEventStore();
+    const router = useRouter();
+    const route = useRoute();
+    const formEventOrganizerCompany: EventOrganizerCompany = reactive({
+      title: props.company?.title || '',
+      businessType: props.company?.businessType || '',
+      ico: props.company?.ico || '',
+      dic: props.company?.dic || '',
     });
 
     const onSubmit = (): void => {
-      // noop
-      emit('save')
+      eventStore.updateEventOrganizers(
+        formEventOrganizerCompany,
+        eventStore.eventOrganizers,
+      );
+      emit('save');
     };
 
     const onReset = (): void => {
-      // noop
+      router.push({
+        name: routesConf['event_organizers']['children']['name'],
+        params: { slug: route.params.slug as string },
+      });
     };
 
     return {
@@ -72,9 +80,7 @@ export default defineComponent({
       class="q-gutter-md text-grey-10"
     >
       <!-- Heading -->
-      <h2
-        class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
-      >
+      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
         {{ $t('event.organizers.titleEditCompany') }}
       </h2>
       <div class="q-mt-lg">
@@ -87,7 +93,6 @@ export default defineComponent({
           />
           <form-field-text
             v-model="formEventOrganizerCompany.businessType"
-            disabled
             name="form-business-type"
             label="event.organizers.labelBusinessType"
             class="col-12 col-sm-6"
@@ -106,24 +111,24 @@ export default defineComponent({
           />
         </div>
       </div>
-        <!-- Button: submit -->
-        <div class="flex justify-end q-gutter-sm q-mt-lg">
-          <q-btn
-            rounded
-            unelevated
-            outline
-            type="reset"
-            color="primary"
-            :label="$t('event.organizers.buttonCancel')"
-          />
-          <q-btn
-            rounded
-            unelevated
-            type="submit"
-            color="primary"
-            :label="$t('event.organizers.buttonSave')"
-          />
-        </div>
+      <!-- Button: submit -->
+      <div class="flex justify-end q-gutter-sm q-mt-lg">
+        <q-btn
+          rounded
+          unelevated
+          outline
+          type="reset"
+          color="primary"
+          :label="$t('event.organizers.buttonCancel')"
+        />
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          :label="$t('event.organizers.buttonSave')"
+        />
+      </div>
     </q-form>
   </div>
 </template>

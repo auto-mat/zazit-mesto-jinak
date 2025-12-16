@@ -3,67 +3,49 @@
     <div class="q-mb-xl">
       <div class="row justify-between items-center q-mb-md">
         <h2 class="text-body1 text-weight-bold">
-          {{ $t('event.organizers.titleMainOrganizer') }}
+          {{ t('event.organizers.titleCompany') }}
         </h2>
-        <edit-button @edit="$emit('editOrganizers')"/>
       </div>
-      <event-organizer-person v-if="mainOrganizer" :organizer="mainOrganizer" />
-    </div>
-    <div v-if="company" class="q-mb-xl">
-      <div class="row justify-between items-center q-mb-md">
-        <h2 class="text-body1 text-weight-bold">
-          {{ $t('event.organizers.titleCompany') }}
-        </h2>
-        <edit-button @edit="$emit('editCompany')"/>
+      <event-organizer-company-preview v-if="company" :company />
+      <div v-else class="text-grey-6">
+        {{ t('event.organizers.noCompany') }}
       </div>
-      <event-organizer-company :company />
     </div>
     <div>
       <div class="row justify-between items-center q-mb-md">
         <h2 class="text-body1 text-weight-bold">
-          {{ $t('event.organizers.titleOtherOrganizers') }}
+          {{ t('event.organizers.titleOtherOrganizers') }}
         </h2>
-        <edit-button @edit="$emit('editOrganizers')"/>
       </div>
-      <div
-        v-for="organizer in otherOrganizers"
-        :key="organizer.email"
-      >
+      <div v-for="organizer in eventOrganizers" :key="organizer.email">
         <event-organizer-person :organizer="organizer" />
-        <q-separator spaced="xl"/>
+        <q-separator spaced="xl" />
+      </div>
+      <div v-if="eventOrganizers.length === 0" class="text-grey-6">
+        {{ t('event.organizers.noOrganizers') }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
+import { PropType } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import EventOrganizerPerson from './EventOrganizerPerson.vue';
-import EventOrganizerCompany from './EventOrganizerCompany.vue';
-import EditButton from 'src/components/buttons/EditButton.vue';
-import { EventOrganizerCompanyType, EventOrganizersType } from 'src/types/Event';
+import EventOrganizerCompanyPreview from './EventOrganizerCompanyPreview.vue';
+import { EventOrganizerCompany, EventOrganizers } from 'src/types/Event';
 
-
-const props = defineProps({
+defineProps({
   eventOrganizers: {
-    type: Array as PropType<EventOrganizersType>,
+    type: Array as PropType<EventOrganizers>,
     required: true,
   },
   company: {
-    type: Object as PropType<EventOrganizerCompanyType | null>,
+    type: Object as PropType<EventOrganizerCompany | null>,
     required: true,
-  }
-})
+  },
+});
 
-defineEmits(['editOrganizers', 'editCompany'])
-
-const mainOrganizer = computed(() => {
-  // TODO roles
-  return props.eventOrganizers.find((organizer) => organizer.role === 'main')
-})
-
-const otherOrganizers = computed(() => {
-  return props.eventOrganizers.filter((organizer) => organizer.role !== 'main')
-})
+const { t } = useI18n();
 </script>

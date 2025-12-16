@@ -110,6 +110,7 @@ import { useQuasar } from 'quasar';
 // stores
 import { useEventStore } from 'src/stores/event';
 import { useLoginStore } from 'src/stores/login';
+import { useUserStore } from 'src/stores/user';
 
 // components
 import DrawerHeader from 'src/components/menu/DrawerHeader.vue';
@@ -126,6 +127,7 @@ const { t } = useI18n();
 const drawerOpen = ref(true);
 const eventStore = useEventStore();
 const loginStore = useLoginStore();
+const userStore = useUserStore();
 
 const $q = useQuasar();
 const isMobile = computed(() => $q.screen.lt.md);
@@ -133,6 +135,9 @@ const isMobile = computed(() => $q.screen.lt.md);
 onMounted(async () => {
   if (eventStore.eventList.length === 0) {
     await eventStore.loadEventList();
+  }
+  if (!userStore.userDetails) {
+    await userStore.loadUserDetails();
   }
 });
 </script>

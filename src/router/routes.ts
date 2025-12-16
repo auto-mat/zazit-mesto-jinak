@@ -102,7 +102,8 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['event_organizers']['children']['name'],
-        component: () => import('pages/EventOrganizersPage.vue'),
+        component: () =>
+          import('pages/event/organizers/EventOrganizersPage.vue'),
       },
     ],
   },
@@ -114,7 +115,8 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['event_organizers_edit']['children']['name'],
-        component: () => import('pages/EventOrganizersPage.vue'),
+        component: () =>
+          import('pages/event/organizers/EventOrganizersEditPage.vue'),
       },
     ],
   },
