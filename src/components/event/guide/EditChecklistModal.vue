@@ -1,6 +1,6 @@
 <template>
-  <q-dialog v-model="checklistModal">
-    <div class="q-pa-lg bg-white">
+  <q-dialog v-model="checklistModal" @hide="closeModal">
+    <div class="q-pa-lg bg-white checklist-modal">
       <div class="row justify-between items-center">
         <span class="text-body1 text-weight-bold">{{
           t('event.guide.checklist.title')
@@ -23,12 +23,20 @@
           <span class="q-ml-sm">{{ item.title }}</span>
         </div>
         <div class="row items-center q-mt-sm">
-          <q-btn round flat icon="add" color="primary" @click="addItem" />
+          <q-icon name="add" color="primary" size="24px" class="q-mx-sm" />
           <q-input
             outlined
             v-model="newItem"
             :placeholder="t('event.guide.checklist.addItemPlaceholder')"
             dense
+            class="add-item-input q-mr-sm"
+          />
+          <q-btn
+            rounded
+            unelevated
+            color="primary"
+            :label="t('event.guide.checklist.addItem')"
+            @click="addItem"
           />
         </div>
       </div>
@@ -38,7 +46,7 @@
           rounded
           outline
           :label="t('event.guide.checklist.cancel')"
-          @click="emit('close')"
+          @click="closeModal"
         />
         <q-btn
           color="primary"
@@ -88,4 +96,21 @@ const deleteItem = (item: ChecklistItem) => {
 const saveChecklist = () => {
   emit('save', editChecklist.value);
 };
+
+const closeModal = () => {
+  editChecklist.value = cloneDeep(props.checklist);
+  newItem.value = '';
+  emit('close');
+};
 </script>
+
+<style scoped lang="scss">
+.checklist-modal {
+  width: 100%;
+  max-width: 500px;
+}
+
+.add-item-input {
+  flex: 1;
+}
+</style>

@@ -12,6 +12,7 @@ import { useJwt } from '../composables/useJwt';
 
 // stores
 import { useUserStore } from './user';
+import { useEventStore } from './event';
 
 // config
 import { routesConf } from '../router/routes_conf';
@@ -32,6 +33,7 @@ export const useLoginStore = defineStore(
     const router = useRouter();
     const { readJwtExpiration } = useJwt();
     const userStore = useUserStore();
+    const eventStore = useEventStore();
     const accessToken = ref('');
     const refreshToken = ref(''); // persisted
     const jwtExpiration = ref<number | null>(null); // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
@@ -153,7 +155,8 @@ export const useLoginStore = defineStore(
       setAccessToken('');
       setRefreshToken('');
       setJwtExpiration(null);
-      userStore.clearUser();
+      userStore.clearUserStore();
+      eventStore.clearEventStore();
       clearRefreshTokenTimeout();
       userEmail.value = '';
       // clear stores

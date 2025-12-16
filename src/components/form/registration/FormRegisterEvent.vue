@@ -263,11 +263,11 @@ const optionsSpaceType: FormOption[] = [
     value: EventSpaceType.SIDEWALK,
   },
   {
-    label: t('event.spaceType.roadway'),
+    label: t('event.spaceType.road'),
     value: EventSpaceType.ROAD,
   },
   {
-    label: t('event.spaceType.countryard'),
+    label: t('event.spaceType.yard'),
     value: EventSpaceType.YARD,
   },
 ];

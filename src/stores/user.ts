@@ -54,8 +54,10 @@ export const useUserStore = defineStore('user', () => {
     loading.value = false;
   };
 
-  const clearUser = (): void => {
+  const clearUserStore = (): void => {
     userDetails.value = null;
+    userDetailsForm.value = cloneDeep(defaultUserDetails);
+    loading.value = false;
   };
 
   return {
@@ -65,7 +67,7 @@ export const useUserStore = defineStore('user', () => {
     setEmail,
     loadUserDetails,
     updateUserDetails,
-    clearUser,
+    clearUserStore,
     setUser,
     resetUserDetailsForm,
   };

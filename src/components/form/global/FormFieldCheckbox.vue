@@ -72,3 +72,9 @@ const model = computed({
   set: (value: boolean) => emit('update:modelValue', value),
 });
 </script>
+
+<style scoped lang="scss">
+:deep(.q-field__bottom) {
+  padding-top: 0 !important;
+}
+</style>

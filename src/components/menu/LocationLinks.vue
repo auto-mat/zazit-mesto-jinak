@@ -4,6 +4,7 @@
     group="locationLinks"
     :content-inset-level="0.5"
     :label="eventName"
+    :default-opened="isFirst"
   >
     <q-list class="menu-list">
       <q-item :to="`/event/${eventSlug}/guide`" exact>
@@ -11,7 +12,7 @@
           <q-icon name="rule" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.guideLink') }}
+          {{ t('menu.guideLink') }}
         </q-item-section>
       </q-item>
 
@@ -20,7 +21,7 @@
           <q-icon name="info" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.informationLink') }}
+          {{ t('menu.informationLink') }}
         </q-item-section>
       </q-item>
 
@@ -29,7 +30,7 @@
           <q-icon name="groups" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.organizersLink') }}
+          {{ t('menu.organizersLink') }}
         </q-item-section>
       </q-item>
 
@@ -38,7 +39,7 @@
           <q-icon name="language" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.contentOnWebLink') }}
+          {{ t('menu.contentOnWebLink') }}
         </q-item-section>
       </q-item>
 
@@ -47,7 +48,7 @@
           <q-icon name="schedule" />
         </q-item-section>
         <q-item-section no-wrap>
-          {{ $t('menu.programLink') }}
+          {{ t('menu.programLink') }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -55,6 +56,8 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
 defineProps({
   eventName: {
     type: String,
@@ -64,7 +67,13 @@ defineProps({
     type: String,
     required: true,
   },
+  isFirst: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const { t } = useI18n();
 </script>
 
 <style scoped lang="scss">

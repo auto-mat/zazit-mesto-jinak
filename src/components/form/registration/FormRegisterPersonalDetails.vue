@@ -39,6 +39,7 @@
         v-model="registerFormState.personalDetails.phone"
         required
         bg-color="white"
+        class="col-12 col-sm-6"
       />
       <!-- Input: gender -->
       <div class="col-12 col-sm-6">
@@ -54,7 +55,7 @@
           v-model="registerFormState.personalDetails.gender"
           :options="optionsGender"
           color="primary"
-          class="q-mt-sm q-gutter-x-lg"
+          class="q-mt-sm q-gutter-x-lg q-mt-md"
         />
       </div>
     </div>
@@ -85,8 +86,12 @@
       >
         {{ t('register.personalDetails.labelPrivacyConsent') }}
         <!-- Link: terms -->
-        <!-- TODO: Link to terms page -->
-        <a href="#" target="_blank" class="text-primary">
+        <a
+          href="https://auto-mat.cz/zasady"
+          target="_blank"
+          class="text-primary"
+          @click.stop
+        >
           {{ t('register.personalDetails.linkPrivacyConsent') }} </a
         >.
       </form-field-checkbox>
@@ -98,10 +103,14 @@
       >
         {{ t('register.personalDetails.labelCodexTerms') }}
         <!-- Link: codex -->
-        <!-- TODO: Link to codex page -->
-        <a href="#" target="_blank" class="text-primary">
-          {{ t('register.personalDetails.linkCodexTerms') }} </a
-        >.
+        <a
+          href="https://zazitmestojinak.cz/kodex-zazit-mesto-jinak"
+          target="_blank"
+          class="text-primary"
+          @click.stop
+        >
+          {{ t('register.personalDetails.linkCodexTerms') }}
+        </a>
       </form-field-checkbox>
     </div>
     <!-- Button: submit -->

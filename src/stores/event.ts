@@ -280,6 +280,21 @@ export const useEventStore = defineStore(
       }
     });
 
+    const clearEventStore = (): void => {
+      eventList.value = [];
+      slug.value = null;
+      loading.value = false;
+      eventInformation.value = null;
+      isEventInformationLoading.value = false;
+      isEventInformationSaving.value = false;
+      eventContent.value = null;
+      eventProgram.value = [];
+      eventOrganizers.value = [];
+      eventOrganizerCompany.value = null;
+      isEventOrganizersLoading.value = false;
+      isEventOrganizersSaving.value = false;
+    };
+
     return {
       eventList,
       slug,
@@ -309,6 +324,8 @@ export const useEventStore = defineStore(
       loadEventOrganizers,
       updateEventOrganizers,
       isEventOrganizersLoading,
+      isEventOrganizersSaving,
+      clearEventStore,
     };
   },
   {

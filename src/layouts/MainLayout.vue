@@ -49,10 +49,11 @@
         </q-item-label>
 
         <LocationLinks
-          v-for="event in eventStore.eventList"
+          v-for="(event, index) in eventStore.eventList"
           :key="event.slug"
           :event-name="event.name"
           :event-slug="event.slug"
+          :is-first="index === 0"
         />
 
         <q-separator inset spaced />
