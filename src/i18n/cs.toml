@@ -196,12 +196,19 @@ labelMunicipalDistrict = "Městská část"
 labelLocation = "Místo"
 labelSpaceType = "Typ prostoru"
 labelSpaceArea = "Velikost prostoru"
+labelSpaceRent = "Pronájem prostoru"
+labelActivities = "Aktivity"
 titleEventLevel = "Vaše akce byla zařazena jako"
 buttonEventLevel = "Nesouhlasíte s klasifikací? Napište nám."
 titleEditInformation = "Upravit informace o akci"
 titleOtherInformation = "Další informace"
 subtitleOtherInformation = "Tyto informace mohou měnit pouze administrátoři"
 buttonAskForChange = "Požádat o změnu"
+successUpdate = "Informace o akci byly úspěšně aktualizovány"
+
+[event.information.eventTier]
+smallTitle = "Malá slavnost"
+smallDescription = "Malá slavnost je nejnižší kategorie akcí."
 
 [event.content]
 labelImage = "Obrázek"
@@ -263,10 +270,10 @@ buttonSave = "Uložit"
 
 [event.spaceType]
 none = "Žádný"
-park = "Park"
+park = "Park / Zeleň"
 sidewalk = "Chodník / Parkování"
-roadway = "Silnice"
-countryard = "Dvůr"
+road = "Silnice"
+yard = "Dvůr"
 
 [event.spaceArea]
 xs = "méně než 500 m²"
@@ -278,6 +285,13 @@ xl = "více než 5000 m²"
 [event.spaceRent]
 yes = "Ano"
 no = "Ne"
+
+[discardChanges]
+title = "Opravdu chcete zahodit změny?"
+description = "Změny, které jste provedli, nebudou uloženy."
+buttonCancel = "Zrušit"
+buttonDiscard = "Zahodit"
+buttonSave = "Uložit"
 
 [error]
 clientSideError = "Chyba na straně klienta"

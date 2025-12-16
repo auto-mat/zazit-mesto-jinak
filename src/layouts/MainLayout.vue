@@ -130,9 +130,9 @@ const loginStore = useLoginStore();
 const $q = useQuasar();
 const isMobile = computed(() => $q.screen.lt.md);
 
-onMounted(() => {
+onMounted(async () => {
   if (eventStore.eventList.length === 0) {
-    eventStore.loadEventList();
+    await eventStore.loadEventList();
   }
 });
 </script>
