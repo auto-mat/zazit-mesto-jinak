@@ -2,10 +2,12 @@
   <q-card flat bordered class="column items-center q-pa-lg">
     <q-card-section class="text-center">
       <span class="text-h5">{{ t('event.information.titleEventLevel') }}</span>
-      <h2 class="text-h4 text-bold">Malá slavnost</h2>
+      <h2 class="text-h4 text-bold">
+        {{ t('event.information.eventTier.smallTitle') }}
+      </h2>
     </q-card-section>
     <q-card-section class="text-center">
-      Malá slavnost je nejnižší kategorie akcí.
+      {{ t('event.information.eventTier.smallDescription') }}
     </q-card-section>
     <q-card-actions>
       <q-btn

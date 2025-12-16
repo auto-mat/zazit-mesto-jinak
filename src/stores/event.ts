@@ -111,6 +111,9 @@ export const useEventStore = defineStore('events', () => {
   });
 
   const updateEventInformation = async (): Promise<boolean> => {
+    if (isEventInformationSaving.value) {
+      return false;
+    }
     isEventInformationSaving.value = true;
     if (!slug.value) {
       return false;

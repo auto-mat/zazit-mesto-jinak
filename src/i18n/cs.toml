@@ -206,6 +206,10 @@ subtitleOtherInformation = "Tyto informace mohou měnit pouze administrátoři"
 buttonAskForChange = "Požádat o změnu"
 successUpdate = "Informace o akci byly úspěšně aktualizovány"
 
+[event.information.eventTier]
+smallTitle = "Malá slavnost"
+smallDescription = "Malá slavnost je nejnižší kategorie akcí."
+
 [event.content]
 labelImage = "Obrázek"
 sublabelImage = "Hlavní obrázek vaší akce na webu ZMJ"
