@@ -5,7 +5,7 @@
     :content-inset-level="0.5"
     :label="eventName"
   >
-    <q-list>
+    <q-list class="menu-list">
       <q-item :to="`/event/${eventSlug}/guide`" exact>
         <q-item-section avatar>
           <q-icon name="rule" />
@@ -55,16 +55,23 @@
 </template>
 
 <script setup lang="ts">
-
 defineProps({
   eventName: {
     type: String,
-    required: true
+    required: true,
   },
   eventSlug: {
     type: String,
-    required: true
-  }
-})
-
+    required: true,
+  },
+});
 </script>
+
+<style scoped lang="scss">
+.menu-list {
+  :deep(.q-router-link--active) {
+    color: var(--q-primary);
+    font-weight: bold;
+  }
+}
+</style>

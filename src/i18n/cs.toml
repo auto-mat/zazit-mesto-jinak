@@ -163,6 +163,25 @@ low = "0–20 000 Kč"
 mid = "20–50 000 Kč"
 high = "50 000 Kč a více"
 
+[home]
+title = "Zažít město jinak"
+subtitle = "Vítejte na portálu"
+description = "Měníme spolu města k radosti jejich obyvatel..."
+titleEvents = "Vaše lokality"
+
+[home.news]
+title = "Sledování novinek"
+description = "Chcete být informováni e-mailem o novinkách a aktualizacích na portálu Zažít město jinak?"
+zmjNews = "O dění v komunitě Zažít město jinak"
+allNews = "O veškerých novinkách organizace AutoMat"
+buttonSubscribe = "Začít sledovat"
+buttonAlreadySubscribed = "Již sledujete"
+
+[home.zmjTips]
+title = "Tipy k organizaci lokality v rámci Zažít město jinak"
+description = "V rámci několikaleté praxe jsme shromáždili tipy od ostatních organizátorů, které mohou pomoci při organizaci lokality. Na následujícím odkazu naleznete všechny tipy."
+buttonTips = "Přečíst si manuál"
+
 [profile]
 title = "Profil"
 subtitle = "Osobní údaje"
@@ -224,6 +243,16 @@ step1.description = "Vyplňte informace o vaší akci, které budou zobrazeny na
 step1.button = "Přejít na obsah pro web ZMJ"
 step2.title = "Obsah zveřejněn"
 step2.description = "Obsah na webu ZMJ byl úspěšně zveřejněn. Můžete ho stále upravovat."
+
+[event.guide.checklist]
+title = "TO DO list"
+titleRecommendedChecklist = "Doporučené"
+titleOwnChecklist = "Můj TO DO list"
+edit = "Upravit"
+addItemPlaceholder = "Přidat novou položku"
+cancel = "Zrušit"
+save = "Uložit"
+noItems = "Nemáte žádné položky v checklistu. Můžete si je přidat."
 
 [event.information]
 labelName = "Název"

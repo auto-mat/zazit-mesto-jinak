@@ -43,7 +43,7 @@
         />
       </div>
 
-      <q-list>
+      <q-list class="menu-list">
         <q-item-label header class="menu-events-header">
           {{ t('menu.myEventsHeader') }}
         </q-item-label>
@@ -137,7 +137,7 @@ onMounted(async () => {
 });
 </script>
 
-<style>
+<style scoped lang="scss">
 .header {
   background-color: transparent;
   display: flex;
@@ -147,5 +147,11 @@ onMounted(async () => {
 }
 .menu-events-header {
   font-size: large;
+}
+.menu-list {
+  :deep(.q-router-link--active, .q-router-link--exact-active) {
+    color: var(--q-primary);
+    font-weight: bold;
+  }
 }
 </style>

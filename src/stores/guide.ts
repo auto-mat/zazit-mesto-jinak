@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { ChecklistItem } from 'src/types/Event';
 import { ref } from 'vue';
 
 export const useGuideStore = defineStore(
@@ -15,6 +16,15 @@ export const useGuideStore = defineStore(
 
     const contentWebStep = ref(1);
     const contentWebStepsCount = 2;
+
+    const checklist = ref<ChecklistItem[]>([
+      { title: 'Roznést letáčky pro sousedy', completed: false },
+      { title: 'Pozvat místní instituce', completed: false },
+      { title: 'Domluvit partnerství', completed: false },
+      { title: 'Sehnat hlavní hvězdu programu', completed: false },
+    ]);
+
+    const ownChecklist = ref<ChecklistItem[]>([]);
     return {
       agreementStep,
       agreementStepsCount,
@@ -24,12 +34,21 @@ export const useGuideStore = defineStore(
       meetingStepsCount,
       contentWebStep,
       contentWebStepsCount,
+      checklist,
+      ownChecklist,
     };
   },
   {
     persist: {
       storage: localStorage,
-      pick: ['step'],
+      pick: [
+        'agreementStep',
+        'invoiceStep',
+        'meetingStep',
+        'contentWebStep',
+        'checklist',
+        'ownChecklist',
+      ],
     },
   },
 );

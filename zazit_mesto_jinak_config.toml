@@ -54,30 +54,15 @@ urlBaseBackend = "https://test.dopracenakole.cz/"
 
 # EXTERNAL URLS
 
-urlAppStore = "https://apps.apple.com/cz/app/do-pr%C3%A1ce-na-kole/id1564442780"
 urlAutoMat = "https://auto-mat.cz"
-urlBlog = "https://dopracenakole.cz/novinky-do-prace-na-kole"
-urlContact = "https://dopracenakole.cz/kontakt-do-prace-na-kole"
 urlDonate = "https://auto-mat.cz/daruj-dopracenakole"
-urlProjectSourceCode = "https://github.com/auto-mat/ride-to-work-by-bike-frontend"
-urlFacebook = "https://www.facebook.com/spolekautomat"
-urlFacebookRideToWorkByBike = "https://www.facebook.com/dopracenakole"
-urlFaq = "https://www.dopracenakole.cz/o-vyzve/faq"
 urlFreeSoftwareDefinition = "https://www.gnu.org/philosophy/free-sw.en.html"
-urlGooglePlay = "https://play.google.com/store/apps/details?id=cz.dopracenakole"
-urlHelpdesk = "https://dopracenakole.cz/kontakt-do-prace-na-kole"
 urlInstagram = "https://www.instagram.com/spolekautomat"
 urlAppDataPrivacyPolicy = "https://auto-mat.cz/zasady"
 urlAppDataTermsOfService = "https://dopracenakole.cz/obchodni-podminky"
-urlRideToWorkByBike = "https://dopracenakole.cz"
-urlRideToWorkByBikeOldFrontendDjangoApp = "https://dpnk.dopracenakole.fun"
-urlRideToWorkByBikeOldFrontendDjangoAppAdmin = "admin/"
-urlStravaPrivacyZones = "https://support.strava.com/hc/en-us/articles/115000173384-Privacy-Zones"
 urlTwitter = "https://twitter.com/spolekautomat"
-urlVideoLoggingRoutes = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
-urlVideoOnboarding = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
-urlSizeConversionChart = "https://dopracenakole.cz/o-vyzve/trika#velikostni_tabulky"
+urlZMJManual = "https://www.manual.zazitmestojinak.cz/"
 
 # CHALLENGE DETAILS
 
@@ -102,8 +87,7 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
-apiBase = "http://localhost:8000/api/"
+apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 
