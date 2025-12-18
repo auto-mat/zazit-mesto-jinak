@@ -1,38 +1,37 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isEventOrganizersLoading" class="loading">Loading...</div>
-
-    <!-- <div v-if="error" class="error">{{ error }}</div> -->
-    <div v-if="eventOrganizers">
+    <div
+      v-if="isEventOrganizerCompanyLoading || isEventOrganizersLoading"
+      class="loading"
+    >
+      Loading...
+    </div>
+    <div v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
           <h1>{{ t('event.titleOrganizers') }}</h1>
         </div>
-
-        <edit-button
-          :to="{
-            name: routesConf['event_organizers_edit']['children']['name'],
-            params: { slug: slug },
-          }"
-        />
       </div>
 
-      <event-organizers-preview :event-organizers :company />
+      <event-organizers-preview />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+// libraries
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-
-import EventOrganizersPreview from 'src/components/event/organizers/EventOrganizersPreview.vue';
-import EditButton from 'src/components/buttons/EditButton.vue';
-import { routesConf } from 'src/router/routes_conf';
-import { useEventStore } from 'src/stores/event';
 import { storeToRefs } from 'pinia';
+
+// components
+import EventOrganizersPreview from 'src/components/event/organizers/EventOrganizersPreview.vue';
+
+// stores
+import { useEventStore } from 'src/stores/event';
+import { useEventOrganizersStore } from 'src/stores/event/organizers';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -41,11 +40,9 @@ const slug = ref(route.params.slug as string);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
 const eventStore = useEventStore();
-const {
-  eventOrganizers,
-  eventOrganizerCompany: company,
-  isEventOrganizersLoading,
-} = storeToRefs(eventStore);
+const eventOrganizersStore = useEventOrganizersStore();
+const { isEventOrganizerCompanyLoading, isEventOrganizersLoading } =
+  storeToRefs(eventOrganizersStore);
 
 watch(
   slug,

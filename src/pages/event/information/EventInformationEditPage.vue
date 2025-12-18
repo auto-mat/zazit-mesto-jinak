@@ -42,6 +42,7 @@ import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
+import { useEventInformationStore } from 'src/stores/event/information';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -49,19 +50,20 @@ const route = useRoute();
 const slug = ref(route.params.slug as string);
 
 const eventStore = useEventStore();
+const eventInformationStore = useEventInformationStore();
 const {
   eventInformation,
   isEventInformationFormDirty,
   isEventInformationSaving,
   isEventInformationLoading,
-} = storeToRefs(eventStore);
+} = storeToRefs(eventInformationStore);
 
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
 const discardChangesModal = ref(false);
 
 const discardChanges = (): void => {
-  eventStore.resetEventInformationForm();
+  eventInformationStore.resetEventInformationForm();
   router.push({
     name: routesConf['event_information']['children']['name'],
     params: { slug: slug.value as string },
@@ -77,7 +79,7 @@ watch(
 );
 
 const onSave = async (): Promise<void> => {
-  const success = await eventStore.updateEventInformation();
+  const success = await eventInformationStore.updateEventInformation();
   if (success) {
     router.push({
       name: routesConf['event_information']['children']['name'],

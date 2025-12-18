@@ -51,7 +51,7 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
 // stores
-import { useEventStore } from 'src/stores/event';
+import { useEventInformationStore } from 'src/stores/event/information';
 
 // components
 import FormEventInformation from 'src/components/form/event/FormEventInformation.vue';
@@ -68,8 +68,8 @@ const emit = defineEmits(['save']);
 
 const { t } = useI18n();
 
-const eventStore = useEventStore();
-const { eventInformation } = storeToRefs(eventStore);
+const eventInformationStore = useEventInformationStore();
+const { eventInformation } = storeToRefs(eventInformationStore);
 
 const onSave = (): void => {
   emit('save');

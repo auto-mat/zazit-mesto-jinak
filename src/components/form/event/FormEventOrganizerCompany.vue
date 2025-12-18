@@ -1,4 +1,80 @@
-<script lang="ts">
+<template>
+  <div>
+    <!-- Form: event organizer company -->
+    <q-form
+      autofocus
+      @submit="emit('save')"
+      @reset="emit('reset')"
+      class="q-gutter-md text-grey-10"
+    >
+      <!-- Heading -->
+      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
+        {{ t('event.organizers.titleEditCompany') }}
+      </h2>
+      <div class="q-mt-lg">
+        <div class="row q-col-gutter-md q-mb-sm">
+          <!-- Name -->
+          <form-field-text
+            v-model="eventOrganizerCompanyForm.title"
+            name="form-title"
+            label="event.organizers.labelCompanyTitle"
+            class="col-12 col-sm-6"
+          />
+          <!-- Business type -->
+          <div class="col-12 col-sm-6">
+            <form-label for="business-type" optional>
+              {{ t('event.organizers.labelBusinessType') }}
+            </form-label>
+            <q-select
+              outlined
+              dense
+              id="business-type"
+              v-model="selectedBusinessType"
+              :options="optionsBusinessType"
+              class="q-mt-sm"
+              clearable
+            />
+          </div>
+          <!-- ICO -->
+          <form-field-text
+            v-model="eventOrganizerCompanyForm.ico"
+            name="form-ico"
+            label="event.organizers.labelIco"
+            class="col-12 col-sm-6"
+          />
+          <!-- DIC -->
+          <form-field-text
+            v-model="eventOrganizerCompanyForm.dic"
+            name="form-dic"
+            label="event.organizers.labelDic"
+            class="col-12 col-sm-6"
+          />
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="flex justify-end q-gutter-sm q-mt-lg">
+        <q-btn
+          rounded
+          unelevated
+          outline
+          type="reset"
+          color="primary"
+          :label="t('event.organizers.buttonCancel')"
+        />
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          :label="t('event.organizers.buttonSave')"
+          :loading="isEventOrganizersSaving"
+        />
+      </div>
+    </q-form>
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormEventOrganizerCompany Component
  *
@@ -12,123 +88,42 @@
  */
 
 // libraries
-import { defineComponent, PropType, reactive } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 
 // components
 import FormFieldText from 'src/components/form/global/FormFieldText.vue';
+import FormLabel from 'src/components/form/global/FormLabel.vue';
+
+// stores
+import { useEventOrganizersStore } from 'src/stores/event/organizers';
 
 // types
-import { EventOrganizerCompany } from 'src/types/Event';
-import { useEventStore } from 'src/stores/event';
-import { useRouter, useRoute } from 'vue-router';
-import { routesConf } from 'src/router/routes_conf';
+import { FormOption } from 'src/types/Form';
 
-export default defineComponent({
-  name: 'FormEventOrganizerCompany',
-  components: {
-    FormFieldText,
-  },
-  props: {
-    company: {
-      type: Object as PropType<EventOrganizerCompany>,
-      required: true,
-    },
-  },
-  emits: ['save'],
-  setup(props, { emit }) {
-    const eventStore = useEventStore();
-    const router = useRouter();
-    const route = useRoute();
-    const formEventOrganizerCompany: EventOrganizerCompany = reactive({
-      title: props.company?.title || '',
-      businessType: props.company?.businessType || '',
-      ico: props.company?.ico || '',
-      dic: props.company?.dic || '',
-    });
+const emit = defineEmits(['save', 'reset']);
 
-    const onSubmit = (): void => {
-      eventStore.updateEventOrganizers(
-        formEventOrganizerCompany,
-        eventStore.eventOrganizers,
-      );
-      emit('save');
-    };
+const { t } = useI18n();
+const eventOrganizersStore = useEventOrganizersStore();
 
-    const onReset = (): void => {
-      router.push({
-        name: routesConf['event_organizers']['children']['name'],
-        params: { slug: route.params.slug as string },
-      });
-    };
+const { eventOrganizerCompanyForm, isEventOrganizersSaving, companyTypes } =
+  storeToRefs(eventOrganizersStore);
 
-    return {
-      formEventOrganizerCompany,
-      onReset,
-      onSubmit,
-    };
-  },
+const optionsBusinessType = computed<FormOption[]>(() =>
+  companyTypes.value.map((companyType) => ({
+    label: companyType.type,
+    value: companyType.id,
+  })),
+);
+
+const selectedBusinessType = ref<FormOption | null>(
+  optionsBusinessType.value.find(
+    (option) => option.value === eventOrganizerCompanyForm.value.businessType,
+  ) ?? null,
+);
+
+watch(selectedBusinessType, (newVal: FormOption | null) => {
+  eventOrganizerCompanyForm.value.businessType = newVal?.value ?? null;
 });
 </script>
-
-<template>
-  <div>
-    <!-- Form: event program item -->
-    <q-form
-      autofocus
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md text-grey-10"
-    >
-      <!-- Heading -->
-      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
-        {{ $t('event.organizers.titleEditCompany') }}
-      </h2>
-      <div class="q-mt-lg">
-        <div class="row q-col-gutter-md q-mb-sm">
-          <form-field-text
-            v-model="formEventOrganizerCompany.title"
-            name="form-title"
-            label="event.organizers.labelCompanyTitle"
-            class="col-12 col-sm-6"
-          />
-          <form-field-text
-            v-model="formEventOrganizerCompany.businessType"
-            name="form-business-type"
-            label="event.organizers.labelBusinessType"
-            class="col-12 col-sm-6"
-          />
-          <form-field-text
-            v-model="formEventOrganizerCompany.ico"
-            name="form-ico"
-            label="event.organizers.labelIco"
-            class="col-12 col-sm-6"
-          />
-          <form-field-text
-            v-model="formEventOrganizerCompany.dic"
-            name="form-dic"
-            label="event.organizers.labelDic"
-            class="col-12 col-sm-6"
-          />
-        </div>
-      </div>
-      <!-- Button: submit -->
-      <div class="flex justify-end q-gutter-sm q-mt-lg">
-        <q-btn
-          rounded
-          unelevated
-          outline
-          type="reset"
-          color="primary"
-          :label="$t('event.organizers.buttonCancel')"
-        />
-        <q-btn
-          rounded
-          unelevated
-          type="submit"
-          color="primary"
-          :label="$t('event.organizers.buttonSave')"
-        />
-      </div>
-    </q-form>
-  </div>
-</template>
