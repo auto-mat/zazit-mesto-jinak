@@ -3,6 +3,8 @@ import {
   EventContent,
   EventInformation,
   EventInformationForm,
+  EventOrganizerCompany,
+  EventOrganizers,
   EventProgram,
 } from 'src/types/Event';
 import { convertDateToString, convertDateToISOString } from 'src/utils';
@@ -25,6 +27,29 @@ export interface EventInformationPayload {
   place: string;
   latitude: number;
   longitude: number;
+}
+
+export interface ApiEventOrganizerCompany {
+  name: string;
+  company_type_name: string;
+  company_type: number | null;
+  crn: string;
+  tin: string;
+}
+
+export interface ApiEventOrganizerCompanyPayload {
+  name: string;
+  company_type: number | null;
+  crn: string;
+  tin: string;
+}
+
+export interface ApiEventOrganizer {
+  id: number | null;
+  first_name: string;
+  last_name: string;
+  email: string;
+  telephone: string;
 }
 
 type ApiEventContent = {
@@ -71,6 +96,49 @@ export const eventsAdapter = {
       latitude: eventData.coordinates.latitude,
       longitude: eventData.coordinates.longitude,
     };
+  },
+
+  toEventOrganizerCompany(
+    eventData: ApiEventOrganizerCompany,
+  ): EventOrganizerCompany {
+    return {
+      title: eventData.name,
+      businessTypeName: eventData.company_type_name,
+      businessType: eventData.company_type,
+      ico: eventData.crn,
+      dic: eventData.tin,
+    };
+  },
+
+  toEventOrganizerCompanyPayload(
+    eventData: EventOrganizerCompany,
+  ): ApiEventOrganizerCompanyPayload {
+    return {
+      name: eventData.title,
+      company_type: eventData.businessType,
+      crn: eventData.ico,
+      tin: eventData.dic,
+    };
+  },
+
+  toEventOrganizers(eventData: ApiEventOrganizer[]): EventOrganizers {
+    return eventData.map((organizer) => ({
+      id: organizer.id,
+      name: organizer.first_name,
+      surname: organizer.last_name,
+      email: organizer.email,
+      phone: organizer.telephone,
+    }));
+  },
+
+  toEventOrganizersPayload(eventData: EventOrganizers): ApiEventOrganizer[] {
+    return eventData.map((organizer) => ({
+      id: organizer.id,
+      first_name: organizer.name,
+      last_name: organizer.surname,
+      email: organizer.email,
+      telephone: organizer.phone,
+    }));
   },
 
   toEventContent(eventData: ApiEventContent): EventContent {

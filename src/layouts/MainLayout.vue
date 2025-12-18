@@ -58,7 +58,7 @@
 
         <q-separator inset spaced />
 
-        <q-item to="/profile" exact>
+        <q-item :to="{ name: routesConf['profile']['children']['name'] }">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>

@@ -39,13 +39,15 @@ import EventInformationPreview from 'src/components/event/information/EventInfor
 
 // stores
 import { useEventStore } from 'src/stores/event';
+import { useEventInformationStore } from 'src/stores/event/information';
 
 const { t } = useI18n();
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
-const { eventInformation } = storeToRefs(eventStore);
+const eventInformationStore = useEventInformationStore();
+const { eventInformation } = storeToRefs(eventInformationStore);
 
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));

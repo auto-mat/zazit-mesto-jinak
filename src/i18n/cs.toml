@@ -340,7 +340,8 @@ buttonCancel = "Zrušit"
 buttonSave = "Uložit"
 noCompany = "Není zadána žádná organizační jednotka"
 noOrganizers = "Nejsou zadáni žádní další organizátoři"
-successUpdate = "Údaje o organizátorech byly úspěšně aktualizovány"
+successOrganizersUpdate = "Údaje o organizátorech byly úspěšně aktualizovány"
+successCompanyUpdate = "Údaje o organizační jednotce byly úspěšně aktualizovány"
 
 [event.spaceType]
 none = "Žádný"

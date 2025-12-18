@@ -16,7 +16,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item :to="`/event/${eventSlug}/information`" exact>
+      <q-item
+        :to="{
+          name: routesConf['event_information']['children']['name'],
+          params: { slug: eventSlug },
+        }"
+      >
         <q-item-section avatar>
           <q-icon name="info" />
         </q-item-section>
@@ -25,7 +30,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item :to="`/event/${eventSlug}/organizers`" exact>
+      <q-item
+        :to="{
+          name: routesConf['event_organizers']['children']['name'],
+          params: { slug: eventSlug },
+        }"
+      >
         <q-item-section avatar>
           <q-icon name="groups" />
         </q-item-section>
@@ -34,7 +44,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item :to="`/event/${eventSlug}/web-content`" exact>
+      <q-item
+        :to="{
+          name: routesConf['event_web_content']['children']['name'],
+          params: { slug: eventSlug },
+        }"
+      >
         <q-item-section avatar>
           <q-icon name="language" />
         </q-item-section>
@@ -43,7 +58,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item :to="`/event/${eventSlug}/program`" exact>
+      <q-item
+        :to="{
+          name: routesConf['event_program']['children']['name'],
+          params: { slug: eventSlug },
+        }"
+      >
         <q-item-section avatar>
           <q-icon name="schedule" />
         </q-item-section>
@@ -56,6 +76,7 @@
 </template>
 
 <script setup lang="ts">
+import { routesConf } from 'src/router/routes_conf';
 import { useI18n } from 'vue-i18n';
 
 defineProps({

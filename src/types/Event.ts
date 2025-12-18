@@ -58,6 +58,7 @@ export interface EventProgramItem {
 export type EventProgram = EventProgramItem[];
 
 export interface EventOrganizer {
+  id: number | null;
   name: string;
   surname: string;
   email: string;
@@ -66,7 +67,8 @@ export interface EventOrganizer {
 
 export interface EventOrganizerCompany {
   title: string;
-  businessType: string;
+  businessTypeName: string;
+  businessType: number | null;
   ico: string;
   dic: string;
 }

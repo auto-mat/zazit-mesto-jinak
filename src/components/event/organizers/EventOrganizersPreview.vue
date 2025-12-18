@@ -5,6 +5,14 @@
         <h2 class="text-body1 text-weight-bold">
           {{ t('event.organizers.titleCompany') }}
         </h2>
+        <edit-button
+          :to="{
+            name: routesConf['event_organizer_company_edit']['children'][
+              'name'
+            ],
+            params: { slug: eventStore.slug },
+          }"
+        />
       </div>
       <event-organizer-company-preview v-if="company" :company />
       <div v-else class="text-grey-6">
@@ -16,6 +24,12 @@
         <h2 class="text-body1 text-weight-bold">
           {{ t('event.organizers.titleOtherOrganizers') }}
         </h2>
+        <edit-button
+          :to="{
+            name: routesConf['event_organizers_edit']['children']['name'],
+            params: { slug: eventStore.slug },
+          }"
+        />
       </div>
       <div v-for="organizer in eventOrganizers" :key="organizer.email">
         <event-organizer-person :organizer="organizer" />
@@ -29,23 +43,25 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
+// libraries
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 
+// components
 import EventOrganizerPerson from './EventOrganizerPerson.vue';
 import EventOrganizerCompanyPreview from './EventOrganizerCompanyPreview.vue';
-import { EventOrganizerCompany, EventOrganizers } from 'src/types/Event';
+import EditButton from 'src/components/buttons/EditButton.vue';
 
-defineProps({
-  eventOrganizers: {
-    type: Array as PropType<EventOrganizers>,
-    required: true,
-  },
-  company: {
-    type: Object as PropType<EventOrganizerCompany | null>,
-    required: true,
-  },
-});
+// stores
+import { useEventStore } from 'src/stores/event';
+import { useEventOrganizersStore } from 'src/stores/event/organizers';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
 
 const { t } = useI18n();
+const eventStore = useEventStore();
+const eventOrganizersStore = useEventOrganizersStore();
+const { eventOrganizerCompany: company, eventOrganizers } =
+  storeToRefs(eventOrganizersStore);
 </script>

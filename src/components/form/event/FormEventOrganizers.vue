@@ -1,4 +1,93 @@
-<script lang="ts">
+<template>
+  <div>
+    <!-- Form: event organizers -->
+    <q-form
+      autofocus
+      @submit="emit('save')"
+      @reset="emit('reset')"
+      class="q-gutter-md text-grey-10"
+    >
+      <!-- Heading -->
+      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
+        {{ t('event.organizers.titleEditOrganizers') }}
+      </h2>
+      <div class="q-mt-lg">
+        <div v-for="(organizer, index) in eventOrganizersForm" :key="index">
+          <div class="row q-col-gutter-md q-my-sm">
+            <!-- Name -->
+            <form-field-text
+              v-model="organizer.name"
+              name="form-name"
+              label="event.organizers.labelName"
+              class="col-12 col-sm-6"
+            />
+            <!-- Surname -->
+            <form-field-text
+              v-model="organizer.surname"
+              name="form-surname"
+              label="event.organizers.labelSurname"
+              class="col-12 col-sm-6"
+            />
+            <!-- Email -->
+            <form-field-email
+              v-model="organizer.email"
+              class="col-12 col-sm-6"
+            />
+            <!-- Phone -->
+            <form-field-phone
+              v-model="organizer.phone"
+              label="event.organizers.labelPhone"
+              class="col-12 col-sm-6"
+            />
+            <div class="col-12 flex justify-end items-center">
+              <q-btn
+                rounded
+                unelevated
+                outline
+                color="primary"
+                icon="delete"
+                :label="t('event.organizers.buttonDeleteOrganizer')"
+                @click="deleteOrganizer(index)"
+              />
+            </div>
+          </div>
+          <q-separator spaced="md" />
+        </div>
+        <q-btn
+          rounded
+          unelevated
+          outline
+          color="primary"
+          icon="add"
+          :label="t('event.organizers.buttonAddOrganizer')"
+          class="q-mt-md"
+          @click="addOrganizer"
+        />
+      </div>
+      <!-- Buttons -->
+      <div class="flex justify-end q-gutter-sm q-mt-lg">
+        <q-btn
+          rounded
+          unelevated
+          outline
+          type="reset"
+          color="primary"
+          :label="t('event.organizers.buttonCancel')"
+        />
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          :label="t('event.organizers.buttonSave')"
+          :loading="isEventOrganizersSaving"
+        />
+      </div>
+    </q-form>
+  </div>
+</template>
+
+<script setup lang="ts">
 /**
  * FormEventOrganizers Component
  *
@@ -12,7 +101,8 @@
  */
 
 // libraries
-import { defineComponent, PropType, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 
 // components
 import FormFieldText from 'src/components/form/global/FormFieldText.vue';
@@ -20,151 +110,32 @@ import FormFieldEmail from 'src/components/form/global/FormFieldEmail.vue';
 import FormFieldPhone from 'src/components/form/global/FormFieldPhone.vue';
 
 // types
-import { EventOrganizers, EventOrganizer } from 'src/types/Event';
-import { useEventStore } from 'src/stores/event';
-import { useRouter, useRoute } from 'vue-router';
-import { routesConf } from 'src/router/routes_conf';
+import { EventOrganizer } from 'src/types/Event';
 
-export default defineComponent({
-  name: 'FormEventOrganizers',
-  components: {
-    FormFieldText,
-    FormFieldEmail,
-    FormFieldPhone,
-  },
-  props: {
-    organizers: {
-      type: Object as PropType<EventOrganizers>,
-      required: true,
-    },
-  },
-  emits: ['save'],
-  setup(props, { emit }) {
-    const formEventOrganizers: EventOrganizers = reactive(props.organizers);
-    const eventStore = useEventStore();
-    const router = useRouter();
-    const route = useRoute();
-    const addOrganizer = (): void => {
-      const newLink: EventOrganizer = {
-        name: '',
-        surname: '',
-        email: '',
-        phone: '',
-      };
+// stores
+import { useEventOrganizersStore } from 'src/stores/event/organizers';
 
-      formEventOrganizers.push(newLink);
-    };
+const emit = defineEmits(['save', 'reset']);
 
-    const deleteOrganizer = (index: number): void => {
-      formEventOrganizers.splice(index, 1);
-    };
+const { t } = useI18n();
+const eventOrganizersStore = useEventOrganizersStore();
 
-    const onSubmit = (): void => {
-      eventStore.updateEventOrganizers(
-        eventStore.eventOrganizerCompany,
-        formEventOrganizers,
-      );
-      emit('save');
-    };
+const { eventOrganizersForm, isEventOrganizersSaving } =
+  storeToRefs(eventOrganizersStore);
 
-    const onReset = (): void => {
-      router.push({
-        name: routesConf['event_organizers']['children']['name'],
-        params: { slug: route.params.slug as string },
-      });
-    };
+const addOrganizer = (): void => {
+  const newOrganizer: EventOrganizer = {
+    id: null,
+    name: '',
+    surname: '',
+    email: '',
+    phone: '',
+  };
 
-    return {
-      formEventOrganizers,
-      addOrganizer,
-      deleteOrganizer,
-      onReset,
-      onSubmit,
-    };
-  },
-});
+  eventOrganizersForm.value.push(newOrganizer);
+};
+
+const deleteOrganizer = (index: number): void => {
+  eventOrganizersForm.value.splice(index, 1);
+};
 </script>
-
-<template>
-  <div>
-    <!-- Form: event program item -->
-    <q-form
-      autofocus
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md text-grey-10"
-    >
-      <!-- Heading -->
-      <h2 class="q-mt-0 q-mb-sm text-body1 text-weight-bold">
-        {{ $t('event.organizers.titleEditOrganizers') }}
-      </h2>
-      <div class="q-mt-lg">
-        <div v-for="(organizer, index) in formEventOrganizers" :key="index">
-          <div class="row q-col-gutter-md q-my-sm">
-            <form-field-text
-              v-model="organizer.name"
-              name="form-name"
-              label="event.organizers.labelName"
-              class="col-12 col-sm-6"
-            />
-            <form-field-text
-              v-model="organizer.surname"
-              name="form-surname"
-              label="event.organizers.labelSurname"
-              class="col-12 col-sm-6"
-            />
-            <form-field-email
-              v-model="organizer.email"
-              class="col-12 col-sm-6"
-            />
-            <form-field-phone
-              v-model="organizer.phone"
-              label="event.organizers.labelPhone"
-              class="col-12 col-sm-6"
-            />
-            <div class="col-12 flex justify-end items-center">
-              <q-btn
-                rounded
-                unelevated
-                outline
-                color="primary"
-                icon="delete"
-                :label="$t('event.organizers.buttonDeleteOrganizer')"
-                @click="deleteOrganizer(index)"
-              />
-            </div>
-          </div>
-          <q-separator spaced="md" />
-        </div>
-        <q-btn
-          rounded
-          unelevated
-          outline
-          color="primary"
-          icon="add"
-          :label="$t('event.organizers.buttonAddOrganizer')"
-          class="q-mt-md"
-          @click="addOrganizer"
-        />
-      </div>
-      <!-- Button: submit -->
-      <div class="flex justify-end q-gutter-sm q-mt-lg">
-        <q-btn
-          rounded
-          unelevated
-          outline
-          type="reset"
-          color="primary"
-          :label="$t('event.organizers.buttonCancel')"
-        />
-        <q-btn
-          rounded
-          unelevated
-          type="submit"
-          color="primary"
-          :label="$t('event.organizers.buttonSave')"
-        />
-      </div>
-    </q-form>
-  </div>
-</template>
