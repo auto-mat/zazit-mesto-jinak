@@ -28,7 +28,7 @@
 
       <!-- TODO sanitaze HTML -->
       <div
-        v-if="eventContent.mainContent"
+        v-if="eventContent?.mainContent"
         class="content"
         v-html="eventContent.mainContent"
       ></div>
@@ -46,7 +46,7 @@
         </h3>
       </div>
 
-      <div v-if="eventContent.links.length > 0">
+      <div v-if="eventContent?.links.length > 0">
         <div
           v-for="(link, index) in eventContent.links"
           :key="index"
@@ -70,38 +70,36 @@
         </h3>
       </div>
 
-      <event-program-table :rows="eventProgram" />
+      <!-- <event-program-table :rows="eventProgram" /> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
-import EventProgramTable from '../program/EventProgramTable.vue';
-import { EventContent, EventProgram } from 'src/types/Event';
+// libraries
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// components
+// import EventProgramTable from '../program/EventProgramTable.vue';
+
+// stores
+import { useEventContentStore } from 'src/stores/event/content';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const { t } = useI18n();
 
-const props = defineProps({
-  eventContent: {
-    type: Object as PropType<EventContent>,
-    required: true,
-  },
-  eventProgram: {
-    type: Array as PropType<EventProgram[]>,
-    required: true,
-  },
-});
-
-defineEmits(['edit']);
+const eventContentStore = useEventContentStore();
+const { eventContent } = storeToRefs(eventContentStore);
 
 const imageSrc = computed(() => {
-  if (props.eventContent.image) {
-    return URL.createObjectURL(props.eventContent.image);
-  } else {
-    return 'image-placeholder.jpg';
+  if (eventContent.value?.image) {
+    return zazitMestoJinakConfig.urlBaseBackend + eventContent.value.image;
   }
+  return 'image-placeholder.jpg';
 });
 </script>
 

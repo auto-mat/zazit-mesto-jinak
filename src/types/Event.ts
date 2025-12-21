@@ -42,6 +42,12 @@ export interface Link {
 }
 
 export interface EventContent {
+  image: string | null;
+  mainContent: string;
+  links: Link[];
+}
+
+export interface EventContentForm {
   image: File | null;
   mainContent: string;
   links: Link[];
