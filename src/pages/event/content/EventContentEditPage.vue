@@ -1,14 +1,11 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isLoading" class="loading">Loading...</div>
-
-    <!-- <div v-if="error" class="error">{{ error }}</div> -->
-
-    <div v-if="eventContent && eventProgram" class="content">
+    <div v-if="isEventContentLoading" class="loading">Loading...</div>
+    <div v-else class="content">
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
-          <h1>{{ t('event.titleInformation') }}</h1>
+          <h1>{{ t('event.titleWebContent') }}</h1>
         </div>
 
         <back-button
@@ -19,48 +16,86 @@
         />
       </div>
 
-      <!-- <embed 
-        src="https://zazitmestojinak.cz/locations_/praha/praha-3/husitska" 
-        style="width:500px; height: 300px;"
-      > -->
-
-      <event-content-editor :event-content @save="onSave" />
+      <div class="q-pt-md q-pb-xl">
+        <form-event-content @save="onSave" @reset="onBack" />
+      </div>
     </div>
+    <discard-changes-modal
+      v-model="discardChangesModal"
+      :is-saving="isEventContentSaving"
+      @cancel="discardChangesModal = false"
+      @discard-changes="discardChanges"
+      @save="onSave"
+    />
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+// libraries
+import { computed, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 
+// components
 import BackButton from 'src/components/buttons/BackButton.vue';
-import EventContentEditor from 'src/components/event/content/EventContentEditor.vue';
+import FormEventContent from 'src/components/form/event/FormEventContent.vue';
+
+// stores
 import { useEventStore } from 'src/stores/event';
-import { useI18n } from 'vue-i18n';
+import { useEventContentStore } from 'src/stores/event/content';
 
 const { t } = useI18n();
 
 const route = useRoute();
 const slug = ref(route.params.slug as string);
-
-const eventStore = useEventStore();
 const router = useRouter();
 
-const onSave = (): void => {
+const eventStore = useEventStore();
+const eventContentStore = useEventContentStore();
+const { isEventContentLoading, isEventContentFormDirty, isEventContentSaving } =
+  storeToRefs(eventContentStore);
+const discardChangesModal = ref(false);
+
+const discardChanges = (): void => {
+  eventContentStore.resetEventContentForm();
   router.push({
     name: routesConf['event_web_content']['children']['name'],
-    params: { slug: slug.value },
+    params: { slug: slug.value as string },
   });
 };
 
-onMounted(() => {
-  eventStore.loadEventContent(slug.value);
-  eventStore.loadEventProgram(slug.value);
-});
+const onSave = async (): Promise<void> => {
+  const success = await eventContentStore.updateEventContent();
+  if (success) {
+    router.push({
+      name: routesConf['event_web_content']['children']['name'],
+      params: { slug: slug.value },
+    });
+  }
+};
 
-const isLoading = computed(() => eventStore.isLoading);
+const onBack = (): void => {
+  if (isEventContentFormDirty.value) {
+    discardChangesModal.value = true;
+  } else {
+    router.push({
+      name: routesConf['event_web_content']['children']['name'],
+      params: { slug: slug.value },
+    });
+  }
+};
+
 const eventName = computed(() => eventStore.getEventName(slug.value));
-const eventContent = computed(() => eventStore.eventContent);
-const eventProgram = computed(() => eventStore.eventProgram);
+
+watch(
+  slug,
+  () => {
+    eventStore.setSlug(slug.value as string);
+  },
+  { immediate: true },
+);
 </script>

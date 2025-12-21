@@ -1,42 +1,77 @@
-import { ref } from 'vue';
-import eventService from 'src/services/eventService';
-
-import { EventContentType } from 'src/types/Event';
-import { eventsAdapter } from 'src/adapters/eventAdapter';
-
-
-type ApiLinkType = {
-  title: string,
-  url: string
-}
-
-type ApiEventContentType = {
-  image: File | null,
-  main_content: string,
-  links: ApiLinkType[]
-} 
+import { EventContent, EventContentForm } from 'src/types/Event';
+import { ApiEventContent, eventsAdapter } from 'src/adapters/eventAdapter';
+import { useLoginStore } from 'src/stores/login';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import apiFetch from 'src/api/apiFetch';
+import { Notify } from 'quasar';
 
 export function useApiEventContent() {
-  const error = ref<string | null>(null);
+  const loginStore = useLoginStore();
 
-  const fetchEventContent = async (slug: string) => {
-    let eventContent: EventContentType | null = null;
-
+  const getEventContentApi = async (
+    slug: string,
+  ): Promise<EventContent | null> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return null;
+    }
     try {
-      const response: ApiEventContentType = await eventService.getEventContent(slug);
-      if (response) {
-        eventContent = eventsAdapter.toEventContent(response); 
-      }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      error.value = err.message;
+      const url = `${zazitMestoJinakConfig.urlApiEvents}${slug}${zazitMestoJinakConfig.urlApiEventContent}`;
+      const { data } = await apiFetch.get<ApiEventContent>(url);
+      return eventsAdapter.toEventContent(data);
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return null;
+    }
+  };
+
+  const updateEventContentApi = async (
+    slug: string,
+    eventContent: EventContentForm,
+  ): Promise<boolean> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return false;
     }
 
-    return eventContent;
-  }
+    const formData = new FormData();
+    if (eventContent.image) {
+      formData.append('main_photo', eventContent.image);
+    }
+
+    formData.append('description', eventContent.mainContent);
+
+    if (eventContent.links[0]) {
+      formData.append('url', eventContent.links[0].url);
+      formData.append('url_title', eventContent.links[0].title);
+    }
+    if (eventContent.links[1]) {
+      formData.append('url1', eventContent.links[1].url);
+      formData.append('url_title1', eventContent.links[1].title);
+    }
+    if (eventContent.links[2]) {
+      formData.append('url2', eventContent.links[2].url);
+      formData.append('url_title2', eventContent.links[2].title);
+    }
+
+    try {
+      await apiFetch.put<void>(
+        `${zazitMestoJinakConfig.urlApiEvents}${slug}${zazitMestoJinakConfig.urlApiEventContent}`,
+        formData,
+      );
+      return true;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
+    }
+  };
 
   return {
-    fetchEventContent,
-    error
-  }
+    getEventContentApi,
+    updateEventContentApi,
+  };
 }

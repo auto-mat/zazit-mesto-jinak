@@ -50,7 +50,7 @@ contactEmail = "kontakt@dopracenakole.cz"
 
 urlRTWBBLogo = "#/"
 urlLoginRegisterBackgroundImage = "/image/login-register-layout.webp"
-urlBaseBackend = "https://test.dopracenakole.cz/"
+urlBaseBackend = "http://localhost:8000"
 
 # EXTERNAL URLS
 
@@ -87,7 +87,8 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
+# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
+apiBase = "http://localhost:8000/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 
@@ -141,6 +142,7 @@ urlApiEventList = "zmj/events/"
 urlApiEventInformation = "zmj/events/"
 urlApiEventOrganizerCompany = "/company/"
 urlApiEventOrganizers = "/organizers/"
+urlApiEventContent = "/content/"
 
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
