@@ -50,7 +50,7 @@ contactEmail = "kontakt@dopracenakole.cz"
 
 urlRTWBBLogo = "#/"
 urlLoginRegisterBackgroundImage = "/image/login-register-layout.webp"
-urlBaseBackend = "http://localhost:8000"
+urlBaseBackend = "https://klub-zmj-test.dopracenakole.net"
 
 # EXTERNAL URLS
 
@@ -87,8 +87,7 @@ iDontWantMerchandiseItemCode = "nic"
 
 # API CONFIGURATION
 
-# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
-apiBase = "http://localhost:8000/api/"
+apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 
