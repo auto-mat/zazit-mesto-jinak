@@ -1,7 +1,11 @@
 <template>
-  <div class="table-wrapper" :style="{ height: tableHeight + 'px' }">
+  <div
+    class="table-wrapper"
+    :style="tableHeight ? { height: tableHeight + 'px' } : {}"
+  >
     <div class="fit">
       <q-table
+        ref="tableRef"
         flat
         bordered
         :rows="rows"
@@ -52,13 +56,14 @@
 
 <script setup lang="ts">
 // libraries
-import { onMounted, PropType, ref } from 'vue';
+import { nextTick, onMounted, PropType, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { QTable } from 'quasar';
 
 // types
 import { EventCategory, EventProgram } from 'src/types/Event';
 
-defineProps({
+const props = defineProps({
   rows: {
     type: Array as PropType<EventProgram>,
     required: true,
@@ -81,20 +86,6 @@ const centerAlign = 'center' as const;
 
 const columns = [
   {
-    name: 'name',
-    required: true,
-    align: leftAlign,
-    label: t('event.program.labelTitle'),
-    field: 'name',
-    sortable: true,
-  },
-  {
-    name: 'description',
-    align: leftAlign,
-    label: t('event.program.labelDescription'),
-    field: 'description',
-  },
-  {
     name: 'timeFrom',
     align: centerAlign,
     label: t('event.program.labelTimeFrom'),
@@ -107,6 +98,20 @@ const columns = [
     label: t('event.program.labelTimeTo'),
     field: 'timeTo',
     sortable: true,
+  },
+  {
+    name: 'name',
+    required: true,
+    align: leftAlign,
+    label: t('event.program.labelTitle'),
+    field: 'name',
+    sortable: true,
+  },
+  {
+    name: 'description',
+    align: leftAlign,
+    label: t('event.program.labelDescription'),
+    field: 'description',
   },
   {
     name: 'categories',
@@ -122,18 +127,38 @@ const columns = [
   },
 ];
 
-// TODO height of table, because of absolute position
-const element = ref<HTMLElement>();
-const tableHeight = ref(0);
+const tableRef = ref<InstanceType<typeof QTable>>();
+const tableHeight = ref<number | null>(null);
 
+const calculateTableHeight = async (): Promise<void> => {
+  await nextTick();
+  if (tableRef.value?.$el) {
+    const tableElement = tableRef.value.$el as HTMLElement;
+    const height = tableElement.offsetHeight;
+    // Only set height if table has content (more than just header)
+    if (height > 100) {
+      tableHeight.value = height;
+    } else if (props.rows.length === 0) {
+      // If no rows, don't set a fixed height
+      tableHeight.value = null;
+    }
+  }
+};
+
+// Watch for changes in rows to recalculate height
+watch(() => props.rows, calculateTableHeight, { deep: true });
+
+// Calculate height after mount and when table is ready
 onMounted(() => {
-  element.value = document.querySelector('.table') as HTMLElement;
-  tableHeight.value = element.value ? element.value.offsetHeight : 0;
+  calculateTableHeight();
 });
 
-// watchEffect(() => {
-//   tableHeight.value = element.value?.offsetHeight ? element.value.offsetHeight : 0;
-// })
+// Watch for table element changes
+watchEffect(() => {
+  if (tableRef.value?.$el) {
+    calculateTableHeight();
+  }
+});
 </script>
 
 <style scoped>

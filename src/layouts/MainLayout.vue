@@ -28,7 +28,8 @@
     <q-drawer
       v-model="drawerOpen"
       :side="isMobile ? 'right' : 'left'"
-      class="bg-secondary text-black"
+      :breakpoint="0"
+      class="bg-secondary text-black drawer"
     >
       <drawer-header v-if="!isMobile" />
       <div v-else class="flex justify-end items-center q-pr-md q-pt-md">
@@ -134,13 +135,29 @@ defineOptions({
 });
 
 const { t } = useI18n();
-const drawerOpen = ref(true);
 const eventStore = useEventStore();
 const loginStore = useLoginStore();
 const userStore = useUserStore();
 
 const $q = useQuasar();
 const isMobile = computed(() => $q.screen.lt.md);
+
+// Drawer should always be open on desktop, toggleable on mobile
+const drawerOpen = computed({
+  get: () => {
+    if (isMobile.value) {
+      return drawerOpenMobile.value;
+    }
+    return true; // Always open on desktop
+  },
+  set: (value: boolean) => {
+    if (isMobile.value) {
+      drawerOpenMobile.value = value;
+    }
+  },
+});
+
+const drawerOpenMobile = ref(false);
 
 onMounted(async () => {
   if (eventStore.eventList.length === 0) {
@@ -173,6 +190,14 @@ onMounted(async () => {
 }
 
 .page-container {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.drawer {
+  position: fixed;
+  height: 100vh;
   overflow-y: auto;
 }
 </style>
