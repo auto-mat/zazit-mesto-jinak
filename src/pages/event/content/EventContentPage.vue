@@ -1,7 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
     <div v-if="isLoading" class="loading">Loading...</div>
-    <div v-else class="content">
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -17,7 +17,7 @@
       </div>
 
       <event-content-preview />
-    </div>
+    </template>
   </q-page>
 </template>
 
