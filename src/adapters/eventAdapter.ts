@@ -6,8 +6,14 @@ import {
   EventOrganizerCompany,
   EventOrganizers,
   EventProgram,
+  EventProgramItemPayload,
 } from 'src/types/Event';
-import { convertDateToString, convertDateToISOString } from 'src/utils';
+import {
+  convertDateToString,
+  convertDateToISOString,
+  convertTimeToISOString,
+  convertTimeToString,
+} from 'src/utils';
 
 export interface ApiEventInformation {
   name: string;
@@ -63,13 +69,30 @@ export interface ApiEventContent {
   url_title2: string | null;
 }
 
-type ApiEventProgramItem = {
-  title: string;
+export interface ApiEventCategory {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export interface ApiEventProgramItem {
+  id: number | null;
+  name: string;
   description: string;
   time_from: string;
   time_to: string;
-  categories: string[];
-};
+  categories: ApiEventCategory[];
+}
+
+export interface ApiEventProgramItemPayload {
+  id: number | null;
+  name: string;
+  description: string;
+  time_from: string;
+  time_to: string;
+  categories: number[];
+}
 
 export const eventsAdapter = {
   toEventInformation(eventData: ApiEventInformation): EventInformation {
@@ -176,14 +199,28 @@ export const eventsAdapter = {
     const eventProgram: EventProgram = [];
     eventData.forEach((programItem) => {
       eventProgram.push({
-        title: programItem.title,
+        id: programItem.id,
+        name: programItem.name,
         description: programItem.description,
-        timeFrom: programItem.time_from,
-        timeTo: programItem.time_to,
+        timeFrom: convertTimeToString(programItem.time_from),
+        timeTo: convertTimeToString(programItem.time_to),
         categories: programItem.categories,
       });
     });
 
     return eventProgram;
+  },
+
+  toEventProgramItemPayload(
+    eventData: EventProgramItemPayload,
+  ): ApiEventProgramItemPayload {
+    return {
+      id: eventData.id,
+      name: eventData.name,
+      description: eventData.description,
+      time_from: convertTimeToISOString(eventData.timeFrom),
+      time_to: convertTimeToISOString(eventData.timeTo),
+      categories: eventData.categories,
+    };
   },
 };
