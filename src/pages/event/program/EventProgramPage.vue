@@ -1,9 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isLoading" class="loading">Loading...</div>
-
-    <!-- <div v-if="error" class="error">{{ error }}</s div> -->
-    <div v-if="eventProgram">
+    <div v-if="isEventProgramLoading" class="loading">Loading...</div>
+    <div v-else>
       <div class="row justify-between items-end q-mb-md">
         <div class="q-mb-md">
           <span>{{ eventName }}</span>
@@ -18,21 +16,32 @@
         />
       </div>
 
-      <event-program-table :rows="eventProgram" />
+      <event-program-table
+        :rows="eventProgram"
+        :pagination="{ rowsPerPage: 20 }"
+        :rows-per-page-label="t('event.program.rowsPerPageLabel')"
+      />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+// libraries
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 
+// components
 import EventProgramTable from 'src/components/event/program/EventProgramTable.vue';
 import EditButton from 'src/components/buttons/EditButton.vue';
 
+// stores
 import { useEventStore } from 'src/stores/event';
-import { useI18n } from 'vue-i18n';
+import { useEventProgramStore } from 'src/stores/event/program';
 
 const { t } = useI18n();
 
@@ -40,14 +49,16 @@ const route = useRoute();
 const slug = ref(route.params.slug as string);
 
 const eventStore = useEventStore();
+const eventProgramStore = useEventProgramStore();
+const { eventProgram, isEventProgramLoading } = storeToRefs(eventProgramStore);
 
-onMounted(() => {
-  if (eventStore.eventProgram.length === 0) {
-    eventStore.loadEventProgram(slug.value);
-  }
-});
-
-const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
-const eventProgram = computed(() => eventStore.eventProgram);
+
+watch(
+  slug,
+  () => {
+    eventStore.setSlug(slug.value as string);
+  },
+  { immediate: true },
+);
 </script>

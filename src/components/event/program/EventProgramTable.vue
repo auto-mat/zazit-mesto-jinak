@@ -9,6 +9,7 @@
         row-key="name"
         class="table"
         :no-data-label="t('event.program.noData')"
+        v-bind="$attrs"
       >
         <template v-slot:header="props">
           <q-tr :props="props">
@@ -50,18 +51,25 @@
 </template>
 
 <script setup lang="ts">
-import { EventProgramType } from 'src/types/Event';
+// libraries
 import { onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+// types
+import { EventCategory, EventProgram } from 'src/types/Event';
+
 defineProps({
   rows: {
-    type: Array as PropType<EventProgramType>,
+    type: Array as PropType<EventProgram>,
     required: true,
   },
   editable: {
     type: Boolean,
     default: false,
+  },
+  rowsPerPage: {
+    type: Number,
+    default: 5,
   },
 });
 
@@ -73,11 +81,11 @@ const centerAlign = 'center' as const;
 
 const columns = [
   {
-    name: 'title',
+    name: 'name',
     required: true,
     align: leftAlign,
     label: t('event.program.labelTitle'),
-    field: 'title',
+    field: 'name',
     sortable: true,
   },
   {
@@ -105,9 +113,9 @@ const columns = [
     align: leftAlign,
     label: t('event.program.labelCategories'),
     field: 'categories',
-    format: (val: string[]) => {
+    format: (val: EventCategory[]) => {
       const list = val.map((category) =>
-        t(`event.program.category.${category}`),
+        t(`event.program.category.${category.slug}`),
       );
       return list.join(', ');
     },

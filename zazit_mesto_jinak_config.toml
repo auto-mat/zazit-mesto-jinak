@@ -136,12 +136,14 @@ urlApiUser = "zmj/user/"
 urlApiRegisterComplete = "zmj/registration/"
 urlApiCheckRegistrationStatus = "zmj/registration/status/"
 urlApiCompanyTypes = "zmj/company-types/"
+urlApiEventCategories = "zmj/categories/"
 urlApiEvents = "zmj/events/"
 urlApiEventList = "zmj/events/"
 urlApiEventInformation = "zmj/events/"
 urlApiEventOrganizerCompany = "/company/"
 urlApiEventOrganizers = "/organizers/"
 urlApiEventContent = "/content/"
+urlApiEventProgram = "/program/"
 
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds

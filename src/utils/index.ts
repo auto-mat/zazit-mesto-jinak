@@ -15,6 +15,19 @@ const convertDateToISOString = (dateString: string): string => {
   return extractedDate.toISOString();
 };
 
+const convertTimeToString = (timestamp: string): string => {
+  return date.formatDate(new Date(timestamp), 'HH:mm');
+};
+
+const convertTimeToISOString = (timeString: string): string => {
+  const dateString = '01.01.2000';
+  const extractedDate = date.extractDate(
+    dateString + ' ' + timeString,
+    'DD.MM.YYYY HH:mm',
+  );
+  return extractedDate.toISOString();
+};
+
 const getLocalizedSpaceType = (spaceType: EventSpaceType): string => {
   return i18n.global.t(`event.spaceType.${spaceType}`);
 };
@@ -30,6 +43,8 @@ const getLocalizedSpaceRent = (spaceRent: boolean): string => {
 export {
   convertDateToString,
   convertDateToISOString,
+  convertTimeToString,
+  convertTimeToISOString,
   getLocalizedSpaceType,
   getLocalizedSpaceArea,
   getLocalizedSpaceRent,

@@ -21,11 +21,9 @@ export const useEventInformationStore = defineStore('eventsInformation', () => {
     isEventInformationLoading.value = true;
     const eventInformationResponse = await getEventInformationApi(slug);
 
-    if (!eventInformationResponse) {
-      return;
+    if (eventInformationResponse) {
+      eventInformation.value = eventInformationResponse;
     }
-
-    eventInformation.value = eventInformationResponse;
 
     isEventInformationLoading.value = false;
   };
