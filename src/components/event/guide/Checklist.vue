@@ -16,17 +16,21 @@
       <div class="column" v-if="checklist.length > 0">
         <q-checkbox
           v-for="item in checklist"
-          :key="item.title"
-          v-model="item.completed"
-          :val="item.title"
-          :label="item.title"
+          :key="item.id"
+          v-model="item.checked"
+          :val="item.name"
+          :label="item.name"
           dense
           color="primary"
           class="col-12 col-sm-4 text-grey-10 q-mt-md"
+          @update:model-value="toogleEventChecklistItem(item)"
         />
       </div>
-      <div class="column" v-else>
-        <span class="text-grey-6">{{
+      <div class="column q-mt-md" v-else>
+        <span v-if="editable" class="text-grey-6">{{
+          t('event.guide.checklist.noItemsEditable')
+        }}</span>
+        <span v-else class="text-grey-6">{{
           t('event.guide.checklist.noItems')
         }}</span>
       </div>
@@ -35,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+import { useEventGuideStore } from 'src/stores/event/guide';
 import { ChecklistItem } from 'src/types/Event';
 import { PropType, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -65,6 +70,9 @@ watch(
 );
 
 const { t } = useI18n();
+
+const eventGuideStore = useEventGuideStore();
+const { toogleEventChecklistItem } = eventGuideStore;
 </script>
 
 <style scoped lang="scss">
