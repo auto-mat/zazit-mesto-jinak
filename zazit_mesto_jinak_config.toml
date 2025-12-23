@@ -144,6 +144,10 @@ urlApiEventOrganizerCompany = "/company/"
 urlApiEventOrganizers = "/organizers/"
 urlApiEventContent = "/content/"
 urlApiEventProgram = "/program/"
+urlApiEventAgreement = "/agreement/"
+urlApiEventInvoice = "/invoice/"
+urlApiEventChecklist = "/checklist/"
+urlApiEventContentPublic = "/public-on-web/"
 
 checkIsEmailVerifiedInterval = 20                    # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds

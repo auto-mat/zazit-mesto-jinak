@@ -1,8 +1,16 @@
-import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
 import {
+  EventAgreementStatus,
+  EventInvoiceStatus,
+  EventSpaceArea,
+  EventSpaceType,
+} from 'src/enums/eventEnums';
+import {
+  EventAgreement,
+  EventAgreementPayload,
   EventContent,
   EventInformation,
   EventInformationForm,
+  EventInvoice,
   EventOrganizerCompany,
   EventOrganizers,
   EventProgram,
@@ -92,6 +100,21 @@ export interface ApiEventProgramItemPayload {
   time_from: string;
   time_to: string;
   categories: number[];
+}
+
+export interface ApiEventAgreement {
+  status: EventAgreementStatus | null;
+  pdf_url: string | null;
+  pdf_url_completed: string | null;
+}
+
+export interface ApiEventAgreementPayload {
+  pdf_file_signed: File | null;
+}
+
+export interface ApiEventInvoice {
+  status: EventInvoiceStatus | null;
+  pdf_url: string | null;
 }
 
 export const eventsAdapter = {
@@ -221,6 +244,29 @@ export const eventsAdapter = {
       time_from: convertTimeToISOString(eventData.timeFrom),
       time_to: convertTimeToISOString(eventData.timeTo),
       categories: eventData.categories,
+    };
+  },
+
+  toEventAgreement(eventData: ApiEventAgreement): EventAgreement {
+    return {
+      status: eventData.status,
+      pdfUrl: eventData.pdf_url,
+      pdfUrlCompleted: eventData.pdf_url_completed,
+    };
+  },
+
+  toEventAgreementPayload(
+    eventData: EventAgreementPayload,
+  ): ApiEventAgreementPayload {
+    return {
+      pdf_file_signed: eventData.pdfFile,
+    };
+  },
+
+  toEventInvoice(eventData: ApiEventInvoice): EventInvoice {
+    return {
+      status: eventData.status,
+      pdfUrl: eventData.pdf_url,
     };
   },
 };
