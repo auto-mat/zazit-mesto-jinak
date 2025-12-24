@@ -30,6 +30,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Verify email page
+ * Displays the verify email page with resend button
+ */
+
 // libraries
 import { ref, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';

@@ -1,6 +1,6 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isLoading" class="loading">Loading...</div>
+    <spinner v-if="isLoading" />
     <template v-else>
       <div class="q-mb-xl">
         <span>{{ eventName }}</span>
@@ -64,19 +64,32 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Event guide page
+ * Displays the event guide page with the guide cards and the checklist
+ */
+
+// libraries
 import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
+import { ref, computed, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+// stores
+import { useEventStore } from 'src/stores/event';
+import { useEventGuideStore } from 'src/stores/event/guide';
+
+// components
+import Spinner from 'src/components/global/Spinner.vue';
 import AgreementGuideModal from 'src/components/event/guide/AgreementGuideModal.vue';
 import InvoiceGuideModal from 'src/components/event/guide/InvoiceGuideModal.vue';
 import ContentWebGuideModal from 'src/components/event/guide/ContentWebGuideModal.vue';
 import GuideCard from 'src/components/event/guide/GuideCard.vue';
-import { useI18n } from 'vue-i18n';
-import { useEventGuideStore } from 'src/stores/event/guide';
-import { ref, computed, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useEventStore } from 'src/stores/event';
 // eslint-disable-next-line no-unused-vars
 import Checklist from 'src/components/event/guide/Checklist.vue';
 import EditChecklistModal from 'src/components/event/guide/EditChecklistModal.vue';
+
+// types
 import { ChecklistItem } from 'src/types/Event';
 
 const { t } = useI18n();
@@ -112,6 +125,7 @@ const saveChecklist = async (checklist: ChecklistItem[]): Promise<void> => {
   }
 };
 
+// Watch the slug to set the event slug in the store - get new data
 watch(
   slug,
   () => {

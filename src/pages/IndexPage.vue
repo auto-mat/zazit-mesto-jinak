@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 /**
- * Home page component
+ * Home page
  * Displays the home page with the events, news and zmj tips
  */
 

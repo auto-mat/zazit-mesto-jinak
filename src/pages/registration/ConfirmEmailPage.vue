@@ -16,6 +16,12 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Verify email page
+ * Displays the verify email page with the confirm button
+ * Redirected from email verification link
+ */
+
 // libraries
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
@@ -23,10 +29,6 @@ import { useI18n } from 'vue-i18n';
 
 //stores
 import { useRegisterStore } from 'src/stores/register';
-
-defineOptions({
-  name: 'ConfirmEmailPage',
-});
 
 const route = useRoute();
 const { t } = useI18n();

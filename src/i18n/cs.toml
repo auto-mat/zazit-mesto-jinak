@@ -394,3 +394,8 @@ buttonConfirm = "Smazat"
 clientSideError = "Chyba na straně klienta"
 serverSideError = "Chyba na straně serveru"
 invalidConfirmationLink = "Odkaz na potvrzení e-mailu je neplatný."
+
+[error.notFound]
+title = "Stránka nebyla nalezena"
+description = "Stránka, kterou hledáte, neexistuje."
+homeButton = "Přejít na domovskou stránku"
