@@ -23,7 +23,7 @@
             outline
             rounded
             icon="check"
-            disable
+            @click="updateUserZmjNewsPreferences"
           />
           <q-btn
             v-else
@@ -31,6 +31,7 @@
             color="primary"
             rounded
             unelevated
+            @click="updateUserZmjNewsPreferences"
           />
         </div>
         <q-separator />
@@ -43,7 +44,7 @@
             outline
             rounded
             icon="check"
-            disable
+            @click="updateUserAllNewsPreferences"
           />
           <q-btn
             v-else
@@ -51,6 +52,7 @@
             color="primary"
             rounded
             unelevated
+            @click="updateUserAllNewsPreferences"
           />
         </div>
       </div>
@@ -59,14 +61,46 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * News box component
+ * Displays the news box with the news preferences
+ *
+ * @example
+ * <news-box />
+ */
+// libraries
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+
+// stores
+import { useUserStore } from 'src/stores/user';
+
+// config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const { t } = useI18n();
 
-const zmjNewsSubscribed = ref(true);
-const allNewsSubscribed = ref(false);
+const userStore = useUserStore();
+const { userNewsPreferences } = storeToRefs(userStore);
+
+const zmjNewsSubscribed = computed(
+  () => userNewsPreferences.value?.onlyOrganizerNews ?? false,
+);
+const allNewsSubscribed = computed(
+  () => userNewsPreferences.value?.allNews ?? false,
+);
+
+const updateUserAllNewsPreferences = async (): Promise<void> => {
+  userNewsPreferences.value.allNews = !userNewsPreferences.value.allNews;
+  await userStore.updateUserNewsPreferences();
+};
+
+const updateUserZmjNewsPreferences = async (): Promise<void> => {
+  userNewsPreferences.value.onlyOrganizerNews =
+    !userNewsPreferences.value.onlyOrganizerNews;
+  await userStore.updateUserNewsPreferences();
+};
 </script>
 
 <style scoped lang="scss">
