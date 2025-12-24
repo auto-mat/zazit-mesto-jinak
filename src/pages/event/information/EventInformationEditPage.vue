@@ -1,8 +1,8 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isEventInformationLoading" class="loading">Loading...</div>
+    <spinner v-if="isEventInformationLoading" />
 
-    <div v-if="eventInformation">
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -13,18 +13,23 @@
       </div>
 
       <event-information-editor @save="onSave" />
-    </div>
+    </template>
+    <discard-changes-modal
+      v-model="discardChangesModal"
+      :is-saving="isEventInformationSaving"
+      @cancel="discardChangesModal = false"
+      @discard-changes="discardChanges"
+      @save="onSave"
+    />
   </q-page>
-  <discard-changes-modal
-    v-model="discardChangesModal"
-    :is-saving="isEventInformationSaving"
-    @cancel="discardChangesModal = false"
-    @discard-changes="discardChanges"
-    @save="onSave"
-  />
 </template>
 
 <script setup lang="ts">
+/**
+ * Event information edit page
+ * Displays the event information edit page with the form
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -35,6 +40,7 @@ import { useI18n } from 'vue-i18n';
 import { routesConf } from 'src/router/routes_conf';
 
 // components
+import Spinner from 'src/components/global/Spinner.vue';
 import BackButton from 'src/components/buttons/BackButton.vue';
 import EventInformationEditor from 'src/components/event/information/EventInformationEditor.vue';
 // eslint-disable-next-line no-unused-vars
@@ -52,7 +58,6 @@ const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 const eventInformationStore = useEventInformationStore();
 const {
-  eventInformation,
   isEventInformationFormDirty,
   isEventInformationSaving,
   isEventInformationLoading,
@@ -69,14 +74,6 @@ const discardChanges = (): void => {
     params: { slug: slug.value as string },
   });
 };
-
-watch(
-  slug,
-  () => {
-    eventStore.setSlug(slug.value as string);
-  },
-  { immediate: true },
-);
 
 const onSave = async (): Promise<void> => {
   const success = await eventInformationStore.updateEventInformation();
@@ -98,4 +95,13 @@ const onBack = (): void => {
     });
   }
 };
+
+// Watch the slug to set the event slug in the store - get new data
+watch(
+  slug,
+  () => {
+    eventStore.setSlug(slug.value as string);
+  },
+  { immediate: true },
+);
 </script>

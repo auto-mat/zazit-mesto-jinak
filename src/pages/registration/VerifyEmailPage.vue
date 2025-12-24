@@ -30,6 +30,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Verify email page
+ * Displays the verify email page with resend button
+ */
+
 // libraries
 import { ref, watch, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -70,6 +75,7 @@ const handleResendEmail = async (): Promise<void> => {
   }
 };
 
+// Start the cooldown timer to prevent spamming the resend button
 const startCooldown = (): void => {
   cooldownSeconds.value = zazitMestoJinakConfig.checkIsEmailVerifiedInterval;
 
@@ -88,12 +94,6 @@ const startCooldown = (): void => {
   }, 1000);
 };
 
-onUnmounted(() => {
-  if (cooldownInterval) {
-    clearInterval(cooldownInterval);
-  }
-});
-
 const registerAgain = () => {
   loginStore.logout();
   router.push(routesConf['signup']['path']);
@@ -102,6 +102,12 @@ const registerAgain = () => {
 watch(isUserVerified, (newVal) => {
   if (newVal) {
     router.push(routesConf['home']['path']);
+  }
+});
+
+onUnmounted(() => {
+  if (cooldownInterval) {
+    clearInterval(cooldownInterval);
   }
 });
 </script>

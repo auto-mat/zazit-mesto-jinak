@@ -1,6 +1,6 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isLoading" class="loading">Loading...</div>
+    <spinner v-if="isLoading" />
     <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
@@ -22,6 +22,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Event content page
+ * Displays the event content page with the content preview
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -34,6 +39,7 @@ import { routesConf } from 'src/router/routes_conf';
 // components
 import EditButton from 'src/components/buttons/EditButton.vue';
 import EventContentPreview from 'components/event/content/EventContentPreview.vue';
+import Spinner from 'src/components/global/Spinner.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -51,6 +57,7 @@ const { isEventContentLoading } = storeToRefs(eventContentStore);
 const isLoading = computed(() => isEventContentLoading.value);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
+// Watch the slug to set the event slug in the store - get new data
 watch(
   slug,
   () => {

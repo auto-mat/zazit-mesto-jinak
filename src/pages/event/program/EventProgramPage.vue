@@ -1,7 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isEventProgramLoading" class="loading">Loading...</div>
-    <div v-else>
+    <spinner v-if="isEventProgramLoading" />
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div class="q-mb-md">
           <span>{{ eventName }}</span>
@@ -21,11 +21,16 @@
         :pagination="{ rowsPerPage: 20 }"
         :rows-per-page-label="t('event.program.rowsPerPageLabel')"
       />
-    </div>
+    </template>
   </q-page>
 </template>
 
 <script setup lang="ts">
+/**
+ * Event program page
+ * Displays the event program page with the program table
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -38,6 +43,7 @@ import { routesConf } from 'src/router/routes_conf';
 // components
 import EventProgramTable from 'src/components/event/program/EventProgramTable.vue';
 import EditButton from 'src/components/buttons/EditButton.vue';
+import Spinner from 'src/components/global/Spinner.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -54,6 +60,7 @@ const { eventProgram, isEventProgramLoading } = storeToRefs(eventProgramStore);
 
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
+// Watch the slug to set the event slug in the store - get new data
 watch(
   slug,
   () => {

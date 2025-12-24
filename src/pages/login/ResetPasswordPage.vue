@@ -9,6 +9,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Reset password page
+ * Displays the reset password page with the form
+ */
+
 // libraries
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -27,11 +32,6 @@ const loginStore = useLoginStore();
 const uid = ref('');
 const token = ref('');
 
-onMounted(() => {
-  uid.value = route.query.uid as string;
-  token.value = route.query.token as string;
-});
-
 const onSubmit = async (password: string, passwordConfirm: string) => {
   await loginStore.resetPasswordConfirm(
     uid.value,
@@ -41,7 +41,8 @@ const onSubmit = async (password: string, passwordConfirm: string) => {
   );
 };
 
-defineOptions({
-  name: 'ResetPasswordPage',
+onMounted(() => {
+  uid.value = route.query.uid as string;
+  token.value = route.query.token as string;
 });
 </script>

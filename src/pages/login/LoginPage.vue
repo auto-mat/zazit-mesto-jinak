@@ -14,6 +14,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Login page
+ * Displays the login page with the form
+ */
+
 // libraries
 import { useI18n } from 'vue-i18n';
 
@@ -24,8 +29,4 @@ import { routesConf } from 'src/router/routes_conf';
 import FormLogin from 'src/components/form/login/FormLogin.vue';
 
 const { t } = useI18n();
-
-defineOptions({
-  name: 'LoginPage',
-});
 </script>
