@@ -10,7 +10,7 @@
         <q-btn icon="close" flat round dense v-close-popup />
       </div>
       <q-stepper
-        v-model="agreementStep"
+        :model-value="agreementStep"
         vertical
         flat
         color="primary"
@@ -21,7 +21,7 @@
         <q-step
           :name="1"
           :title="t('event.guide.agreement.step1.title')"
-          prefix="1"
+          :prefix="1"
           :done="agreementStep > 1"
         >
           {{ t('event.guide.agreement.step1.description') }}
@@ -41,10 +41,18 @@
           prefix="3"
           :done="agreementStep > 3"
         >
-          {{ t('event.guide.agreement.step3.description') }}
+          <template v-if="agreementStatus === EventAgreementStatus.REJECTED">
+            {{ t('event.guide.agreement.step3.rejectedDescription') }}
+          </template>
+          <template v-else>
+            {{ t('event.guide.agreement.step3.description') }}
+          </template>
 
           <div class="files-container q-mt-md">
-            <file-downloader />
+            <file-downloader
+              :pdf-url="pdfUrl"
+              :text="t('event.guide.agreement.step3.downloadTitle')"
+            />
             <file-uploader @uploadFile="uploadFile" />
           </div>
         </q-step>
@@ -67,7 +75,12 @@
           :done="agreementStep > 5"
         >
           {{ t('event.guide.agreement.step5.description') }}
-          <!-- stazeni smlouvy -->
+          <div class="q-mt-md">
+            <file-downloader
+              :pdf-url="pdfUrl"
+              :text="t('event.guide.agreement.step5.downloadTitle')"
+            />
+          </div>
         </q-step>
       </q-stepper>
     </div>
@@ -79,18 +92,21 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import FileDownloader from './FileDowloader.vue';
 import FileUploader from './FileUploader.vue';
-import { useGuideStore } from 'src/stores/guide';
+import { useEventGuideStore } from 'src/stores/event/guide';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { EventAgreementStatus } from 'src/enums/eventEnums';
 
 const showAgreementGuideModal = defineModel<boolean>('showAgreementGuideModal');
 
 const { t } = useI18n();
 
-const guideStore = useGuideStore();
-const { agreementStep } = storeToRefs(guideStore);
+const eventGuideStore = useEventGuideStore();
+const { agreementStep, agreementStatus, pdfUrl } = storeToRefs(eventGuideStore);
 
-const uploadFile = (): void => {
-  agreementStep.value = 4;
+const uploadFile = (pdfFile: File | null): void => {
+  if (pdfFile) {
+    eventGuideStore.uploadAgreement(pdfFile);
+  }
 };
 </script>
 

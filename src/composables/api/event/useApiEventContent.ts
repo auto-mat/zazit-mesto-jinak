@@ -62,8 +62,12 @@ export function useApiEventContent() {
       );
       return true;
     } catch (error) {
+      let errorMessage = error.message;
+      if (error.response?.data?.url?.[0]) {
+        errorMessage = error.response.data.url[0];
+      }
       Notify.create({
-        message: error.message,
+        message: errorMessage,
         color: 'negative',
       });
       return false;

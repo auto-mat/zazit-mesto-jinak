@@ -15,3 +15,19 @@ export enum EventSpaceArea {
   LG = 'lg',
   XL = 'xl',
 }
+
+export enum EventAgreementStatus {
+  DRAFT = 'draft',
+  SENT = 'sent',
+  SIGNED = 'signed',
+  REJECTED = 'rejected',
+  COMPLETED = 'completed',
+}
+
+export enum EventInvoiceStatus {
+  DRAFT = 'draft',
+  SENT = 'sent',
+  REMINDED = 'reminded',
+  OVERDUE = 'overdue',
+  PAID = 'paid',
+}

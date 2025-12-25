@@ -1,9 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isLoading" class="loading">Loading...</div>
-
-    <!-- <div v-if="error" class="error">{{ error }}</div> -->
-    <div v-if="eventInformation">
+    <spinner v-if="isLoading" />
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -19,11 +17,16 @@
       </div>
 
       <event-information-preview :event-information />
-    </div>
+    </template>
   </q-page>
 </template>
 
 <script setup lang="ts">
+/**
+ * Event information page
+ * Displays the event information page with the information preview
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -36,6 +39,7 @@ import { routesConf } from 'src/router/routes_conf';
 // components
 import EditButton from 'src/components/buttons/EditButton.vue';
 import EventInformationPreview from 'src/components/event/information/EventInformationPreview.vue';
+import Spinner from 'src/components/global/Spinner.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -52,6 +56,7 @@ const { eventInformation } = storeToRefs(eventInformationStore);
 const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
+// Watch the slug to set the event slug in the store - get new data
 watch(
   slug,
   () => {

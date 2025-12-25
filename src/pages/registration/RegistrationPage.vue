@@ -50,9 +50,16 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Registration page
+ * Displays the registration page with the registration form
+ * Stepper is used to navigate through the registration process
+ */
+
 // libraries
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 // stores
 import { useRegisterStore } from 'src/stores/register';
@@ -60,18 +67,13 @@ import { useUserStore } from 'src/stores/user';
 
 // config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
 
 // components
 import FormRegisterPersonalDetails from 'src/components/form/registration/FormRegisterPersonalDetails.vue';
 import FormRegisterEvent from 'src/components/form/registration/FormRegisterEvent.vue';
 import FormRegisterOrganizers from 'src/components/form/registration/FormRegisterOrganizers.vue';
 import FormRegisterMoreInformation from 'src/components/form/registration/FormRegisterMoreInformation.vue';
-import { routesConf } from 'src/router/routes_conf';
-import { useRouter } from 'vue-router';
-
-defineOptions({
-  name: 'RegistrationPage',
-});
 
 const step = ref(1);
 

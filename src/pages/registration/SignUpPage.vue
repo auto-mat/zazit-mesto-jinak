@@ -12,6 +12,13 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Sign up page
+ * Displays the sign up page with the form
+ * Sign up with email and password
+ * Redirect to verify email page after successful sign up
+ */
+
 // libraries
 import { useI18n } from 'vue-i18n';
 
@@ -22,8 +29,4 @@ import { routesConf } from 'src/router/routes_conf';
 import FormRegister from 'src/components/form/registration/FormRegister.vue';
 
 const { t } = useI18n();
-
-defineOptions({
-  name: 'SignUpPage',
-});
 </script>

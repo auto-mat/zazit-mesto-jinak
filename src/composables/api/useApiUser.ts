@@ -1,5 +1,9 @@
 import { userAdapter, ApiUserDetails } from 'src/adapters/userAdapter';
-import { UserDetails } from 'src/types/User';
+import {
+  UserDetails,
+  UserDetailsForm,
+  UserNewsPreferences,
+} from 'src/types/User';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { useLoginStore } from 'src/stores/login';
 import apiFetch from 'src/api/apiFetch';
@@ -8,7 +12,7 @@ import { Notify } from 'quasar';
 export function useApiUser() {
   const loginStore = useLoginStore();
 
-  const getUserDetails = async (): Promise<UserDetails | null> => {
+  const getUserDetailsApi = async (): Promise<UserDetails | null> => {
     if (!(await loginStore.validateAccessToken())) {
       return null;
     }
@@ -32,11 +36,11 @@ export function useApiUser() {
     }
   };
 
-  const updateUserDetails = async (
-    newUserDetails: UserDetails,
-  ): Promise<void> => {
+  const updateUserDetailsApi = async (
+    newUserDetails: UserDetailsForm,
+  ): Promise<boolean> => {
     if (!(await loginStore.validateAccessToken())) {
-      return;
+      return false;
     }
 
     const payload = {
@@ -49,17 +53,42 @@ export function useApiUser() {
     };
 
     try {
-      await apiFetch.put<void>(zazitMestoJinakConfig.urlApiUser, payload);
+      await apiFetch.patch<void>(zazitMestoJinakConfig.urlApiUser, payload);
+      return true;
     } catch (error) {
       Notify.create({
         message: error.message,
         color: 'negative',
       });
+      return false;
+    }
+  };
+
+  const updateUserNewsPreferencesApi = async (
+    newsPreferences: UserNewsPreferences,
+  ): Promise<boolean> => {
+    if (!(await loginStore.validateAccessToken())) {
+      return false;
+    }
+    try {
+      const payload = {
+        send_mailing_lists: newsPreferences.onlyOrganizerNews,
+        newsletter_on: newsPreferences.allNews,
+      };
+      await apiFetch.patch<void>(zazitMestoJinakConfig.urlApiUser, payload);
+      return true;
+    } catch (error) {
+      Notify.create({
+        message: error.message,
+        color: 'negative',
+      });
+      return false;
     }
   };
 
   return {
-    getUserDetails,
-    updateUserDetails,
+    getUserDetailsApi,
+    updateUserDetailsApi,
+    updateUserNewsPreferencesApi,
   };
 }

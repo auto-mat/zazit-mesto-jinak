@@ -42,9 +42,24 @@
           :done="invoiceStep > 3"
         >
           {{ t('event.guide.invoice.step3.description') }}
+          <div
+            v-if="invoiceStatus === EventInvoiceStatus.REMINDED"
+            class="text-orange text-bold q-mt-sm"
+          >
+            {{ t('event.guide.invoice.step3.remindedDescription') }}
+          </div>
+          <div
+            v-if="invoiceStatus === EventInvoiceStatus.OVERDUE"
+            class="text-red text-bold q-mt-sm"
+          >
+            {{ t('event.guide.invoice.step3.overdueDescription') }}
+          </div>
 
           <div class="files-container q-mt-md">
-            <file-downloader />
+            <file-downloader
+              :pdf-url="invoicePdfUrl"
+              :text="t('event.guide.invoice.step3.downloadTitle')"
+            />
           </div>
         </q-step>
 
@@ -67,15 +82,17 @@
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import FileDownloader from './FileDowloader.vue';
-import { useGuideStore } from 'src/stores/guide';
+import { useEventGuideStore } from 'src/stores/event/guide';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+import { EventInvoiceStatus } from 'src/enums/eventEnums';
 
 const showInvoiceGuideModal = defineModel<boolean>('showInvoiceGuideModal');
 
 const { t } = useI18n();
 
-const guideStore = useGuideStore();
-const { invoiceStep } = storeToRefs(guideStore);
+const eventGuideStore = useEventGuideStore();
+const { invoiceStep, invoicePdfUrl, invoiceStatus } =
+  storeToRefs(eventGuideStore);
 </script>
 
 <style scoped lang="scss">
