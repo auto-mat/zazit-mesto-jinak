@@ -107,7 +107,7 @@ export const useLoginStore = defineStore(
       await processLoginData(data);
 
       if (data) {
-        userEmail.value = payload.username;
+        userEmail.value = payload.email;
 
         await checkUserVerification();
         // check if user is verified

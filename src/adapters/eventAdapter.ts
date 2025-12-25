@@ -52,14 +52,16 @@ export interface ApiEventOrganizer {
   telephone: string;
 }
 
-type ApiEventContent = {
-  image: File | null;
-  main_content: string;
-  links: {
-    title: string;
-    url: string;
-  }[];
-};
+export interface ApiEventContent {
+  main_photo: string | null;
+  description: string;
+  url: string | null;
+  url_title: string | null;
+  url1: string | null;
+  url_title1: string | null;
+  url2: string | null;
+  url_title2: string | null;
+}
 
 type ApiEventProgramItem = {
   title: string;
@@ -142,10 +144,31 @@ export const eventsAdapter = {
   },
 
   toEventContent(eventData: ApiEventContent): EventContent {
+    const links = [];
+
+    if (eventData.url && eventData.url_title) {
+      links.push({
+        title: eventData.url_title,
+        url: eventData.url,
+      });
+    }
+    if (eventData.url1 && eventData.url_title1) {
+      links.push({
+        title: eventData.url_title1,
+        url: eventData.url1,
+      });
+    }
+    if (eventData.url2 && eventData.url_title2) {
+      links.push({
+        title: eventData.url_title2,
+        url: eventData.url2,
+      });
+    }
+
     return {
-      image: eventData.image,
-      mainContent: eventData.main_content,
-      links: eventData.links,
+      image: eventData.main_photo,
+      mainContent: eventData.description,
+      links,
     };
   },
 
