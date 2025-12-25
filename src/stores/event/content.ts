@@ -20,11 +20,9 @@ export const useEventContentStore = defineStore('eventsContent', () => {
     isEventContentLoading.value = true;
     const eventContentResponse = await getEventContentApi(slug);
 
-    if (!eventContentResponse) {
-      return;
+    if (eventContentResponse) {
+      eventContent.value = eventContentResponse;
     }
-
-    eventContent.value = eventContentResponse;
 
     isEventContentLoading.value = false;
   };

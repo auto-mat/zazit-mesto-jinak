@@ -53,15 +53,31 @@ export interface EventContentForm {
   links: Link[];
 }
 
+export interface EventCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface EventProgramItem {
-  title: string;
+  id: number | null;
+  name: string;
   description: string;
   timeFrom: string;
   timeTo: string;
-  categories: string[];
+  categories: EventCategory[];
 }
 
 export type EventProgram = EventProgramItem[];
+
+export interface EventProgramItemPayload {
+  id: number | null;
+  name: string;
+  description: string;
+  timeFrom: string;
+  timeTo: string;
+  categories: number[];
+}
 
 export interface EventOrganizer {
   id: number | null;

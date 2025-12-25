@@ -26,7 +26,6 @@
         }}</span>
       </div>
 
-      <!-- TODO sanitaze HTML -->
       <div
         v-if="eventContent?.mainContent"
         class="content"
@@ -70,7 +69,7 @@
         </h3>
       </div>
 
-      <!-- <event-program-table :rows="eventProgram" /> -->
+      <event-program-table :rows="eventProgram" />
     </div>
   </div>
 </template>
@@ -82,10 +81,11 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 
 // components
-// import EventProgramTable from '../program/EventProgramTable.vue';
+import EventProgramTable from '../program/EventProgramTable.vue';
 
 // stores
 import { useEventContentStore } from 'src/stores/event/content';
+import { useEventProgramStore } from 'src/stores/event/program';
 
 // config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
@@ -93,7 +93,9 @@ import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 const { t } = useI18n();
 
 const eventContentStore = useEventContentStore();
+const eventProgramStore = useEventProgramStore();
 const { eventContent } = storeToRefs(eventContentStore);
+const { eventProgram } = storeToRefs(eventProgramStore);
 
 const imageSrc = computed(() => {
   if (eventContent.value?.image) {
