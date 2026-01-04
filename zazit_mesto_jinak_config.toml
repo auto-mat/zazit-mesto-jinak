@@ -16,27 +16,11 @@ containerFormWidth = "600px"
 # container used for main layout
 containerContentWidth = "1024px"
 
-# manually selected height that shows reports without internal scrollbar on desktop
-dataReportIframeHeight = "1500px"
-
-borderRadiusButtonSmall = "8px"
-borderRadiusCard = "16px"
-borderRadiusCardSmall = "8px"
-maxWidthBanner = "876px"
-
-image = "image.png"
-width = "850px"
-title = "Title"
-subtitle = "Subtitle"
 
 notifyMessagePosition = "top"
-mobileBottomPanelVisibleItems = 3
-
-indexPageVisibleOfferCount = 6
 
 # LOCAL URLS
 
-urlLoginRegisterBackgroundImage = "/image/login-register-layout.webp"
 urlBaseBackend = "https://klub-zmj-test.dopracenakole.net"
 
 # EXTERNAL URLS
@@ -45,80 +29,34 @@ urlAutoMat = "https://auto-mat.cz"
 urlFreeSoftwareDefinition = "https://www.gnu.org/philosophy/free-sw.en.html"
 urlInstagram = "https://www.instagram.com/spolekautomat"
 urlAppDataPrivacyPolicy = "https://auto-mat.cz/zasady"
-urlAppDataTermsOfService = "https://dopracenakole.cz/obchodni-podminky"
+urlAppDataCodex = "https://zazitmestojinak.cz/kodex-zazit-mesto-jinak"
 urlTwitter = "https://twitter.com/spolekautomat"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
 urlZMJManual = "https://www.manual.zazitmestojinak.cz/"
 urlDonate = "https://auto-mat.cz/nakrmte-automat"
 
-# CHALLENGE DETAILS
+# Event details
 
-challengeMonth = "may"
-challengeStartDate = "2024-08-01T12:00:00"
-challengeLoggingWindowDays = 8
-defaultDistanceZero = "0.00"
-
-# Challenge registration
-entryFeePaymentMax = "2000"
-entryFeePaymentOptions = "850,1500"
-rtwbbChallengeEntryFeeOrderedProductName = "RTWBB challenge entry fee"
-rtwbbDonationOrderedProductName = "RTWBB donation"
-checkRegisterChallengeStatusIntervalSeconds = 20
-checkRegisterChallengeStatusMaxRepetitions = 5
-tripMaxFileUploadSizeMegabytes = 1
-
-
-# Merchandise
-iDontWantMerchandiseItemCode = "nic"
+eventDate = "28.09.2026"
+documentMaxFileUploadSizeMegabytes = 2
+imageMaxFileUploadSizeMegabytes = 2
 
 
 # API CONFIGURATION
 
 # apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiBase = "http://localhost:8000/api/"
-apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
-apiBaseIpAddress = "https://ipapi.co/json/"
 
-apiDefaultVersion = "v1"
-apiVersion2 = "v2"
 apiDefaultLang = "cs"
 
-urlApiCities = "cities/"
-urlApiCommuteMode = "commute_mode/"
-urlApiDiscountCoupon = "discount-coupon/"
-urlApiHasOrganizationAdmin = "has-organization-admin/"
 urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/"
-urlApiIsUserOrganizationAdmin = "is-user-organization-admin/"
 urlApiLogin = "auth/login/"
-urlApiRefreshToken = "token/refresh/"
-urlApiLoginGoogle = "auth/google/login/"
-urlApiOrganizations = "organizations/"
-urlApiLoginFacebook = "auth/facebook/login/"
-urlApiMerchandise = "merchandise/"
-urlApiMyOrganizationAdmin = "my-organization-admin/"
-urlApiMyTeam = "my_team/"
-urlApiOpenAppWithRestToken = "open-app-with-rest-token/"
-urlApiPayuCreateOrder = "payu-create-order/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"
 urlApiResendEmail = "auth/registration/send-confirmation-email/"
 urlApiConfirmEmail = "auth/registration/account-confirm-email/"
 urlApiResetPassword = "auth/password/reset/"
 urlApiResetPasswordConfirm = "auth/password/reset/confirm/"
-urlApiResultsByChallenge = "datareport-results-by-challenge/"
-urlApiResults = "datareport-results/"
-urlApiSendRegistrationConfirmationEmail = "auth/registration/send-confirmation-email/"
-urlApiSendTeamMembershipInvitationEmail = "send-team-membership-invitation-email/"
-urlApiStravaAuthAccount = "strava-auth/"
-urlApiStravaConnectAccount = "strava-connect/"
-urlApiStravaDisconnectAccount = "strava-disconnect/"
-urlApiStravaGetAccount = "strava_account/"
-urlApiStravaGetAccountSync = "strava_account/sync/"
-urlApiSubsidiaries = "subsidiaries/"
-urlApiTeams = "teams/"
-urlApiTrips = "trips/"
-urlApiChallengeRegistrationUser = "challenge/registration/user/"
-urlApiThisCampaign = "this_campaign/"
 
 urlApiUser = "zmj/user/"
 urlApiRegisterComplete = "zmj/registration/"
@@ -137,14 +75,7 @@ urlApiEventInvoice = "/invoice/"
 urlApiEventChecklist = "/checklist/"
 urlApiEventContentPublic = "/public-on-web/"
 
-checkIsEmailVerifiedInterval = 20                    # seconds
-checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
-feedRefreshCachedPostsIntervalHours = 24
-apiFeedMaxOffersNumber = 50
-apiFeedMaxPrizesNumber = 50
-apiTripsSourceApplicationId = 'RTWBB web app'
-apiTripsThirdPartyAppIdCyclers = "1"
-apiTripsThirdPartyAppIdNaKolePrahou = "3"
+checkIsEmailVerifiedInterval = 20 # seconds
 
 # DATE TIME FORMATS
 
@@ -197,25 +128,8 @@ numberFormatsAllLocales = '''
 # SECRETS
 
 secretString = "SECRET"
-googleLoginAppId = "SECRET"
-facebookLoginAppId = "SECRET"
-apiBaseRtwbbFeedBearerToken = "SECRET"
-
-# LIBRARIES
-
-facebookLoginSdkVersion = "v21.0"
-facebookLoginSdkOptions = '''
-{
-  "scope": "email,public_profile"
-}
-'''
 
 # MAP SETTINGS
 
-mapProjection = "EPSG:3857"
 mapCenterLon = "14.4378"
 mapCenterLat = "50.0755"
-mapZoom = "14"
-mapGeocodingApiUrl = "https://nominatim.openstreetmap.org/reverse"
-mapSourceRtwbb = "https://mnk-osm-tiles.dopracenakole.net/{z}/{x}/{y}.png"
-mapSourceOsm = "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"

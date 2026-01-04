@@ -10,6 +10,7 @@ import { cloneDeep } from 'lodash';
 import { useUserStore } from './user';
 import { CompanyType, RegisterForm } from 'src/types/Register';
 import { EventSpaceArea, EventSpaceType } from 'src/enums/eventEnums';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 export const useRegisterStore = defineStore('register', () => {
   const router = useRouter();
@@ -28,11 +29,9 @@ export const useRegisterStore = defineStore('register', () => {
   const password = ref('');
   const passwordConfirm = ref('');
 
-  // TODO temporary flag
   const isRegistratonComplete = ref(false);
 
-  // TODO temporary date
-  const eventDate = '28.09.2026';
+  const eventDate = zazitMestoJinakConfig.eventDate;
 
   const companyTypes = ref<CompanyType[]>([]);
 

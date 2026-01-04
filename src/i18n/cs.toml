@@ -50,6 +50,7 @@ messageDateInvalid = "Vyplňte prosím platné datum"
 messageTimeEarlier = "Čas od musí být dřívější než čas do"
 messageTimeEqual = "Čas od nesmí být stejný jako čas do"
 messageTimeLater = "Čas do musí být pozdější než čas od"
+messageMaxFileUploadSize = "Soubor překročil maximální velikost."
 
 [button]
 edit = "Upravit"

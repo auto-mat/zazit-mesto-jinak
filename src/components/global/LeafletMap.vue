@@ -3,20 +3,25 @@
 </template>
 
 <script setup lang="ts">
+// libraries
 import { computed, onMounted } from 'vue';
 import leaflet from 'leaflet';
 
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// icons
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 const props = defineProps({
   latitude: {
     type: Number,
-    default: 50.073658, // Prague
+    default: zazitMestoJinakConfig.mapCenterLat,
   },
   longitude: {
     type: Number,
-    default: 14.41854, // Prague
+    default: zazitMestoJinakConfig.mapCenterLon, // Prague
   },
   marker: {
     type: Boolean,

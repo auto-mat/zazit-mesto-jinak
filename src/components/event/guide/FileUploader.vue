@@ -7,8 +7,10 @@
       clearable
       v-model="model"
       accept=".pdf"
+      :max-file-size="maxFileSize"
       class="q-mt-sm"
       id="form-image"
+      @rejected="onRejected"
     >
       <template v-slot:prepend>
         <q-icon name="attach_file" />
@@ -28,8 +30,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+// libraries
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Notify } from 'quasar';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const emit = defineEmits(['uploadFile']);
 
@@ -37,8 +44,19 @@ const { t } = useI18n();
 
 const model = ref<File | null>(null);
 
+const maxFileSize = computed(
+  () => zazitMestoJinakConfig.documentMaxFileUploadSizeMegabytes * 1024,
+);
+
 const uploadFile = (): void => {
   emit('uploadFile', model.value);
+};
+
+const onRejected = (): void => {
+  Notify.create({
+    message: t('form.messageMaxFileUploadSize'),
+    color: 'negative',
+  });
 };
 </script>
 

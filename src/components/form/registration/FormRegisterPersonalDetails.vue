@@ -87,7 +87,7 @@
         {{ t('register.personalDetails.labelPrivacyConsent') }}
         <!-- Link: terms -->
         <a
-          href="https://auto-mat.cz/zasady"
+          :href="zazitMestoJinakConfig.urlAppDataPrivacyPolicy"
           target="_blank"
           class="text-primary"
           @click.stop
@@ -104,7 +104,7 @@
         {{ t('register.personalDetails.labelCodexTerms') }}
         <!-- Link: codex -->
         <a
-          href="https://zazitmestojinak.cz/kodex-zazit-mesto-jinak"
+          :href="zazitMestoJinakConfig.urlAppDataCodex"
           target="_blank"
           class="text-primary"
           @click.stop
@@ -156,6 +156,9 @@ import { FormOption } from 'src/types/Form';
 
 // enums
 import { UserGender } from 'src/enums/userEnums';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const emit = defineEmits(['submit']);
 
