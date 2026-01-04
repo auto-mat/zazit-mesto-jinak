@@ -30,7 +30,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['global_vars', 'google_login', 'i18n', 'logger', 'pinia', 'swiper'],
+    boot: ['global_vars', 'i18n', 'pinia'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -81,18 +81,7 @@ export default defineConfig((ctx) => {
       // distDir
 
       extendViteConf(viteConf) {
-        // Fix dynamic module import error during Cypress component tests on the OS MS Windows
-        viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
         viteConf.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
-      },
-
-      viteVuePluginOptions: {
-        template: {
-          compilerOptions: {
-            isCustomElement: (tag) =>
-              ['swiper-slide', 'swiper-container'].includes(tag),
-          },
-        },
       },
 
       vitePlugins: [
