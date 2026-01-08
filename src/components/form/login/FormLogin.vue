@@ -27,6 +27,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FormLogin Component
+ *
+ * The `FormLogin` displays the login form.
+ *
+ * @description * Use this component to display the login form.
+ *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ *
+ * @example
+ * <form-login @submit="onSubmit" />
+ *
+ */
+
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -79,11 +79,33 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * InvoiceGuideModal component
+ *
+ * The `InvoiceGuideModal` component is used to display the invoice guide modal.
+ *
+ * @description * Use this component to display the invoice guide modal.
+ *
+ * @props
+ * - `showInvoiceGuideModal` (boolean, required): Whether the invoice guide modal is shown.
+ *   It should be of type `boolean`.
+ *
+ * @example
+ * <invoice-guide-modal v-model="showInvoiceGuideModal" />
+ */
+
+// libraries
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// components
 import FileDownloader from './FileDowloader.vue';
+
+// stores
 import { useEventGuideStore } from 'src/stores/event/guide';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// enums
 import { EventInvoiceStatus } from 'src/enums/eventEnums';
 
 const showInvoiceGuideModal = defineModel<boolean>('showInvoiceGuideModal');

@@ -28,6 +28,17 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FormRegister Component
+ *
+ * The `FormRegister` displays the simple register form.
+ *
+ * @description * Use this component to display the simple register form.
+ *
+ * @example
+ * <form-register  />
+ */
+
 // libraries
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';

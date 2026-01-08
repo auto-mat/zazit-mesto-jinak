@@ -105,7 +105,7 @@
  *
  * @description * Use this component to display event content form.
  *
- * @emits
+ * @events
  * - `save`: Emitted when the form is submitted.
  * - `reset`: Emitted when the form is reset.
  *

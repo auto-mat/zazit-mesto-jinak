@@ -30,6 +30,25 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * DeleteModal component
+ *
+ * The `DeleteModal` component is used to display a delete modal.
+ *
+ * @description * Use this component to display a delete modal.
+ *
+ * @props
+ * - `isSaving` (boolean, default: false): Whether the saving is in progress.
+ *
+ * @events
+ * - `confirm`: Emitted when the confirm button is clicked.
+ * - `cancel`: Emitted when the cancel button is clicked.
+ *
+ * @example
+ * <delete-modal :is-saving="isSaving" @confirm="onConfirm" @cancel="onCancel" />
+ */
+
+// libraries
 import { useI18n } from 'vue-i18n';
 
 defineProps({

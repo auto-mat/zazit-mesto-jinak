@@ -3,6 +3,26 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * LeafletMap component
+ *
+ * The `LeafletMap` component is used to display a leaflet map.
+ *
+ * @description * Use this component to display a leaflet map.
+ *
+ * @props
+ * - `latitude` (number, default: zazitMestoJinakConfig.mapCenterLat): The latitude of the map center.
+ * - `longitude` (number, default: zazitMestoJinakConfig.mapCenterLon): The longitude of the map center.
+ * - `marker` (boolean, default: false): Whether to display a marker on the map.
+ * - `editable` (boolean, default: false): Whether to make the map editable.
+ *
+ * @events
+ * - `setCoords`: Emitted when the coordinates are set.
+ *
+ * @example
+ * <leaflet-map :latitude="latitude" :longitude="longitude" marker editable @set-coords="onSetCoords" />
+ */
+
 // libraries
 import { computed, onMounted } from 'vue';
 import leaflet from 'leaflet';
@@ -17,7 +37,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 const props = defineProps({
   latitude: {
     type: Number,
-    default: zazitMestoJinakConfig.mapCenterLat,
+    default: zazitMestoJinakConfig.mapCenterLat, // Prague
   },
   longitude: {
     type: Number,

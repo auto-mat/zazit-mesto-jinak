@@ -24,6 +24,19 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * BackButton component
+ *
+ * The `BackButton` component is used to display a back button.
+ *
+ * @description * Use this component to display a back button.
+ *
+ * @events
+ * - `back`: Emitted when the back button is clicked.
+ *
+ * @example
+ * <back-button @back="goBack" />
+ */
 import { useI18n } from 'vue-i18n';
 
 defineEmits(['back']);

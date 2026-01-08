@@ -8,9 +8,29 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventCard component
+ *
+ * The `EventCard` component is used to display the event card.
+ *
+ * @description * Use this component to display the event card.
+ *
+ * @props
+ * - `event` (EventMeta, required): The event.
+ *   It should be of type `EventMeta`.
+ *
+ * @example
+ * <event-card :event="event" />
+ */
+
+// libraries
 import { PropType } from 'vue';
-import { EventMeta } from 'src/types/Event';
 import { useRouter } from 'vue-router';
+
+// types
+import { EventMeta } from 'src/types/Event';
+
+// config
 import { routesConf } from 'src/router/routes_conf';
 
 const props = defineProps({

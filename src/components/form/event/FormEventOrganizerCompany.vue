@@ -82,8 +82,12 @@
  *
  * @description * Use this component to display event organizer company form.
  *
+ * @events
+ * - `save`: Emitted when the event organizer company is saved.
+ * - `reset`: Emitted when the event organizer company is reset.
+ *
  * @example
- * <form-event-organizer-company />
+ * <form-event-organizer-company @save="onSave" @reset="onReset" />
  *
  */
 

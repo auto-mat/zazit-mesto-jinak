@@ -26,6 +26,20 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FormResetPassword Component
+ *
+ * The `FormResetPassword` displays the reset password form.
+ *
+ * @description * Use this component to display the reset password form.
+ *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ *
+ * @example
+ * <form-reset-password @submit="onSubmit" />
+ */
+
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -63,11 +63,15 @@
 <script setup lang="ts">
 /**
  * News box component
- * Displays the news box with the news preferences
+ *
+ * The `NewsBox` component is used to display the news box with the news preferences.
+ *
+ * @description * Use this component to display the news box with the news preferences.
  *
  * @example
  * <news-box />
  */
+
 // libraries
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';

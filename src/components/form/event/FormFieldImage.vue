@@ -53,7 +53,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-image v-model="imageFile" />
+ * <form-field-image v-model="imageFile" :default-image="defaultImage" />
  *
  */
 

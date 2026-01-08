@@ -24,6 +24,16 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * DrawerHeader component
+ *
+ * The `DrawerHeader` component is used to display the drawer header.
+ *
+ * @description * Use this component to display the drawer header.
+ *
+ * @example
+ * <drawer-header />
+ */
 import { storeToRefs } from 'pinia';
 import { useUserStore } from 'src/stores/user';
 import { routesConf } from 'src/router/routes_conf';

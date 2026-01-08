@@ -23,6 +23,17 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventTierCard component
+ *
+ * The `EventTierCard` component is used to display the event tier card.
+ *
+ * @description * Use this component to display the event tier card.
+ *
+ * @example
+ * <event-tier-card />
+ */
+
 // libraries
 import { useI18n } from 'vue-i18n';
 

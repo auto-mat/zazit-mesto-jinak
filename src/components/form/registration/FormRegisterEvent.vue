@@ -197,8 +197,12 @@
  *
  * @description * Use this component to display registration form.
  *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ * - `back`: Emitted when the form is reset.
+ *
  * @example
- * <form-register-event />
+ * <form-register-event @submit="onSubmit" @back="onBack" />
  */
 
 // libraries

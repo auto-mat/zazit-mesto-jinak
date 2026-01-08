@@ -56,13 +56,29 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * ContentWebGuideModal component
+ *
+ * The `ContentWebGuideModal` component is used to display the content web guide modal.
+ *
+ * @description * Use this component to display the content web guide modal.
+ *
+ * @example
+ * <content-web-guide-modal />
+ */
+
+// libraries
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
-import { useEventGuideStore } from 'src/stores/event/guide';
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
-import { routesConf } from 'src/router/routes_conf';
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
+
+// stores
+import { useEventGuideStore } from 'src/stores/event/guide';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
 
 const showContentWebGuideModal = defineModel<boolean>(
   'showContentWebGuideModal',

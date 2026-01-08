@@ -1,6 +1,6 @@
 <template>
   <!-- Form: register personal details -->
-  <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md text-grey-10">
+  <q-form @submit="onSubmit" class="q-gutter-md text-grey-10">
     <div class="row q-col-gutter-md q-mb-lg">
       <div class="column">
         <label class="text-caption text-bold q-mb-xs">
@@ -134,8 +134,12 @@
  *
  * @description * Use this component to display registration form.
  *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ * - `reset`: Emitted when the form is reset.
+ *
  * @example
- * <form-register-personal-details />
+ * <form-register-personal-details @submit="onSubmit" @reset="onReset" />
  */
 
 // libraries
@@ -191,9 +195,5 @@ const optionsGender: FormOption[] = [
 
 const onSubmit = (): void => {
   emit('submit');
-};
-
-const onReset = (): void => {
-  // noop
 };
 </script>

@@ -10,6 +10,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * ProgressBar component
+ *
+ * The `ProgressBar` component is used to display a step progress bar.
+ *
+ * @description * Use this component to display a step progress bar.
+ *
+ * @props
+ * - `totalSteps` (number, required): The total number of steps.
+ * - `doneSteps` (number, required): The number of done steps.
+ *
+ * @example
+ * <progress-bar :totalSteps="totalSteps" :doneSteps="doneSteps" />
+ */
+
 defineProps({
   totalSteps: {
     type: Number,

@@ -24,10 +24,30 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventOrganizerPerson component
+ *
+ * The `EventOrganizerPerson` component is used to display the event organizer person.
+ *
+ * @description * Use this component to display the event organizer person.
+ *
+ * @props
+ * - `organizer` (EventOrganizer, required): The event organizer.
+ *   It should be of type `EventOrganizer`.
+ *
+ * @example
+ * <event-organizer-person :organizer="organizer" />
+ */
+
+// libraries
 import { PropType } from 'vue';
-import EventOrganizerRow from './EventOrganizerRow.vue';
-import { EventOrganizer } from 'src/types/Event';
 import { useI18n } from 'vue-i18n';
+
+// components
+import EventOrganizerRow from './EventOrganizerRow.vue';
+
+// types
+import { EventOrganizer } from 'src/types/Event';
 
 const { t } = useI18n();
 

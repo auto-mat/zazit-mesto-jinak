@@ -39,10 +39,39 @@
 </template>
 
 <script setup lang="ts">
-import { useEventGuideStore } from 'src/stores/event/guide';
-import { ChecklistItem } from 'src/types/Event';
+/**
+ * Checklist component
+ *
+ * The `Checklist` component is used to display the checklist for an event.
+ *
+ * @description * Use this component to display the checklist for an event.
+ *
+ * @props
+ * - `title` (string, required): The title of the checklist.
+ * - `checklist` (array, required): The checklist items.
+ * - `editable` (boolean, default: false): Whether the checklist is editable.
+ *
+ * @events
+ * - `edit`: Emitted when the checklist is edited.
+ *
+ * @example
+ * <checklist
+ *   :title="t('event.guide.checklist.titleRecommendedChecklist')"
+ *   :checklist="checklist"
+ *   :editable="false"
+ *   @edit="showEditChecklistModal = true"
+ * />
+ */
+
+// libraries
 import { PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+// stores
+import { useEventGuideStore } from 'src/stores/event/guide';
+
+// types
+import { ChecklistItem } from 'src/types/Event';
 
 defineProps({
   title: {

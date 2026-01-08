@@ -30,6 +30,24 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FileUploader component
+ *
+ * The `FileUploader` component is used to upload the event PDF file.
+ *
+ * @description * Use this component to upload the event PDF file.
+ *
+ * @props
+ * - `modelValue` (File | null, required): The file object representing the uploaded file.
+ *   It should be of type `File | null`.
+ *
+ * @events
+ * - `uploadFile`: Emitted when the file is uploaded.
+ *
+ * @example
+ * <file-uploader @uploadFile="uploadFile" />
+ */
+
 // libraries
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';

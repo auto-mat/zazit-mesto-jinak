@@ -78,13 +78,37 @@
 </template>
 
 <script setup lang="ts">
-import FormFieldText from 'src/components/form/global/FormFieldText.vue';
-import FormFieldPhone from 'src/components/form/global/FormFieldPhone.vue';
-import { useI18n } from 'vue-i18n';
-import { useUserStore } from 'src/stores/user';
+/**
+ * FormProfile Component
+ *
+ * The `FormProfile` displays the profile form.
+ *
+ * @description * Use this component to display the profile form.
+ *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ * - `reset`: Emitted when the form is reset.
+ *
+ * @example
+ * <form-profile @submit="onSubmit" @reset="onReset" />
+ */
+
+// libraries
 import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
+
+// stores
+import { useUserStore } from 'src/stores/user';
+
+// components
+import FormFieldText from '../global/FormFieldText.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
+import LanguageSwitcher from '../global/LanguageSwitcher.vue';
+
+// types
 import { FormOption } from 'src/types/Form';
-import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
+
+// enums
 import { UserGender, UserLanguage } from 'src/enums/userEnums';
 
 const emit = defineEmits(['submit', 'reset']);
