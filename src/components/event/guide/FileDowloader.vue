@@ -34,15 +34,15 @@
 // libraries
 import { computed } from 'vue';
 
-// config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+// utils
+import { getMultimediaUrl } from 'src/utils/get_multimedia_file_url';
 
 const props = defineProps<{
   pdfUrl: string;
   text: string;
 }>();
 
-const url = computed(() => zazitMestoJinakConfig.urlBaseBackend + props.pdfUrl);
+const url = computed(() => getMultimediaUrl(props.pdfUrl));
 </script>
 
 <style scoped lang="scss">

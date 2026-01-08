@@ -97,8 +97,8 @@ import EventProgramTable from '../program/EventProgramTable.vue';
 import { useEventContentStore } from 'src/stores/event/content';
 import { useEventProgramStore } from 'src/stores/event/program';
 
-// config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+// utils
+import { getMultimediaUrl } from 'src/utils/get_multimedia_file_url';
 
 const { t } = useI18n();
 
@@ -109,7 +109,7 @@ const { eventProgram } = storeToRefs(eventProgramStore);
 
 const imageSrc = computed(() => {
   if (eventContent.value?.image) {
-    return zazitMestoJinakConfig.urlBaseBackend + eventContent.value.image;
+    return getMultimediaUrl(eventContent.value.image);
   }
   return 'image-placeholder.jpg';
 });

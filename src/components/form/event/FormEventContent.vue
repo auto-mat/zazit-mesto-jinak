@@ -130,8 +130,8 @@ import { Link } from 'src/types/Event';
 // stores
 import { useEventContentStore } from 'src/stores/event/content';
 
-// config
-import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+// utils
+import { getMultimediaUrl } from 'src/utils/get_multimedia_file_url';
 
 const emit = defineEmits(['save', 'reset']);
 
@@ -147,7 +147,7 @@ const {
 
 const defaultImageSrc = computed(() => {
   if (eventContent.value?.image) {
-    return zazitMestoJinakConfig.urlBaseBackend + eventContent.value.image;
+    return getMultimediaUrl(eventContent.value.image);
   }
   return 'image-placeholder.jpg';
 });
