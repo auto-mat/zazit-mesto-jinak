@@ -17,6 +17,7 @@
     </template>
   </q-page>
 </template>
+;
 
 <script setup lang="ts">
 /**
@@ -47,7 +48,8 @@ const router = useRouter();
 const isLoading = computed(() => userStore.loading);
 const userDetails = computed(() => userStore.userDetails);
 
-const onSubmit = (): void => {
+const onSubmit = async (): Promise<void> => {
+  await userStore.updateUserDetails();
   router.push({ name: routesConf['profile']['children']['name'] });
 };
 

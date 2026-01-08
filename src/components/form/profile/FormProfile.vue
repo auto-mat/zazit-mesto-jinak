@@ -141,8 +141,7 @@ const onUpdateLocale = (locale: UserLanguage): void => {
   userDetailsForm.value.languagePreference = locale;
 };
 
-const onSubmit = async (): Promise<void> => {
-  await userStore.updateUserDetails();
+const onSubmit = (): void => {
   emit('submit');
 };
 
