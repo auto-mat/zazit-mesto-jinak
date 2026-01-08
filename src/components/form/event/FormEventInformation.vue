@@ -81,7 +81,7 @@ import { storeToRefs } from 'pinia';
 import { watch } from 'vue';
 
 // stores
-import { useEventStore } from 'src/stores/event';
+import { useEventInformationStore } from 'src/stores/event/information';
 
 // components
 import FormFieldText from 'src/components/form/global/FormFieldText.vue';
@@ -96,12 +96,12 @@ const emit = defineEmits(['save']);
 
 const { t } = useI18n();
 
-const eventStore = useEventStore();
+const eventInformationStore = useEventInformationStore();
 const {
   eventInformationForm,
   isEventInformationFormDirty,
   isEventInformationSaving,
-} = storeToRefs(eventStore);
+} = storeToRefs(eventInformationStore);
 
 const setCoords = (latitude: number, longitude: number): void => {
   eventInformationForm.value.coordinates.latitude = latitude;

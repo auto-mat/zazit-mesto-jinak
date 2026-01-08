@@ -73,7 +73,7 @@ const routesConf: RoutesConf = {
     },
   },
   profile_edit: {
-    path: '/profile/edit',
+    path: 'edit',
     children: {
       fullPath: '/profile/edit',
       name: 'profile-edit',
@@ -101,7 +101,7 @@ const routesConf: RoutesConf = {
     },
   },
   event_information_edit: {
-    path: '/event/:slug/information/edit',
+    path: 'edit',
     children: {
       fullPath: '/event/:slug/information/edit',
       name: 'event-information-edit',
@@ -115,7 +115,7 @@ const routesConf: RoutesConf = {
     },
   },
   event_web_content_edit: {
-    path: '/event/:slug/web-content/edit',
+    path: 'edit',
     children: {
       fullPath: '/event/:slug/web-content/edit',
       name: 'event-web-content-edit',
@@ -129,7 +129,7 @@ const routesConf: RoutesConf = {
     },
   },
   event_program_edit: {
-    path: '/event/:slug/program/edit',
+    path: 'edit',
     children: {
       fullPath: '/event/:slug/program/edit',
       name: 'event-program-edit',
@@ -143,10 +143,17 @@ const routesConf: RoutesConf = {
     },
   },
   event_organizers_edit: {
-    path: '/event/:slug/organizers/edit',
+    path: 'edit',
     children: {
       fullPath: '/event/:slug/organizers/edit',
       name: 'event-organizers-edit',
+    },
+  },
+  event_organizer_company_edit: {
+    path: 'company/edit',
+    children: {
+      fullPath: '/event/:slug/organizers/company/edit',
+      name: 'event-organizer-company-edit',
     },
   },
   // profile_notifications: {

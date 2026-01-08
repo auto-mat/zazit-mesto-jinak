@@ -18,23 +18,26 @@
       </div>
 
       <div class="q-pt-md">
-        <div class="q-mb-xl">
+        <form-event-organizer-company @save="onSave" @reset="onBack" />
+        <div>
           <div class="row justify-between items-center q-mb-md">
             <h2 class="text-body1 text-weight-bold">
-              {{ t('event.organizers.titleCompany') }}
+              {{ t('event.organizers.titleOtherOrganizers') }}
             </h2>
           </div>
-          <event-organizer-company-preview v-if="company" :company />
-          <div v-else class="text-grey-6">
-            {{ t('event.organizers.noCompany') }}
+          <div v-for="organizer in eventOrganizers" :key="organizer.email">
+            <event-organizer-person :organizer="organizer" />
+            <q-separator spaced="xl" />
+          </div>
+          <div v-if="eventOrganizers.length === 0" class="text-grey-6">
+            {{ t('event.organizers.noOrganizers') }}
           </div>
         </div>
-        <form-event-organizers @save="onSave" @reset="onBack" />
       </div>
     </div>
     <discard-changes-modal
       v-model="discardChangesModal"
-      :is-saving="isEventOrganizersSaving"
+      :is-saving="isEventOrganizerCompanySaving"
       @cancel="discardChangesModal = false"
       @discard-changes="discardChanges"
       @save="onSave"
@@ -44,10 +47,17 @@
 
 <script setup lang="ts">
 // libraries
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
+
+// components
+import BackButton from 'src/components/buttons/BackButton.vue';
+import FormEventOrganizerCompany from 'src/components/form/event/FormEventOrganizerCompany.vue';
+import EventOrganizerPerson from 'src/components/event/organizers/EventOrganizerPerson.vue';
+// eslint-disable-next-line no-unused-vars
+import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -55,13 +65,6 @@ import { useEventOrganizersStore } from 'src/stores/event/organizers';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
-
-// components
-import FormEventOrganizers from 'src/components/form/event/FormEventOrganizers.vue';
-import BackButton from 'src/components/buttons/BackButton.vue';
-import EventOrganizerCompanyPreview from 'src/components/event/organizers/EventOrganizerCompanyPreview.vue';
-// eslint-disable-next-line no-unused-vars
-import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
 
 const { t } = useI18n();
 
@@ -72,10 +75,10 @@ const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 const eventOrganizersStore = useEventOrganizersStore();
 const {
-  eventOrganizerCompany: company,
   isEventOrganizersLoading,
   isEventOrganizerCompanyLoading,
-  isEventOrganizersSaving,
+  eventOrganizers,
+  isEventOrganizerCompanySaving,
   isEventOrganizersFormDirty,
 } = storeToRefs(eventOrganizersStore);
 
@@ -83,6 +86,7 @@ const eventName = computed(() => eventStore.getEventName(slug.value));
 
 const discardChangesModal = ref(false);
 
+// watch the params of the route to fetch the data again
 watch(
   slug,
   () => {
@@ -91,14 +95,26 @@ watch(
   { immediate: true },
 );
 
+onMounted(async () => {
+  await eventOrganizersStore.getCompanyTypes();
+});
+
 const onSave = async (): Promise<void> => {
-  const success = await eventOrganizersStore.updateEventOrganizers();
+  const success = await eventOrganizersStore.updateEventOrganizerCompany();
   if (success) {
     router.push({
       name: routesConf['event_organizers']['children']['name'],
       params: { slug: slug.value as string },
     });
   }
+};
+
+const discardChanges = (): void => {
+  eventOrganizersStore.resetEventOrganizerCompanyForm();
+  router.push({
+    name: routesConf['event_organizers']['children']['name'],
+    params: { slug: slug.value as string },
+  });
 };
 
 const onBack = (): void => {
@@ -110,13 +126,5 @@ const onBack = (): void => {
       params: { slug: slug.value as string },
     });
   }
-};
-
-const discardChanges = (): void => {
-  eventOrganizersStore.resetEventOrganizersForm();
-  router.push({
-    name: routesConf['event_organizers']['children']['name'],
-    params: { slug: slug.value as string },
-  });
 };
 </script>

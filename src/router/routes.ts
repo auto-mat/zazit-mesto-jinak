@@ -1,6 +1,3 @@
-// libraries
-// import { Screen } from 'quasar';
-
 // config
 import { routesConf } from './routes_conf';
 
@@ -42,15 +39,8 @@ const routes: RouteRecordRaw[] = [
         name: routesConf['profile']['children']['name'],
         component: () => import('pages/profile/ProfilePage.vue'),
       },
-    ],
-  },
-  // profile edit
-  {
-    path: routesConf['profile_edit']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
+        path: routesConf['profile_edit']['path'],
         name: routesConf['profile_edit']['children']['name'],
         component: () => import('pages/profile/ProfileEditPage.vue'),
       },
@@ -67,15 +57,8 @@ const routes: RouteRecordRaw[] = [
         component: () =>
           import('pages/event/information/EventInformationPage.vue'),
       },
-    ],
-  },
-  // event information edit
-  {
-    path: routesConf['event_information_edit']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
+        path: routesConf['event_information_edit']['path'],
         name: routesConf['event_information_edit']['children']['name'],
         component: () =>
           import('pages/event/information/EventInformationEditPage.vue'),
@@ -105,18 +88,17 @@ const routes: RouteRecordRaw[] = [
         component: () =>
           import('pages/event/organizers/EventOrganizersPage.vue'),
       },
-    ],
-  },
-  // event organizers edit
-  {
-    path: routesConf['event_organizers_edit']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
+        path: routesConf['event_organizers_edit']['path'],
         name: routesConf['event_organizers_edit']['children']['name'],
         component: () =>
           import('pages/event/organizers/EventOrganizersEditPage.vue'),
+      },
+      {
+        path: routesConf['event_organizer_company_edit']['path'],
+        name: routesConf['event_organizer_company_edit']['children']['name'],
+        component: () =>
+          import('pages/event/organizers/EventOrganizerCompanyEditPage.vue'),
       },
     ],
   },
@@ -130,15 +112,8 @@ const routes: RouteRecordRaw[] = [
         name: routesConf['event_web_content']['children']['name'],
         component: () => import('pages/event/content/EventContentPage.vue'),
       },
-    ],
-  },
-  // event web content edit
-  {
-    path: routesConf['event_web_content_edit']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
+        path: routesConf['event_web_content_edit']['path'],
         name: routesConf['event_web_content_edit']['children']['name'],
         component: () => import('pages/event/content/EventContentEditPage.vue'),
       },
@@ -154,15 +129,8 @@ const routes: RouteRecordRaw[] = [
         name: routesConf['event_program']['children']['name'],
         component: () => import('pages/event/program/EventProgramPage.vue'),
       },
-    ],
-  },
-  // event program edit
-  {
-    path: routesConf['event_program_edit']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
+        path: routesConf['event_program_edit']['path'],
         name: routesConf['event_program_edit']['children']['name'],
         component: () => import('pages/event/program/EventProgramEditPage.vue'),
       },
