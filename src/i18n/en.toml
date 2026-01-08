@@ -50,6 +50,7 @@ messageDateInvalid = "Please fill in a valid date"
 messageTimeEarlier = "Time from has to be earlier than time to"
 messageTimeEqual = "Time from cannot be same as time to"
 messageTimeLater = "Time to has to be later than time from"
+messageMaxFileUploadSize = "File exceeded maximum size."
 
 [button]
 edit = "Edit"
@@ -201,6 +202,9 @@ buttonCancel = "Cancel"
 textEmailChange = "Are you sure about changing email? Administrators will contact you soon."
 buttonYes = "Yes"
 
+[user]
+newsPreferencesUpdated = "Your news preferences have been successfully updated."
+
 [event]
 titleStatus = "Status of your event"
 titleInformation = "Information"
@@ -215,6 +219,7 @@ step1.description = "The agreement is being created. You will be informed by ema
 step2.title = "Agreement created"
 step3.title = "Waiting for signature"
 step3.description = "Here you have the agreement for download. We ask you to sign it and then upload it back to the system."
+step3.rejectedDescription = "The signed agreement has been rejected. We ask you to correct it and then upload it back to the system."
 step3.uploadTitle = "Upload signed agreement"
 step3.uploadButton = "Upload"
 step3.downloadTitle = "Agreement for download"
@@ -222,6 +227,8 @@ step4.title = "Signed agreement uploaded"
 step4.description = "The agreement has been successfully uploaded. Now waiting for confirmation and signing of the agreement by the AutoMat association."
 step5.title = "Agreement completed"
 step5.description = "The agreement has been successfully completed. Here you have the agreement for download."
+step5.downloadTitle = "Completed agreement for download"
+successUpload = "Agreement has been successfully uploaded."
 
 [event.guide.invoice]
 title = "Invoice"
@@ -230,6 +237,8 @@ step1.description = "The invoice is being created. You will be informed by email
 step2.title = "Invoice created and sent to your email"
 step3.title = "Waiting for payment"
 step3.description = "Here you have the invoice for download. We ask you to pay it."
+step3.remindedDescription = "Invoice reminder sent"
+step3.overdueDescription = "The invoice is overdue and unpaid. Please pay it immediately!"
 step3.downloadTitle = "Invoice for download"
 step4.title = "Invoice paid"
 step4.description = "The invoice has been successfully paid. Here is the access to the shared folder with materials for your location:"
@@ -251,9 +260,11 @@ titleRecommendedChecklist = "Recommended"
 titleOwnChecklist = "My TO DO list"
 edit = "Edit"
 addItemPlaceholder = "Add new item"
+addItem = "Add"
 cancel = "Cancel"
 save = "Save"
-noItems = "You don't have any items in the checklist. You can add them."
+noItems = "We didn't find any recommended items."
+noItemsEditable = "You don't have any items in the checklist. You can add them."
 
 [event.information]
 labelName = "Name"
@@ -289,8 +300,10 @@ labelLinkTitle = "Link title"
 labelLinkUrl = "URL"
 buttonAddLink = "Add new link"
 buttonSave = "Save"
+buttonReset = "Cancel"
 altImage = "Main image for event website"
 empty = "Not filled in"
+successUpdate = "Content on ZMJ website has been successfully updated"
 
 [event.program]
 labelTitle = "Title"
@@ -298,24 +311,29 @@ labelDescription = "Description"
 labelTimeFrom = "From"
 labelTimeTo = "To"
 labelCategories = "Categories"
+rowsPerPageLabel = "Items per page"
 titleExistingProgramItems = "Existing program items"
 titleAddProgramItem = "Add program item"
 titleEditProgramItem = "Edit program item"
 buttonSave = "Save"
 buttonReset = "Cancel"
 noData = "No program items available"
+successAdd = "Program item has been successfully added"
+successUpdate = "Program item has been successfully updated"
+successDelete = "Program item has been successfully deleted"
 
 [event.program.category]
-theater = "Theater"
-forchildren = "For children"
-film = "Film"
 workshop = "Workshop"
-food = "Food"
-music = "Music"
+theater = "Theater"
 games = "Games"
-dance = "Dance"
-sport = "Sport"
 sale = "Sale"
+for-children = "For children"
+food = "Food"
+concert = "Concert"
+dance = "Dance"
+movie = "Movie"
+music = "Music"
+sports = "Sports"
 other = "Other"
 
 [event.organizers]
@@ -339,7 +357,8 @@ buttonCancel = "Cancel"
 buttonSave = "Save"
 noCompany = "No organizational unit specified"
 noOrganizers = "No other organizers specified"
-successUpdate = "Organizers information has been successfully updated"
+successOrganizersUpdate = "Organizers information has been successfully updated"
+successCompanyUpdate = "Organizational unit information has been successfully updated"
 
 [event.spaceType]
 none = "None"
@@ -366,7 +385,18 @@ buttonCancel = "Cancel"
 buttonDiscard = "Discard"
 buttonSave = "Save"
 
+[deleteModal]
+title = "Do you really want to delete the item?"
+description = "The item will be permanently deleted."
+buttonCancel = "Cancel"
+buttonConfirm = "Delete"
+
 [error]
 clientSideError = "Client-side error"
 serverSideError = "Server-side error"
 invalidConfirmationLink = "Email confirmation link is invalid."
+
+[error.notFound]
+title = "Page not found"
+description = "The page you are looking for does not exist."
+homeButton = "Go to home page"
