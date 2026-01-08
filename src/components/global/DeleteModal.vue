@@ -50,7 +50,7 @@ const { t } = useI18n();
 .actions {
   gap: 8px;
 
-  :deep(.q-btn--rectangle) {
+  button {
     padding: 4px 16px;
   }
 }

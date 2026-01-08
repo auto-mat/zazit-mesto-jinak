@@ -61,33 +61,33 @@ const { eventProgram, isEventProgramSaving, selectedEventProgramItem } =
 
 const deleteModal = ref(false);
 
-const editProgramItem = (item: EventProgramItem) => {
+const editProgramItem = (item: EventProgramItem): void => {
   eventProgramStore.selectEventProgramItem(item);
 };
 
 const deletedProgramItem = ref<EventProgramItem | null>(null);
-const deleteProgramItem = async (item: EventProgramItem) => {
+const deleteProgramItem = async (item: EventProgramItem): Promise<void> => {
   deletedProgramItem.value = item;
   deleteModal.value = true;
 };
 
-const onDelete = async () => {
+const onDelete = async (): Promise<void> => {
   await eventProgramStore.deleteProgramItem(deletedProgramItem.value);
   deleteModal.value = false;
 };
 
-const onCancel = () => {
+const onCancel = (): void => {
   deleteModal.value = false;
 };
 
 const { setVerticalScrollPosition } = scroll;
 
-const onSave = async () => {
+const onSave = async (): Promise<void> => {
   await eventProgramStore.addOrUpdateProgramItem();
   setVerticalScrollPosition(window, 0, 300);
 };
 
-const onReset = () => {
+const onReset = (): void => {
   if (selectedEventProgramItem.value) {
     eventProgramStore.selectEventProgramItem(null);
   } else {
