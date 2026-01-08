@@ -106,7 +106,7 @@ onMounted(async () => {
 
   :deep(.q-stepper__step) {
     border-radius: 10px;
-    background-color: #f3f7ff;
+    background-color: var(--q-surface);
     padding: 2rem;
     margin: 1rem 0;
 

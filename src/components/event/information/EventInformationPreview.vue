@@ -44,6 +44,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventInformationPreview component
+ *
+ * The `EventInformationPreview` component is used to display the event information preview.
+ *
+ * @description * Use this component to display the event information preview.
+ *
+ * @props
+ * - `eventInformation` (EventInformation, required): The event information.
+ *   It should be of type `EventInformation`.
+ *
+ * @example
+ * <event-information-preview :event-information="eventInformation" />
+ */
+
 // libraries
 import { PropType } from 'vue';
 import { useI18n } from 'vue-i18n';

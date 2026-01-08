@@ -95,8 +95,12 @@
  *
  * @description * Use this component to display event organizers form.
  *
+ * @events
+ * - `save`: Emitted when the event organizers are saved.
+ * - `reset`: Emitted when the event organizers are reset.
+ *
  * @example
- * <form-event-organizers />
+ * <form-event-organizers @save="onSave" @reset="onReset" />
  *
  */
 

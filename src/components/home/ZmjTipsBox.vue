@@ -32,7 +32,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * ZmjTipsBox component
+ *
+ * The `ZmjTipsBox` component is used to display the zmj tips box.
+ *
+ * @description * Use this component to display the zmj tips box.
+ *
+ * @example
+ * <zmj-tips-box />
+ */
+
+// libraries
 import { useI18n } from 'vue-i18n';
+
+// config
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const { t } = useI18n();

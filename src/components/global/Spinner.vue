@@ -7,7 +7,13 @@
 <script setup lang="ts">
 /**
  * Spinner component
- * Displays a spinner
+ *
+ * The `Spinner` component is used to display a spinner.
+ *
+ * @description * Use this component to display a spinner.
+ *
+ * @example
+ * <spinner />
  */
 </script>
 

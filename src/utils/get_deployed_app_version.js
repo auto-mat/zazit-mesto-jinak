@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import { parse } from 'toml';
 import fs from 'fs-extra';
 

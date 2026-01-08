@@ -76,8 +76,27 @@
 </template>
 
 <script setup lang="ts">
-import { routesConf } from 'src/router/routes_conf';
+/**
+ * LocationLinks component
+ *
+ * The `LocationLinks` component is used to display the links of the event.
+ *
+ * @description * Use this component to display the links of the event.
+ *
+ * @props
+ * - `eventName` (string, required): The name of the event.
+ * - `eventSlug` (string, required): The slug of the event.
+ * - `isFirst` (boolean, default: false): Whether this is the first event.
+ *
+ * @example
+ * <location-links :eventName="eventName" :eventSlug="eventSlug" :isFirst="isFirst" />
+ */
+
+// libraries
 import { useI18n } from 'vue-i18n';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
 
 defineProps({
   eventName: {

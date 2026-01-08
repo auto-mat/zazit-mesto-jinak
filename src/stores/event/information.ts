@@ -111,7 +111,6 @@ export const useEventInformationStore = defineStore('eventsInformation', () => {
   watch(
     () => eventStore.slug,
     async (newSlug) => {
-      console.log('newSlug', newSlug);
       if (newSlug) {
         clearEventInformationForm();
         await loadEventInformation(newSlug);

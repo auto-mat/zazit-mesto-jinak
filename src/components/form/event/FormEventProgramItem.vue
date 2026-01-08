@@ -101,6 +101,10 @@
  *
  * @description * Use this component to display program item form.
  *
+ * @events
+ * - `save`: Emitted when the event program item is saved.
+ * - `reset`: Emitted when the event program item is reset.
+ *
  * @example
  * <form-event-program-item @save="onSave" @reset="onReset" />
  *

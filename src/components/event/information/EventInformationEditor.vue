@@ -46,6 +46,20 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventInformationEditor component
+ *
+ * The `EventInformationEditor` component is used to display the event information editor.
+ *
+ * @description * Use this component to display the event information editor.
+ *
+ * @events
+ * - `save`: Emitted when the event information is saved.
+ *
+ * @example
+ * <event-information-editor @save="onSave" />
+ */
+
 // libraries
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';

@@ -31,10 +31,15 @@
  * manage and retrieve the current language and available translations.
  *
  * @props
- * - `shortVariant`: Enable short variant of language in text.
+ * - `value` (UserLanguage, required): The current language.
+ * - `shortVersion` (boolean, default: false): Enable short variant of language in text.
+ * - `readonly` (boolean, default: false): Whether the language switcher is readonly.
+ *
+ * @events
+ * - `updateLocale`: Emitted when the language is updated.
  *
  * @example
- * <language-switcher />
+ * <language-switcher :value="UserLanguage.CS" @updateLocale="onUpdateLocale" />
  */
 
 // libraries

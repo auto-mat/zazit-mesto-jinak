@@ -70,8 +70,11 @@
  *
  * @description * Use this component to display event Information form.
  *
+ * @events
+ * - `save`: Emitted when the event information is saved.
+ *
  * @example
- * <form-event-Information />
+ * <form-event-Information @save="onSave" />
  *
  */
 

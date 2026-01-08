@@ -10,6 +10,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventInformationRowDense component
+ *
+ * The `EventInformationRowDense` component is used to display an event information row in a dense format.
+ *
+ * @description * Use this component to display an event information row in a dense format.
+ *
+ * @props
+ * - `label` (string, required): The label of the event information row.
+ * - `data` (string, required): The data of the event information row.
+ *
+ * @example
+ * <event-information-row-dense :label="label" :data="data" />
+ */
+
 defineProps({
   label: {
     type: String,
@@ -19,5 +34,5 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 </script>

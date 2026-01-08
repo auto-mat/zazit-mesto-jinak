@@ -49,6 +49,8 @@ import { routesConf } from 'src/router/routes_conf';
 import Spinner from 'src/components/global/Spinner.vue';
 import BackButton from 'src/components/buttons/BackButton.vue';
 import FormEventContent from 'src/components/form/event/FormEventContent.vue';
+// eslint-disable-next-line no-unused-vars
+import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';

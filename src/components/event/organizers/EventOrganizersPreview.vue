@@ -43,6 +43,17 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventOrganizersPreview component
+ *
+ * The `EventOrganizersPreview` component is used to display the event organizers preview.
+ *
+ * @description * Use this component to display the event organizers preview.
+ *
+ * @example
+ * <event-organizers-preview />
+ */
+
 // libraries
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';

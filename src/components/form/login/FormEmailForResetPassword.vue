@@ -15,6 +15,20 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FormEmailForResetPassword Component
+ *
+ * The `FormEmailForResetPassword` displays the email for reset password form.
+ *
+ * @description * Use this component to display the email for reset password form.
+ *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ *
+ * @example
+ * <form-email-for-reset-password @submit="onSubmit" />
+ */
+
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';

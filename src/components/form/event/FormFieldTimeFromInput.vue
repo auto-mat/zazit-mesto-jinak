@@ -8,6 +8,7 @@
  *
  * @props
  * - `modelValue` (string, required): The object representing user input.
+ * - `timeTo` (string, default: ''): The time to value.
  * - `required` (boolean, default: false): Whether the input is required.
  *
  * @events
@@ -29,7 +30,7 @@ import { useValidation } from 'src/composables/useValidation';
 export default defineComponent({
   name: 'FormFieldTimeFromInput',
   components: {
-    FormFieldTimeInput
+    FormFieldTimeInput,
   },
   props: {
     modelValue: {
@@ -57,7 +58,7 @@ export default defineComponent({
     });
 
     const { isFilled, isTimeEarlierThan, isTimeEqualTo } = useValidation();
-    
+
     return {
       inputValue,
       isFilled,
@@ -70,31 +71,26 @@ export default defineComponent({
 
 <template>
   <div>
-    <label
-      for="form-time-from"
-      class="text-caption text-bold text-grey-10"
-    >
+    <label for="form-time-from" class="text-caption text-bold text-grey-10">
       {{ $t('form.labelTimeFrom') }}
     </label>
     <form-field-time-input
-      v-model="inputValue" 
+      v-model="inputValue"
       id="form-time-from"
       :required="required"
       :rules="[
         (val: string) =>
           !required ||
           isFilled(val) ||
-          $t('form.messageFieldRequired', { 
-            fieldName: $t('form.labelTimeFrom')
+          $t('form.messageFieldRequired', {
+            fieldName: $t('form.labelTimeFrom'),
           }),
-        (val: string) => 
+        (val: string) =>
           !timeTo ||
           isTimeEarlierThan(val, timeTo) ||
           $t('form.messageTimeEarlier'),
-        (val: string) => 
-          !timeTo ||
-          !isTimeEqualTo(val, timeTo) ||
-          $t('form.messageTimeEqual'),
+        (val: string) =>
+          !timeTo || !isTimeEqualTo(val, timeTo) || $t('form.messageTimeEqual'),
       ]"
     />
   </div>

@@ -8,6 +8,8 @@
       icon="download"
       color="primary"
       :href="url"
+      target="_blank"
+      rel="noopener noreferrer"
       download
     />
   </div>
@@ -21,8 +23,9 @@
  *
  * @description * Use this component to display a button to download the event PDF file.
  *
- * @param {string} pdfUrl - The URL of the event PDF file.
- * @param {string} text - The text to display above the button.
+ * @props
+ * - `pdfUrl` (string, required): The URL of the event PDF file.
+ * - `text` (string, required): The text to display above the button.
  *
  * @example
  * <file-downloader :pdf-url="pdfUrl" :text="text" />

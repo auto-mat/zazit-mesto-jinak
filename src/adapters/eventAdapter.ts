@@ -6,7 +6,6 @@ import {
 } from 'src/enums/eventEnums';
 import {
   EventAgreement,
-  EventAgreementPayload,
   EventContent,
   EventInformation,
   EventInformationForm,
@@ -104,17 +103,13 @@ export interface ApiEventProgramItemPayload {
 
 export interface ApiEventAgreement {
   status: EventAgreementStatus | null;
-  pdf_url: string | null;
-  pdf_url_completed: string | null;
-}
-
-export interface ApiEventAgreementPayload {
-  pdf_file_signed: File | null;
+  pdf_file: string | null;
+  pdf_file_completed: string | null;
 }
 
 export interface ApiEventInvoice {
   status: EventInvoiceStatus | null;
-  pdf_url: string | null;
+  pdf_file: string | null;
 }
 
 export const eventsAdapter = {
@@ -250,23 +245,15 @@ export const eventsAdapter = {
   toEventAgreement(eventData: ApiEventAgreement): EventAgreement {
     return {
       status: eventData.status,
-      pdfUrl: eventData.pdf_url,
-      pdfUrlCompleted: eventData.pdf_url_completed,
-    };
-  },
-
-  toEventAgreementPayload(
-    eventData: EventAgreementPayload,
-  ): ApiEventAgreementPayload {
-    return {
-      pdf_file_signed: eventData.pdfFile,
+      pdfUrl: eventData.pdf_file,
+      pdfUrlCompleted: eventData.pdf_file_completed,
     };
   },
 
   toEventInvoice(eventData: ApiEventInvoice): EventInvoice {
     return {
       status: eventData.status,
-      pdfUrl: eventData.pdf_url,
+      pdfUrl: eventData.pdf_file,
     };
   },
 };

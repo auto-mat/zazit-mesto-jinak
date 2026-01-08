@@ -1,6 +1,6 @@
 <template>
   <!-- Form: register personal details -->
-  <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md text-grey-10">
+  <q-form @submit="onSubmit" class="q-gutter-md text-grey-10">
     <div class="row q-col-gutter-md q-mb-lg">
       <div class="column">
         <label class="text-caption text-bold q-mb-xs">
@@ -87,7 +87,7 @@
         {{ t('register.personalDetails.labelPrivacyConsent') }}
         <!-- Link: terms -->
         <a
-          href="https://auto-mat.cz/zasady"
+          :href="zazitMestoJinakConfig.urlAppDataPrivacyPolicy"
           target="_blank"
           class="text-primary"
           @click.stop
@@ -104,7 +104,7 @@
         {{ t('register.personalDetails.labelCodexTerms') }}
         <!-- Link: codex -->
         <a
-          href="https://zazitmestojinak.cz/kodex-zazit-mesto-jinak"
+          :href="zazitMestoJinakConfig.urlAppDataCodex"
           target="_blank"
           class="text-primary"
           @click.stop
@@ -134,8 +134,12 @@
  *
  * @description * Use this component to display registration form.
  *
+ * @events
+ * - `submit`: Emitted when the form is submitted.
+ * - `reset`: Emitted when the form is reset.
+ *
  * @example
- * <form-register-personal-details />
+ * <form-register-personal-details @submit="onSubmit" @reset="onReset" />
  */
 
 // libraries
@@ -156,6 +160,9 @@ import { FormOption } from 'src/types/Form';
 
 // enums
 import { UserGender } from 'src/enums/userEnums';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const emit = defineEmits(['submit']);
 
@@ -188,9 +195,5 @@ const optionsGender: FormOption[] = [
 
 const onSubmit = (): void => {
   emit('submit');
-};
-
-const onReset = (): void => {
-  // noop
 };
 </script>

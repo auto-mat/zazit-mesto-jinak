@@ -75,6 +75,16 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventContentPreview component
+ *
+ * The `EventContentPreview` component is used to display the event content preview.
+ *
+ * @description * Use this component to display the event content preview.
+ *
+ * @example
+ * <event-content-preview />
+ */
 // libraries
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';

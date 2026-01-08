@@ -24,8 +24,10 @@
       clearable
       v-model="image"
       accept=".jpg, image/*"
+      :max-file-size="maxFileSize"
       class="q-mt-sm"
       id="form-image"
+      @rejected="onRejected"
     >
       <template v-slot:prepend>
         <q-icon name="image" />
@@ -51,13 +53,17 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-image v-model="imageFile" />
+ * <form-field-image v-model="imageFile" :default-image="defaultImage" />
  *
  */
 
 // libraries
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Notify } from 'quasar';
+
+// config
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 
 const props = defineProps<{
   modelValue: File | null;
@@ -71,6 +77,17 @@ const emit = defineEmits<{
 const { t } = useI18n();
 
 const imageViewSrc = ref<string | null>(null);
+
+const maxFileSize = computed(
+  () => zazitMestoJinakConfig.imageMaxFileUploadSizeMegabytes * 1048576,
+);
+
+const onRejected = (): void => {
+  Notify.create({
+    message: t('form.messageMaxFileUploadSize'),
+    color: 'negative',
+  });
+};
 
 const image = computed({
   get() {

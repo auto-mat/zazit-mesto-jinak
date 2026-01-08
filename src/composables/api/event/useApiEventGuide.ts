@@ -61,10 +61,11 @@ export function useApiEventGuide() {
     }
     const url = `${zazitMestoJinakConfig.urlApiEvents}${slug}${zazitMestoJinakConfig.urlApiEventAgreement}`;
     try {
-      await apiFetch.put<void>(
-        url,
-        eventsAdapter.toEventAgreementPayload(eventAgreement),
-      );
+      const formData = new FormData();
+      if (eventAgreement.pdfFile) {
+        formData.append('pdf_file_signed', eventAgreement.pdfFile);
+      }
+      await apiFetch.post<void>(url, formData);
       return true;
     } catch (error) {
       Notify.create({

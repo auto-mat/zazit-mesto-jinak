@@ -88,12 +88,31 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * AgreementGuideModal component
+ *
+ * The `AgreementGuideModal` component is used to display the agreement guide modal.
+ *
+ * @description * Use this component to display the agreement guide modal.
+ *
+ * @example
+ * <agreement-guide-modal />
+ *
+ */
+
+// libraries
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
+
+// components
 import FileDownloader from './FileDowloader.vue';
 import FileUploader from './FileUploader.vue';
+
+// stores
 import { useEventGuideStore } from 'src/stores/event/guide';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// enums
 import { EventAgreementStatus } from 'src/enums/eventEnums';
 
 const showAgreementGuideModal = defineModel<boolean>('showAgreementGuideModal');

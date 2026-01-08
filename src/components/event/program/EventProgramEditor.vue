@@ -28,6 +28,17 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventProgramEditor component
+ *
+ * The `EventProgramEditor` component is used to display the event program editor.
+ *
+ * @description * Use this component to display the event program editor.
+ *
+ * @example
+ * <event-program-editor />
+ */
+
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';

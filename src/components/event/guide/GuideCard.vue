@@ -10,6 +10,18 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * GuideCard component
+ *
+ * The `GuideCard` component is used to display the guide card for an event.
+ *
+ * @description * Use this component to display the guide card for an event.
+ *
+ * @example
+ * <guide-card :title="title" :totalSteps="totalSteps" :doneSteps="doneSteps" :disabled="disabled" @click="navigateToGuide" />
+ */
+
+// components
 import ProgressBar from 'src/components/global/ProgressBar.vue';
 
 defineProps({

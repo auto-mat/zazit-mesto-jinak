@@ -62,10 +62,31 @@
 </template>
 
 <script setup lang="ts">
-import { ChecklistItem } from 'src/types/Event';
+/**
+ * EditChecklistModal component
+ *
+ * The `EditChecklistModal` component is used to edit the checklist for an event.
+ *
+ * @description * Use this component to edit the checklist for an event.
+ *
+ * @props
+ * - `checklist` (array, required): The checklist items.
+ *
+ * @events
+ * - `close`: Emitted when the modal is closed.
+ * - `save`: Emitted when the checklist is saved.
+ *
+ * @example
+ * <edit-checklist-modal v-model="showEditChecklistModal" :checklist="checklist" @save="saveChecklist" @close="showEditChecklistModal = false" />
+ */
+
+// libraries
 import { PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { cloneDeep } from 'lodash';
+
+// types
+import { ChecklistItem } from 'src/types/Event';
 
 const checklistModal = defineModel<boolean>('checklistModal');
 

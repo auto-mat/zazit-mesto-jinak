@@ -38,6 +38,26 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * DiscardChangesModal component
+ *
+ * The `DiscardChangesModal` component is used to display a discard changes modal.
+ *
+ * @description * Use this component to display a discard changes modal.
+ *
+ * @props
+ * - `isSaving` (boolean, default: false): Whether the saving is in progress.
+ *
+ * @events
+ * - `discardChanges`: Emitted when the discard changes button is clicked.
+ * - `save`: Emitted when the save button is clicked.
+ * - `cancel`: Emitted when the cancel button is clicked.
+ *
+ * @example
+ * <discard-changes-modal @discard-changes="onDiscardChanges" @save="onSave" @cancel="onCancel" />
+ */
+
+// libraries
 import { useI18n } from 'vue-i18n';
 
 defineProps({

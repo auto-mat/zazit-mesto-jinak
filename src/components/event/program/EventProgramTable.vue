@@ -55,6 +55,29 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * EventProgramTable component
+ *
+ * The `EventProgramTable` component is used to display the event program table.
+ *
+ * @description * Use this component to display the event program table.
+ *
+ * @props
+ * - `rows` (EventProgram, required): The event program.
+ *   It should be of type `EventProgram`.
+ * - `editable` (boolean, required): Whether the table is editable.
+ *   It should be of type `boolean`.
+ * - `rowsPerPage` (number, required): The number of rows per page.
+ *   It should be of type `number`.
+ *
+ * @events
+ * - `edit`: Emitted when the edit button is clicked.
+ * - `delete`: Emitted when the delete button is clicked.
+ *
+ * @example
+ * <event-program-table :rows="rows" :editable="editable" @edit="edit" @delete="delete" />
+ */
+
 // libraries
 import { nextTick, onMounted, PropType, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';

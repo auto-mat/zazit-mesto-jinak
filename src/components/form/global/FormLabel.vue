@@ -8,6 +8,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * FormLabel Component
+ *
+ * The `FormLabel` displays a label.
+ *
+ * @description * Use this component to display a label.
+ *
+ * @props
+ * - `optional` (boolean, default: false): Whether the label is optional.
+ *
+ * @example
+ * <form-label :optional="true">Label</form-label>
+ */
+
+// libraries
 import { useI18n } from 'vue-i18n';
 
 defineProps({
