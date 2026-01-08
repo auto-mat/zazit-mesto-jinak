@@ -1,26 +1,21 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import {
-  EventContent,
-  EventMeta,
-  EventProgram,
-  EventProgramItem,
-} from 'src/types/Event';
+import { EventMeta, EventProgram, EventProgramItem } from 'src/types/Event';
 
 import { useApiEvents } from 'src/composables/api/event/useApiEvents';
-import { useApiEventContent } from 'src/composables/api/event/useApiEventContent';
 import { useApiEventProgram } from 'src/composables/api/event/useApiEventProgram';
 import { cloneDeep } from 'lodash';
 import { useEventInformationStore } from './event/information';
 import { useEventOrganizersStore } from './event/organizers';
+import { useEventContentStore } from './event/content';
 
 export const useEventStore = defineStore(
   'events',
   () => {
     const eventInformationStore = useEventInformationStore();
     const eventOrganizersStore = useEventOrganizersStore();
+    const eventContentStore = useEventContentStore();
     const { getEventListApi } = useApiEvents();
-    const { fetchEventContent } = useApiEventContent();
     const { fetchEventProgram } = useApiEventProgram();
 
     const eventList = ref<EventMeta[]>([]);
@@ -44,28 +39,6 @@ export const useEventStore = defineStore(
 
     const setSlug = (newSlug: string): void => {
       slug.value = newSlug;
-    };
-
-    // Event content
-    const eventContent = ref<EventContent | null>(null);
-
-    const loadEventContent = async (slug: string): Promise<void> => {
-      const eventContentResponse = await fetchEventContent(slug);
-
-      if (eventContentResponse) {
-        eventContent.value = {
-          image: null,
-          mainContent: '',
-          links: [],
-        } as EventContent;
-      }
-    };
-
-    const updateEventContent = async (
-      newEventContent: EventContent,
-    ): Promise<void> => {
-      eventContent.value = cloneDeep(newEventContent);
-      eventContent.value.image = null;
     };
 
     // Event program
@@ -102,7 +75,7 @@ export const useEventStore = defineStore(
       loading.value = false;
       eventInformationStore.clearEventInformationStore();
       eventOrganizersStore.clearEventOrganizersStore();
-      eventContent.value = null;
+      eventContentStore.clearEventContentStore();
       eventProgram.value = [];
     };
 
@@ -114,10 +87,7 @@ export const useEventStore = defineStore(
       isLoading,
       loadEventList,
       getEventName,
-      loadEventContent,
       loadEventProgram,
-      eventContent,
-      updateEventContent,
       eventProgram,
       addProgramItem,
       deleteProgramItem,

@@ -1,82 +1,18 @@
-<script lang="ts">
-/**
- * FormFieldImage Component
- *
- * The `FormFieldImage` displays image and image input.
- *
- * @description * Use this component to render email input in forms.
- *
- * @props
- * - `value` (string, required): The object representing user input.
- *   It should be of type `string`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @example
- * <form-field-email />
- *
- * @see
- */
-
-// libraries
-import { computed, defineComponent, PropType, ref } from 'vue';
-
-// composables
-import { useValidation } from 'src/composables/useValidation';
-
-export default defineComponent({
-  name: 'FormFieldImage',
-  props: {
-    modelValue: {
-      type: Object as PropType<File | null>,
-      required: true,
-    },
-  },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const imageViewSrc = ref('image-placeholder.jpg');
-
-    const image = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: File | null) {
-        if (value) {
-          imageViewSrc.value = URL.createObjectURL(value);
-        } else {
-          imageViewSrc.value = 'image-placeholder.jpg';
-        }
-        emit('update:modelValue', value);
-      },
-    });
-
-    const { isFilled } = useValidation();
-
-    return {
-      image,
-      imageViewSrc,
-      isFilled,
-    };
-  },
-});
-</script>
-
 <template>
   <div>
     <!-- Label -->
     <div class="column q-mb-sm">
       <label for="form-image" class="text-caption text-bold">
-        {{ $t('event.content.labelImage') }}
+        {{ t('event.content.labelImage') }}
       </label>
       <span class="text-caption">
-        {{ $t('event.content.sublabelImage') }}
+        {{ t('event.content.sublabelImage') }}
       </span>
     </div>
     <div>
       <q-img
         :src="imageViewSrc"
-        :alt="$t('event.content.altImage')"
+        :alt="t('event.content.altImage')"
         fit="contain"
         class="image-input"
       />
@@ -97,6 +33,86 @@ export default defineComponent({
     </q-file>
   </div>
 </template>
+
+<script setup lang="ts">
+/**
+ * FormFieldImage Component
+ *
+ * The `FormFieldImage` displays image and image input.
+ *
+ * @description * Use this component to render image input in forms.
+ *
+ * @props
+ * - `modelValue` (File | null, required): The file object representing the image.
+ *   It should be of type `File | null`.
+ * - `defaultImage` (string, optional): The default image to display if no image is selected.
+ *
+ * @events
+ * - `update:modelValue`: Emitted as a part of v-model structure.
+ *
+ * @example
+ * <form-field-image v-model="imageFile" />
+ *
+ */
+
+// libraries
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const props = defineProps<{
+  modelValue: File | null;
+  defaultImage?: string;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [value: File | null];
+}>();
+
+const { t } = useI18n();
+
+const imageViewSrc = ref<string | null>(null);
+
+const image = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: File | null) {
+    // Clean up previous object URL to prevent memory leaks
+    if (imageViewSrc.value && imageViewSrc.value.startsWith('blob:')) {
+      URL.revokeObjectURL(imageViewSrc.value);
+    }
+
+    if (value) {
+      imageViewSrc.value = URL.createObjectURL(value);
+    } else if (props.defaultImage) {
+      imageViewSrc.value = props.defaultImage;
+    } else {
+      imageViewSrc.value = 'image-placeholder.jpg';
+    }
+    emit('update:modelValue', value);
+  },
+});
+
+// Watch for external changes to modelValue
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    // Clean up previous object URL to prevent memory leaks
+    if (oldValue && imageViewSrc.value.startsWith('blob:')) {
+      URL.revokeObjectURL(imageViewSrc.value);
+    }
+
+    if (newValue) {
+      imageViewSrc.value = URL.createObjectURL(newValue);
+    } else if (props.defaultImage) {
+      imageViewSrc.value = props.defaultImage;
+    } else {
+      imageViewSrc.value = 'image-placeholder.jpg';
+    }
+  },
+  { immediate: true },
+);
+</script>
 
 <style scoped>
 .image-input {

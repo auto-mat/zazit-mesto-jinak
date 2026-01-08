@@ -39,9 +39,10 @@ export function useApiLogin() {
       );
       return data;
     } catch (error) {
-      if (error.response?.data?.detail) {
+      console.log(error);
+      if (error.response?.data?.non_field_errors) {
         Notify.create({
-          message: error.response.data.detail,
+          message: error.response.data.non_field_errors[0],
           color: 'negative',
         });
       } else {

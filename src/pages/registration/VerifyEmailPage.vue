@@ -1,18 +1,24 @@
 <template>
   <div>
-    <h1>{{ t('verifyEmail.title') }}</h1>
+    <h1 class="q-mb-md">{{ t('verifyEmail.title') }}</h1>
     <p>
       {{ t('verifyEmail.description', { email: loginStore.userEmail ?? '' }) }}
     </p>
     <p>{{ t('verifyEmail.checkSpamFolder') }}</p>
     <q-btn
-      :label="t('verifyEmail.resendEmail')"
+      :label="
+        cooldownSeconds > 0
+          ? t('verifyEmail.resendEmail') + ` (${cooldownSeconds}s)`
+          : t('verifyEmail.resendEmail')
+      "
       type="button"
       unelevated
       rounded
       color="primary"
       class="full-width q-mt-lg"
-      @click="registerStore.resendEmail"
+      :disable="cooldownSeconds > 0"
+      :loading="isResending"
+      @click="handleResendEmail"
     />
     <div class="q-mt-lg">
       <span>{{ t('verifyEmail.wrongEmail') }}</span>
@@ -25,13 +31,17 @@
 
 <script setup lang="ts">
 // libraries
+import { ref, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
+import { zazitMestoJinakConfig } from 'src/boot/global_vars';
+
+// composables
+import { useCooldown } from 'src/composables/useCooldown';
 
 // stores
 import { useRegisterStore } from 'src/stores/register';
@@ -45,6 +55,25 @@ const loginStore = useLoginStore();
 
 const { isUserVerified } = storeToRefs(loginStore);
 
+const { cooldownSeconds, startCooldown } = useCooldown(
+  zazitMestoJinakConfig.checkIsEmailVerifiedInterval,
+);
+const isResending = ref(false);
+
+const handleResendEmail = async (): Promise<void> => {
+  if (cooldownSeconds.value > 0 || isResending.value) {
+    return;
+  }
+
+  isResending.value = true;
+  try {
+    await registerStore.resendEmail();
+    startCooldown();
+  } finally {
+    isResending.value = false;
+  }
+};
+
 const registerAgain = () => {
   loginStore.logout();
   router.push(routesConf['signup']['path']);
@@ -54,6 +83,10 @@ watch(isUserVerified, (newVal) => {
   if (newVal) {
     router.push(routesConf['home']['path']);
   }
+});
+
+onMounted(() => {
+  startCooldown();
 });
 </script>
 

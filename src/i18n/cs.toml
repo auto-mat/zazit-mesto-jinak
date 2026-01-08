@@ -290,8 +290,10 @@ labelLinkTitle = "Název odkazu"
 labelLinkUrl = "URL"
 buttonAddLink = "Přidat nový odkaz"
 buttonSave = "Uložit"
+buttonReset = "Zrušit"
 altImage = "Hlavní obrázek pro web akce"
 empty = "Nevyplněno"
+successUpdate = "Obsah na webu ZMJ byl úspěšně aktualizován"
 
 [event.program]
 labelTitle = "Název"
