@@ -21,7 +21,7 @@
         <q-step
           :name="1"
           :title="t('event.guide.agreement.step1.title')"
-          :prefix="1"
+          prefix="1"
           :done="agreementStep > 1"
         >
           {{ t('event.guide.agreement.step1.description') }}
