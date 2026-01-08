@@ -144,7 +144,6 @@ export const useRegisterStore = defineStore('register', () => {
 
   const getCompanyTypes = async (): Promise<void> => {
     companyTypes.value = await getCompanyTypesApi();
-    console.log(companyTypes.value);
   };
 
   const registerComplete = async (): Promise<void> => {

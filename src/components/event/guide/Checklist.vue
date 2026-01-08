@@ -41,10 +41,10 @@
 <script setup lang="ts">
 import { useEventGuideStore } from 'src/stores/event/guide';
 import { ChecklistItem } from 'src/types/Event';
-import { PropType, watch } from 'vue';
+import { PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true,
@@ -60,14 +60,6 @@ const props = defineProps({
 });
 
 defineEmits(['edit']);
-
-watch(
-  () => props.checklist,
-  (newChecklist) => {
-    console.log(newChecklist);
-  },
-  { immediate: true },
-);
 
 const { t } = useI18n();
 

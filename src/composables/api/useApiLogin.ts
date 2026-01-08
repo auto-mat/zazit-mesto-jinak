@@ -39,7 +39,6 @@ export function useApiLogin() {
       );
       return data;
     } catch (error) {
-      console.log(error);
       if (error.response?.data?.non_field_errors) {
         Notify.create({
           message: error.response.data.non_field_errors[0],

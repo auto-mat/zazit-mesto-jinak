@@ -1,7 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
-    <spinner v-if="isLoading" />
-    <template v-else>
+    <spinner v-if="isEventInformationLoading" />
+    <template v-else-if="eventInformation">
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -51,9 +51,10 @@ const route = useRoute();
 const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 const eventInformationStore = useEventInformationStore();
-const { eventInformation } = storeToRefs(eventInformationStore);
+const { eventInformation, isEventInformationLoading } = storeToRefs(
+  eventInformationStore,
+);
 
-const isLoading = computed(() => eventStore.isLoading);
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
 // Watch the slug to set the event slug in the store - get new data

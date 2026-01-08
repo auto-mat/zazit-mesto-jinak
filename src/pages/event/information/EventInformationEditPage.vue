@@ -2,7 +2,7 @@
   <q-page class="column q-pa-xl">
     <spinner v-if="isEventInformationLoading" />
 
-    <template v-else>
+    <template v-else-if="eventInformation">
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -58,6 +58,7 @@ const slug = ref(route.params.slug as string);
 const eventStore = useEventStore();
 const eventInformationStore = useEventInformationStore();
 const {
+  eventInformation,
   isEventInformationFormDirty,
   isEventInformationSaving,
   isEventInformationLoading,
