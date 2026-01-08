@@ -79,7 +79,7 @@ const { t } = useI18n();
 const imageViewSrc = ref<string | null>(null);
 
 const maxFileSize = computed(
-  () => zazitMestoJinakConfig.imageMaxFileUploadSizeMegabytes * 1024,
+  () => zazitMestoJinakConfig.imageMaxFileUploadSizeMegabytes * 1048576,
 );
 
 const onRejected = (): void => {

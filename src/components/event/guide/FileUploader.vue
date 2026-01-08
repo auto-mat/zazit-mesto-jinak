@@ -63,7 +63,7 @@ const { t } = useI18n();
 const model = ref<File | null>(null);
 
 const maxFileSize = computed(
-  () => zazitMestoJinakConfig.documentMaxFileUploadSizeMegabytes * 1024,
+  () => zazitMestoJinakConfig.documentMaxFileUploadSizeMegabytes * 1048576,
 );
 
 const uploadFile = (): void => {

@@ -8,6 +8,8 @@
       icon="download"
       color="primary"
       :href="url"
+      target="_blank"
+      rel="noopener noreferrer"
       download
     />
   </div>

@@ -45,7 +45,11 @@ export const useEventContentStore = defineStore('eventsContent', () => {
   };
 
   const resetEventContentForm = (): void => {
-    eventContentForm.value = cloneDeep(eventContent.value);
+    eventContentForm.value = {
+      image: null,
+      mainContent: cloneDeep(eventContent.value?.mainContent || ''),
+      links: cloneDeep(eventContent.value?.links || []),
+    } as EventContentForm;
     isEventContentFormDirty.value = false;
   };
 
