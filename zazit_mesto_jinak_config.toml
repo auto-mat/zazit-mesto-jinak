@@ -44,9 +44,7 @@ imageMaxFileUploadSizeMegabytes = 2
 
 # API CONFIGURATION
 
-# apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
-apiBase = "http://localhost:8000/api/"
-
+apiBase = "https://klub-zmj-test.dopracenakole.net/api/"
 apiDefaultLang = "cs"
 
 urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/"
