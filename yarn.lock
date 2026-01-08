@@ -4578,11 +4578,6 @@ vue-eslint-parser@^10.2.0:
     esquery "^1.6.0"
     semver "^7.6.3"
 
-vue-facebook-login-component-next@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vue-facebook-login-component-next/-/vue-facebook-login-component-next-1.0.4.tgz#7283298b2a981a810fb7689e041ef16d481b28f4"
-  integrity sha512-yKVcBxpQ57pt8Vh/1asuJxzZ3Dx0yy2fWXZy/fTWkoJMBFI6sG4yhdfK5pSxFGExDoyOoiTsD4EKv3GG5XEcvw==
-
 vue-i18n@^11.0.0:
   version "11.1.9"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.1.9.tgz#214816d3a5461a3169ee1eb507cac045a03a15d8"

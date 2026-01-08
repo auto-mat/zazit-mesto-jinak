@@ -101,9 +101,9 @@ import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/user';
 
 // components
-import FormFieldText from '../global/FormFieldText.vue';
-import FormFieldPhone from '../global/FormFieldPhone.vue';
-import LanguageSwitcher from '../global/LanguageSwitcher.vue';
+import FormFieldText from 'src/components/form/global/FormFieldText.vue';
+import FormFieldPhone from 'src/components/form/global/FormFieldPhone.vue';
+import LanguageSwitcher from 'src/components/global/LanguageSwitcher.vue';
 
 // types
 import { FormOption } from 'src/types/Form';
