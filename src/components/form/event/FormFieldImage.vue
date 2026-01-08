@@ -45,6 +45,7 @@
  * @props
  * - `modelValue` (File | null, required): The file object representing the image.
  *   It should be of type `File | null`.
+ * - `defaultImage` (string, optional): The default image to display if no image is selected.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
