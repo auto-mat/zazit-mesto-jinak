@@ -28,7 +28,7 @@
     <q-drawer
       v-model="drawerOpen"
       :side="isMobile ? 'right' : 'left'"
-      :breakpoint="0"
+      :breakpoint="1024"
       class="bg-secondary text-black drawer"
     >
       <drawer-header v-if="!isMobile" />
@@ -196,8 +196,10 @@ onMounted(async () => {
 }
 
 .drawer {
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
+  @media (min-width: 1024px) {
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+  }
 }
 </style>

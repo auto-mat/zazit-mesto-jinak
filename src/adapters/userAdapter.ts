@@ -8,6 +8,8 @@ export type ApiUserDetails = {
   telephone: string;
   sex: string;
   language: string;
+  send_mailing_lists: boolean;
+  newsletter_on: boolean;
 };
 
 export const userAdapter = {
@@ -19,6 +21,8 @@ export const userAdapter = {
       phone: userData.telephone,
       gender: userData.sex,
       languagePreference: userData.language as UserLanguage,
+      onlyOrganizerNews: userData.send_mailing_lists,
+      allNews: userData.newsletter_on,
     };
   },
 };

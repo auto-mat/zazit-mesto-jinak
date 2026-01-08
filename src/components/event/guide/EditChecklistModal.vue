@@ -9,8 +9,8 @@
       </div>
       <div class="column">
         <div
-          v-for="item in editChecklist"
-          :key="item.title"
+          v-for="(item, index) in editChecklist"
+          :key="item.id"
           class="row items-center q-mt-sm"
         >
           <q-btn
@@ -18,9 +18,9 @@
             flat
             icon="delete"
             color="primary"
-            @click="deleteItem(item)"
+            @click="deleteItem(index)"
           />
-          <span class="q-ml-sm">{{ item.title }}</span>
+          <span class="q-ml-sm">{{ item.name }}</span>
         </div>
         <div class="row items-center q-mt-sm">
           <q-icon name="add" color="primary" size="24px" class="q-mx-sm" />
@@ -36,6 +36,7 @@
             unelevated
             color="primary"
             :label="t('event.guide.checklist.addItem')"
+            :disable="newItem.length === 0"
             @click="addItem"
           />
         </div>
@@ -62,7 +63,7 @@
 
 <script setup lang="ts">
 import { ChecklistItem } from 'src/types/Event';
-import { PropType, ref } from 'vue';
+import { PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { cloneDeep } from 'lodash';
 
@@ -77,20 +78,22 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save']);
 
+watch(props.checklist, (newChecklist) => {
+  editChecklist.value = cloneDeep(newChecklist);
+});
+
 const { t } = useI18n();
 
 const editChecklist = ref<ChecklistItem[]>(cloneDeep(props.checklist));
 const newItem = ref<string>('');
 
-const addItem = () => {
-  editChecklist.value.push({ title: newItem.value, completed: false });
+const addItem = (): void => {
+  editChecklist.value.push({ id: null, name: newItem.value, checked: false });
   newItem.value = '';
 };
 
-const deleteItem = (item: ChecklistItem) => {
-  editChecklist.value = editChecklist.value.filter(
-    (i) => i.title !== item.title,
-  );
+const deleteItem = (index: number): void => {
+  editChecklist.value.splice(index, 1);
 };
 
 const saveChecklist = () => {

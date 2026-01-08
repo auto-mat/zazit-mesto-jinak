@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
-import { useGuideStore } from 'src/stores/guide';
+import { useEventGuideStore } from 'src/stores/event/guide';
 import { zazitMestoJinakConfig } from 'src/boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
 import { useRoute } from 'vue-router';
@@ -73,8 +73,8 @@ const { t } = useI18n();
 const route = useRoute();
 const slug = ref(route.params.slug as string);
 
-const guideStore = useGuideStore();
-const { contentWebStep } = storeToRefs(guideStore);
+const eventGuideStore = useEventGuideStore();
+const { contentWebStep } = storeToRefs(eventGuideStore);
 </script>
 
 <style scoped lang="scss">

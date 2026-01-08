@@ -1,6 +1,6 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isEventContentLoading" class="loading">Loading...</div>
+    <spinner v-if="isEventContentLoading" />
     <div v-else class="content">
       <div class="row justify-between items-end q-mb-md">
         <div>
@@ -31,6 +31,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Event content edit page
+ * Displays the event content edit page with the form
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -41,6 +46,7 @@ import { useI18n } from 'vue-i18n';
 import { routesConf } from 'src/router/routes_conf';
 
 // components
+import Spinner from 'src/components/global/Spinner.vue';
 import BackButton from 'src/components/buttons/BackButton.vue';
 import FormEventContent from 'src/components/form/event/FormEventContent.vue';
 
@@ -91,6 +97,7 @@ const onBack = (): void => {
 
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
+// Watch the slug to set the event slug in the store - get new data
 watch(
   slug,
   () => {

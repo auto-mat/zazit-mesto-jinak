@@ -20,6 +20,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Email reset password page
+ * Displays the email reset password page with the form
+ */
+
 // libraries
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -37,8 +42,4 @@ const emailSent = ref(false);
 const onSubmit = () => {
   emailSent.value = true;
 };
-
-defineOptions({
-  name: 'EmailResetPasswordPage',
-});
 </script>

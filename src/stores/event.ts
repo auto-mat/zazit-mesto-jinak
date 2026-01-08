@@ -7,12 +7,14 @@ import { useEventInformationStore } from './event/information';
 import { useEventOrganizersStore } from './event/organizers';
 import { useEventContentStore } from './event/content';
 import { useEventProgramStore } from './event/program';
+import { useEventGuideStore } from './event/guide';
 
 export const useEventStore = defineStore('events', () => {
   const eventInformationStore = useEventInformationStore();
   const eventOrganizersStore = useEventOrganizersStore();
   const eventContentStore = useEventContentStore();
   const eventProgramStore = useEventProgramStore();
+  const eventGuideStore = useEventGuideStore();
   const { getEventListApi } = useApiEvents();
 
   const eventList = ref<EventMeta[]>([]);
@@ -46,6 +48,7 @@ export const useEventStore = defineStore('events', () => {
     eventOrganizersStore.clearEventOrganizersStore();
     eventContentStore.clearEventContentStore();
     eventProgramStore.clearEventProgramStore();
+    eventGuideStore.clearEventGuideStore();
   };
 
   return {

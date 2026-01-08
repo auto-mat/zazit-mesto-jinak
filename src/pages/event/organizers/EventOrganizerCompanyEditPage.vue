@@ -1,13 +1,9 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div
+    <spinner
       v-if="isEventOrganizerCompanyLoading || isEventOrganizersLoading"
-      class="loading"
-    >
-      Loading...
-    </div>
-
-    <div v-else>
+    />
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div>
           <span>{{ eventName }}</span>
@@ -34,7 +30,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </template>
     <discard-changes-modal
       v-model="discardChangesModal"
       :is-saving="isEventOrganizerCompanySaving"
@@ -46,6 +42,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Event organizer company edit page
+ * Displays the event organizer company edit page with the form
+ */
+
 // libraries
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -58,6 +59,7 @@ import FormEventOrganizerCompany from 'src/components/form/event/FormEventOrgani
 import EventOrganizerPerson from 'src/components/event/organizers/EventOrganizerPerson.vue';
 // eslint-disable-next-line no-unused-vars
 import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
+import Spinner from 'src/components/global/Spinner.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -85,19 +87,6 @@ const {
 const eventName = computed(() => eventStore.getEventName(slug.value));
 
 const discardChangesModal = ref(false);
-
-// watch the params of the route to fetch the data again
-watch(
-  slug,
-  () => {
-    eventStore.setSlug(slug.value as string);
-  },
-  { immediate: true },
-);
-
-onMounted(async () => {
-  await eventOrganizersStore.getCompanyTypes();
-});
 
 const onSave = async (): Promise<void> => {
   const success = await eventOrganizersStore.updateEventOrganizerCompany();
@@ -127,4 +116,18 @@ const onBack = (): void => {
     });
   }
 };
+
+// Watch the slug to set the event slug in the store - get new data
+watch(
+  slug,
+  () => {
+    eventStore.setSlug(slug.value as string);
+  },
+  { immediate: true },
+);
+
+// On mount, get the company types
+onMounted(async () => {
+  await eventOrganizersStore.getCompanyTypes();
+});
 </script>

@@ -5,7 +5,12 @@
  * @version 1.0
  */
 
-import { EventSpaceType, EventSpaceArea } from 'src/enums/eventEnums';
+import {
+  EventSpaceType,
+  EventSpaceArea,
+  EventAgreementStatus,
+  EventInvoiceStatus,
+} from 'src/enums/eventEnums';
 
 export interface EventMeta {
   id: number;
@@ -98,6 +103,22 @@ export interface EventOrganizerCompany {
 export type EventOrganizers = EventOrganizer[];
 
 export interface ChecklistItem {
-  title: string;
-  completed: boolean;
+  id: number | null;
+  name: string;
+  checked: boolean;
+}
+
+export interface EventAgreement {
+  status: EventAgreementStatus | null;
+  pdfUrl: string | null;
+  pdfUrlCompleted: string | null;
+}
+
+export interface EventAgreementPayload {
+  pdfFile: File | null;
+}
+
+export interface EventInvoice {
+  status: EventInvoiceStatus | null;
+  pdfUrl: string | null;
 }

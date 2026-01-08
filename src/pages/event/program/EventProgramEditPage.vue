@@ -1,7 +1,7 @@
 <template>
   <q-page class="column q-pa-xl">
-    <div v-if="isEventProgramLoading" class="loading">Loading...</div>
-    <div v-else>
+    <spinner v-if="isEventProgramLoading" />
+    <template v-else>
       <div class="row justify-between items-end q-mb-md">
         <div class="q-mb-md">
           <span>{{ eventName }}</span>
@@ -12,7 +12,7 @@
       </div>
 
       <event-program-editor />
-    </div>
+    </template>
     <discard-changes-modal
       v-model="discardChangesModal"
       :is-saving="isEventProgramSaving"
@@ -24,6 +24,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Event program edit page
+ * Displays the event program edit page with the form
+ */
+
 // libraries
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -38,6 +43,7 @@ import EventProgramEditor from 'src/components/event/program/EventProgramEditor.
 import BackButton from 'src/components/buttons/BackButton.vue';
 // eslint-disable-next-line no-unused-vars
 import DiscardChangesModal from 'src/components/global/DiscardChangesModal.vue';
+import Spinner from 'src/components/global/Spinner.vue';
 
 // stores
 import { useEventStore } from 'src/stores/event';
@@ -57,14 +63,6 @@ const { isEventProgramSaving, isEventProgramLoading, isEventProgramFormDirty } =
 const discardChangesModal = ref(false);
 
 const eventName = computed(() => eventStore.getEventName(slug.value));
-
-watch(
-  slug,
-  () => {
-    eventStore.setSlug(slug.value as string);
-  },
-  { immediate: true },
-);
 
 const onBack = (): void => {
   if (isEventProgramFormDirty.value) {
@@ -93,4 +91,13 @@ const onSave = async (): Promise<void> => {
     });
   }
 };
+
+// Watch the slug to set the event slug in the store - get new data
+watch(
+  slug,
+  () => {
+    eventStore.setSlug(slug.value as string);
+  },
+  { immediate: true },
+);
 </script>
